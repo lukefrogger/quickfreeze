@@ -7,7 +7,10 @@ export default function Button({ children, onClick, color, type }) {
 		);
 	}
 	return (
-		<button className={`rounded-sm py-2 px-6 border-${color} bg-${type === "outline" ? "transparent" : color}`} onClick={onClick}>
+		<button
+			className={`rounded-sm py-2 px-8 border border-${color} bg-${type === "outline" ? "transparent" : color}`}
+			onClick={onClick}
+		>
 			{children}
 		</button>
 	);

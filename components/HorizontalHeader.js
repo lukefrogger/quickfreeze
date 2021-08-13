@@ -4,7 +4,7 @@ import icon from "../public/logo_trans.png";
 
 export default function HorizontalHeader() {
 	return (
-		<header className="flex p-4 justify-between">
+		<header className="flex p-4 justify-between mb-8">
 			<div className="flex items-center">
 				<Image src={icon} alt="quick freeze logo" height={40} width={40} />
 				<div className="text-2xl text-primary ml-4">Quick Freeze</div>

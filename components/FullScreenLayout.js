@@ -8,7 +8,7 @@ export default function FullScreenLayout({ children }) {
 				<title>Quick Freeze | Temporary Database & Document Store</title>
 				<link rel="icon" href="/icon.png" />
 			</Head>
-			<main className="bg-bDark text-white min-h-screen">
+			<main className="text-white min-h-screen">
 				<Container>{children}</Container>
 			</main>
 		</>
