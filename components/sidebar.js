@@ -1,11 +1,10 @@
 import Image from "next/image";
 import icon from "../public/logo_trans.png";
-import Link from "next/link";
 import SidebarLink from "../atoms/sidebarLink";
 
-export default function Sidebar() {
+export default function Sidebar({ topThree }) {
 	return (
-		<div className="w-60 bg-gray-700 h-screen">
+		<div className="w-60 bg-bLight h-screen">
 			<div className="p-4 flex items-center">
 				<Image src={icon} alt="quick freeze pixel logo" width={40} height={40} />
 				<div className="ml-2 text-xl text-primary">Quick Freeze</div>
@@ -18,7 +17,7 @@ export default function Sidebar() {
 					<li>
 						<SidebarLink href="/buckets">All Buckets</SidebarLink>
 					</li>
-					<li>
+					{/* <li>
 						<SidebarLink href="/recent1">Order-sync</SidebarLink>
 					</li>
 					<li>
@@ -26,7 +25,12 @@ export default function Sidebar() {
 					</li>
 					<li>
 						<SidebarLink href="/recent3">Fetch forms temp db adfa adf asd asd </SidebarLink>
-					</li>
+					</li> */}
+					{topThree.map((bucket, i) => (
+						<li key={`bucketlink${i}`}>
+							<SidebarLink href={bucket.link}>{bucket.name}</SidebarLink>
+						</li>
+					))}
 				</ul>
 				<ul className="mb-6">
 					<li className="mb-1 pl-4">

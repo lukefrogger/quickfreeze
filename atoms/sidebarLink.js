@@ -11,7 +11,7 @@ export default function SidebarLink({ children, href }) {
 	}, []);
 
 	return (
-		<div className={`pt-1 pb-1 pr-4 pl-4 ${isActive ? "bg-primary" : "bg-transparent"}`}>
+		<div className={`pt-1 pb-1 pr-4 pl-4 ${isActive ? "bg-primary" : "bg-transparent"} font-light`}>
 			<Link href={href}>
 				<a className="line-clamp-1">{children}</a>
 			</Link>

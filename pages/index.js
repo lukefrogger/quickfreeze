@@ -1,20 +1,21 @@
-import Layout from "../components/layout";
-import { connectToDatabase } from "../lib/mongodb";
+import FullScreenLayout from "../components/FullScreenLayout";
+import HorizontalHeader from "../components/HorizontalHeader";
+// import { connectToDatabase } from "../lib/mongodb";
 
-export default function Home({ isConnected }) {
+export default function Home() {
 	return (
-		<Layout>
-			<div>Body</div>
-		</Layout>
+		<FullScreenLayout>
+			<HorizontalHeader />
+		</FullScreenLayout>
 	);
 }
 
-export async function getServerSideProps(context) {
-	const { client } = await connectToDatabase();
+// export async function getStaticProps(context) {
+// 	const { client } = await connectToDatabase();
 
-	const isConnected = await client.isConnected();
+// 	const isConnected = await client.isConnected();
 
-	return {
-		props: { isConnected },
-	};
-}
+// 	return {
+// 		props: { isConnected },
+// 	};
+// }
