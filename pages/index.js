@@ -12,6 +12,7 @@ import { SmallHeader } from "../atoms/smallHeader";
 import { VertLabeledIcon } from "../components/VertLabledIcon";
 import Solutions from "../atoms/Solutions";
 import Step from "../atoms/Step";
+import PricingTable from "../components/PricingTable";
 
 export default function Home() {
 	return (
@@ -262,14 +263,14 @@ export default function Home() {
 									<em>Quick Freeze:</em> Once data a read from a bucket, it is automatically deleted
 								</li>
 								<li>
-									<em>Deep Freeze:</em> Data can be stored for up to 30 days and read from a bucket as many times as
+									<em>Deep Freeze:</em> Data can be stored for as long as needed and read from a bucket as many times as
 									needed
 								</li>
 							</ul>
 						</Step>
 						<Step number="2">
-							Post data into your bucket using it’s endpoint and the token generated. The data will be stringified and stored.
-							It won’t be manipulated or read, but it’s bytes will be calculated for billing purposes.
+							Post data into your bucket using it’s endpoint and the token generated. The data will be stringified and stored
+							- it won’t be manipulated or read, but it’s bytes will be calculated for billing purposes.
 						</Step>
 						<Step number="3">
 							Fetch the data out of Quick Freeze with a simple API call. Depending on your{" "}
@@ -285,6 +286,26 @@ export default function Home() {
 						<SmallHeader>Pricing</SmallHeader>
 						<div className="text-3xl mb-4">Simple and straightforward pricing</div>
 					</header>
+					<div>
+						<PricingTable
+							data={{
+								head: [
+									null,
+									{ price: 0, title: "Free", timeframe: "forever" },
+									{ price: 5, title: "Basic", timeframe: "month" },
+									{ price: 10, title: "Pro", timeframe: "month" },
+								],
+								body: [
+									["Number of API Calls", "Unlimited", "Unlimited", "Unlimited"],
+									["Number of Buckets", "3 Buckets", "5 Buckets", "Unlimited"],
+									["Max Bucket Size", "100 kilobytes", "100 megabytes", "1 gigabyte"],
+									["Quick Freeze Storage", true, true, true],
+									["Deep Freeze Storage", false, true, true],
+									["Length of Storage", "15 days", "30 days", "Forever"],
+								],
+							}}
+						/>
+					</div>
 				</Container>
 			</section>
 		</FullScreenLayout>
