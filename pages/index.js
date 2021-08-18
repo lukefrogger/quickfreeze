@@ -13,6 +13,7 @@ import { VertLabeledIcon } from "../components/VertLabledIcon";
 import Solutions from "../atoms/Solutions";
 import Step from "../atoms/Step";
 import PricingTable from "../components/PricingTable";
+import Link from "next/link";
 
 export default function Home() {
 	return (
@@ -31,9 +32,11 @@ export default function Home() {
 							</div>
 							<div className="mt-6">
 								<Button color="primary mr-4">Start a Project</Button>
-								<Button type="outline" color="white">
-									Documentation
-								</Button>
+								<Link href="/docs">
+									<Button type="outline" color="white">
+										Documentation
+									</Button>
+								</Link>
 							</div>
 						</div>
 					</div>

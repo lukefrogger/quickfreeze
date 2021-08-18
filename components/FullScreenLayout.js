@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Container from "../atoms/container";
+import Footer from "./Footer";
 
 export default function FullScreenLayout({ children }) {
 	return (
@@ -9,6 +9,7 @@ export default function FullScreenLayout({ children }) {
 				<link rel="icon" href="/icon.png" />
 			</Head>
 			<main className="text-white min-h-screen">{children}</main>
+			<Footer />
 		</>
 	);
 }
