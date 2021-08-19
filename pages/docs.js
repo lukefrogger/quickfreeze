@@ -5,17 +5,24 @@ import { SmallHeader } from "../atoms/smallHeader";
 import CodeSnippet from "../components/CodeSnippet";
 import FullScreenLayout from "../components/FullScreenLayout";
 import HorizontalHeader from "../components/HorizontalHeader";
+import Message from "../components/Message";
 
 export default function Documentation() {
 	return (
 		<FullScreenLayout>
 			<HorizontalHeader />
-			<section>
+			<section className="pt-4">
 				<Container padding="px-4">
 					<header className="mb-8">
 						<SmallHeader>Documentation</SmallHeader>
 						<div className="text-3xl mb-4">Using the Quick Freeze API</div>
 					</header>
+					<div className="my-6">
+						<Message>
+							<strong>Quick Freeze is still under development.</strong> If you'd like join the upcoming beta program, sign up
+							and we'll keep you updated with newest details.
+						</Message>
+					</div>
 				</Container>
 			</section>
 			<section>

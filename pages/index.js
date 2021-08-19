@@ -14,6 +14,7 @@ import Solutions from "../atoms/Solutions";
 import Step from "../atoms/Step";
 import PricingTable from "../components/PricingTable";
 import Link from "next/link";
+import Message from "../components/Message";
 
 export default function Home() {
 	return (
@@ -31,7 +32,15 @@ export default function Home() {
 								The fastest way to use a temorary data store for webhooks, server logs, data migrations, or anything else!
 							</div>
 							<div className="mt-6">
-								<Button color="primary mr-4">Start a Project</Button>
+								<Message>
+									<strong>Quick Freeze is still under development.</strong> If you'd like join the upcoming beta program,
+									sign up and we'll keep you updated with newest details.
+								</Message>
+							</div>
+							<div className="mt-6">
+								<Link href="/sign-up">
+									<Button color="primary mr-4">Sign up Now</Button>
+								</Link>
 								<Link href="/docs">
 									<Button type="outline" color="white">
 										Documentation

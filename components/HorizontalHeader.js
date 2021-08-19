@@ -26,12 +26,14 @@ export default function HorizontalHeader() {
 					</div>
 				</nav>
 				<nav className="flex items-center">
-					<div className="mr-4 text-lg">
-						<Button type="link">Log In</Button>
-					</div>
-					<div>
+					{/* <Link href="/sign-up">
+						<div className="mr-4 text-lg">
+							<Button type="link">Log In</Button>
+						</div>
+					</Link> */}
+					<Link href="/sign-up">
 						<Button color="primary">Sign Up</Button>
-					</div>
+					</Link>
 				</nav>
 			</header>
 		</Container>
