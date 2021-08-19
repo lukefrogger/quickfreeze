@@ -158,7 +158,7 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 					</p>
 					<div className="grid md:grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-8 mt-8">
 						<div className="mt-4">
-							<div className="text-lg">Quick Freeze</div>
+							<div className="text-lg font-bold">Quick Freeze</div>
 							<p>- Once data a read from a bucket, it is automatically deleted</p>
 							<p>
 								- If you have access to Deep Freeze (requires a paid subscription) you may include the an optional parameter
@@ -179,7 +179,7 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 }`}
 						/>
 						<div className="mt-4">
-							<div className="text-lg">Deep Freeze</div>
+							<div className="text-lg font-bold">Deep Freeze</div>
 							<p>
 								- (requires a paid plan) Data can be stored for as long as needed and read from a bucket as many times as
 								needed

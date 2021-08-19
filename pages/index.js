@@ -290,24 +290,7 @@ export default function Home() {
 						<div className="text-3xl mb-4">Simple and straightforward pricing</div>
 					</header>
 					<div>
-						<PricingTable
-							data={{
-								head: [
-									null,
-									{ price: 0, title: "Free", timeframe: "forever" },
-									{ price: 5, title: "Basic", timeframe: "month" },
-									{ price: 10, title: "Pro", timeframe: "month" },
-								],
-								body: [
-									["Number of API Calls", "Unlimited", "Unlimited", "Unlimited"],
-									["Number of Buckets", "3 Buckets", "5 Buckets", "Unlimited"],
-									["Max Bucket Size", "100 kilobytes", "100 megabytes", "1 gigabyte"],
-									["Quick Freeze Storage", true, true, true],
-									["Deep Freeze Storage", false, true, true],
-									["Length of Storage", "15 days", "30 days", "Forever"],
-								],
-							}}
-						/>
+						<PricingTable />
 					</div>
 				</Container>
 			</section>

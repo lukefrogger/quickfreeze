@@ -1,7 +1,23 @@
 import Button from "../atoms/Button";
 
-export default function PricingTable({ rowPad, data }) {
-	const rowPadding = rowPad || "py-4";
+export default function PricingTable({ type = "light" }) {
+	const data = {
+		head: [
+			null,
+			{ price: 0, title: "Free", timeframe: "forever" },
+			{ price: 5, title: "Basic", timeframe: "month" },
+			{ price: 10, title: "Pro", timeframe: "month" },
+		],
+		body: [
+			["Number of API Calls", "Unlimited", "Unlimited", "Unlimited"],
+			["Number of Buckets", "3 Buckets", "5 Buckets", "Unlimited"],
+			["Max Bucket Size", "100 kilobytes", "100 megabytes", "1 gigabyte"],
+			["Quick Freeze Storage", true, true, true],
+			["Deep Freeze Storage", false, true, true],
+			["Length of Storage", "15 days", "30 days", "Forever"],
+		],
+	};
+	const rowPadding = "py-4";
 	const check = (
 		<svg className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
 			<path
@@ -34,7 +50,7 @@ export default function PricingTable({ rowPad, data }) {
 							return (
 								<th className="text-left pb-6" key={i}>
 									<div className="text-3xl">{item.title}</div>
-									<div className="text-gray-500 font-normal">
+									<div className={`font-normal ${type === "light" ? "text-gray-500" : "text-primary"}`}>
 										${item.price} / {item.timeframe}
 									</div>
 								</th>
@@ -46,7 +62,12 @@ export default function PricingTable({ rowPad, data }) {
 			</thead>
 			<tbody>
 				{data.body.map((row, i) => (
-					<tr className="border border-l-0 border-r-0 border-b-0 border-gray-300 text-gray-600" key={i}>
+					<tr
+						className={`border border-l-0 border-r-0 border-b-0 border-gray-300 ${
+							type === "light" ? "text-gray-600" : "text-gray-200"
+						}`}
+						key={i}
+					>
 						{row.map((item, xi) => {
 							return (
 								<td className={`${rowPadding} pr-12 ${item === true ? "text-primary" : "text-normal"}`} key={xi}>
