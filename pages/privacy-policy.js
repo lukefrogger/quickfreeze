@@ -435,7 +435,7 @@ export default function PrivacyPolicy() {
 						<div className="my-4">
 							<strong>
 								Update Account Information: You have the right to update or change any information you have provided to us.
-								To update or delete your information, please contact us at support@churchreserve.com.
+								To update or delete your information, please contact us at support@quickfreeze.com.
 							</strong>{" "}
 						</div>
 						<div className="my-4">
@@ -470,12 +470,12 @@ export default function PrivacyPolicy() {
 						<div className="my-4">
 							<strong>Emails And Communications:</strong> You may opt out of receiving future email correspondence from us by
 							checking the appropriate box when you register for the account or make a purchase. You may change your
-							communication settings by contacting us at support@churchreserve.com.
+							communication settings by contacting us at support@quickfreeze.com.
 						</div>
 						<div className="my-4">
 							<strong>Marketing Communications:</strong> You may opt out of receiving any third party marketing communications
 							or having your personal information used for marketing purposes. You may do this by contacting us at
-							support@churchreserve.com.
+							support@quickfreeze.com.
 						</div>
 						<div className="my-4">
 							<strong>Processing:</strong> You may, in some circumstances restrict the processing of your data, such as when

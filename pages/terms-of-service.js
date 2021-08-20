@@ -110,9 +110,9 @@ export default function TermsOfService() {
 							in writing.
 						</p>
 						<p className="my-4">
-							After 30 days of outstanding payment, ChurchReserve reserves the right to send you to collections, upon which
-							you will owe the total amount of any outstanding payments plus any collection costs including reasonable
-							attorney’s fees.
+							After 30 days of outstanding payment, Quick Freeze reserves the right to send you to collections, upon which you
+							will owe the total amount of any outstanding payments plus any collection costs including reasonable attorney’s
+							fees.
 						</p>
 					</div>
 					<div className="my-8">
