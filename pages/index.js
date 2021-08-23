@@ -31,12 +31,12 @@ export default function Home() {
 							<div className="text-xl ">
 								The fastest way to use a temorary data store for webhooks, server logs, data migrations, or anything else!
 							</div>
-							<div className="mt-6">
+							{/* <div className="mt-6">
 								<Message>
 									<strong>Quick Freeze is still under development.</strong> If you'd like join the upcoming beta program,
 									sign up and we'll keep you updated with newest details.
 								</Message>
-							</div>
+							</div> */}
 							<div className="mt-6">
 								<Link href="/sign-up">
 									<Button color="primary mr-4">Sign up Now</Button>

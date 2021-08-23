@@ -22,12 +22,12 @@ export default function Footer() {
 								<strong>Links</strong>
 							</li>
 							<li>
-								<Link href="./privacy-policy">
+								<Link href="/privacy-policy">
 									<a className="underline">Privacy Policy</a>
 								</Link>
 							</li>
 							<li>
-								<Link href="./terms-of-service">
+								<Link href="/terms-of-service">
 									<a className="underline">Terms of Service</a>
 								</Link>
 							</li>

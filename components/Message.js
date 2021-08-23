@@ -1,3 +1,11 @@
-export default function Message({ children }) {
-	return <div className="p-4 border border-primary rounded-md bg-transBlue text-bDark text-left">{children}</div>;
+export default function Message({ children, warning }) {
+	return (
+		<div
+			className={`p-4 border border-${warning ? "danger" : "primary"} rounded-md bg-${warning ? "transDanger" : "transBlue"} text-${
+				warning ? "white" : "bDark"
+			} text-left`}
+		>
+			{children}
+		</div>
+	);
 }
