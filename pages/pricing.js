@@ -1,5 +1,5 @@
 import Container from "../atoms/container";
-import SmallHeader from "../atoms/smallHeader";
+import SmallHeader from "../atoms/SmallHeader";
 import FullScreenLayout from "../components/FullScreenLayout";
 import HorizontalHeader from "../components/HorizontalHeader";
 import Message from "../components/Message";

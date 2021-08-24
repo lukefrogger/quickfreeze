@@ -8,7 +8,7 @@ import EmphasizedText from "../atoms/EmphasizedText";
 import PixelWedge from "../atoms/PixelWedge";
 import wedge from "../public/wedge.png";
 import Container from "../atoms/container";
-import SmallHeader from "../atoms/smallHeader";
+import SmallHeader from "../atoms/SmallHeader";
 import { VertLabeledIcon } from "../components/VertLabledIcon";
 import Solutions from "../atoms/Solutions";
 import Step from "../atoms/Step";
