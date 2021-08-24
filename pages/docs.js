@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "../atoms/container";
 import EmphasizedText from "../atoms/EmphasizedText";
-import { SmallHeader } from "../atoms/smallHeader";
+import SmallHeader from "../atoms/smallHeader";
 import CodeSnippet from "../components/CodeSnippet";
 import FullScreenLayout from "../components/FullScreenLayout";
 import HorizontalHeader from "../components/HorizontalHeader";
