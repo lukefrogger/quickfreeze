@@ -39,7 +39,7 @@ export default function Home() {
 							</div> */}
 							<div className="mt-6">
 								<Link href="/sign-up" passHref>
-									<Button color="primary mr-4">Sign up now</Button>
+									<Button color="primary">Sign up now</Button>
 								</Link>
 								<Link href="/docs" passHref>
 									<Button type="outline" color="white">
