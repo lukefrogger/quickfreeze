@@ -104,11 +104,11 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 							account token
 							{/* </a>
 							</Link> */}{" "}
-							and a bucket's endpoint to construct a GET request.
+							and a bucket{`'`}s endpoint to construct a GET request.
 							<div className="ml-4">
 								<div>
-									- There are not "where" clauses in Quick Freeze. Executing a GET request will retrieve all the records
-									in a bucket.
+									- There are not {`"where"`} clauses in Quick Freeze. Executing a GET request will retrieve all the
+									records in a bucket.
 								</div>
 							</div>
 							<div>
@@ -119,8 +119,8 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 								3. Add a Custom Setting to the body of the request if needed
 								<div>
 									<div className="ml-8">
-										<strong>deleteOnComplete:</strong> Use with Deep Freeze - this will delete the data once it's
-										retrieved. If never used, data will remain in the bucket until it reaches it's expiration date
+										<strong>deleteOnComplete:</strong> Use with Deep Freeze - this will delete the data once it is
+										retrieved. If never used, data will remain in the bucket until it reaches its expiration date
 									</div>
 									<div className="ml-8">
 										<strong>preventDelete:</strong> Use with Quick Freeze to prevent deletion - your account must have
@@ -193,8 +193,8 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 								needed
 							</p>
 							<p>
-								- Deep Freeze data is retrieveable up to it's expiration date. If you'd like to delete the data before that
-								it's expiration date, you can include an optional parameter in your request
+								- Deep Freeze data is retrieveable up to its expiration date. If you would like to delete the data before
+								its expiration date, you can include an optional parameter in your request
 							</p>
 						</div>
 						<CodeSnippet

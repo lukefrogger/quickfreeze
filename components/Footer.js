@@ -27,7 +27,7 @@ export default function Footer() {
 								</Link>
 							</li>
 							<li>
-								<Link href="/terms-of-service">
+								<Link href="/terms-of-service" passHref>
 									<a className="underline">Terms of Service</a>
 								</Link>
 							</li>
@@ -37,7 +37,7 @@ export default function Footer() {
 								<strong>Support</strong>
 							</li>
 							<li>
-								<Link href="/docs">
+								<Link href="/docs" passHref>
 									<a className="underline">Documentation</a>
 								</Link>
 							</li>

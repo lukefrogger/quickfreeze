@@ -14,7 +14,7 @@ import Solutions from "../atoms/Solutions";
 import Step from "../atoms/Step";
 import PricingTable from "../components/PricingTable";
 import Link from "next/link";
-import Message from "../components/Message";
+// import Message from "../components/Message";
 
 export default function Home() {
 	return (
@@ -38,10 +38,10 @@ export default function Home() {
 								</Message>
 							</div> */}
 							<div className="mt-6">
-								<Link href="/sign-up">
+								<Link href="/sign-up" passHref>
 									<Button color="primary mr-4">Sign up now</Button>
 								</Link>
-								<Link href="/docs">
+								<Link href="/docs" passHref>
 									<Button type="outline" color="white">
 										Documentation
 									</Button>
@@ -51,7 +51,7 @@ export default function Home() {
 					</div>
 				</Container>
 				<div className="w-full mt-4 bg-white relative">
-					<Image src={wedge} className="z-10" />
+					<Image src={wedge} alt="frozen pixels" className="z-10" />
 					<div className="absolute top-4 z-0 w-full">
 						<PixelWedge />
 					</div>
@@ -159,7 +159,7 @@ export default function Home() {
 								A <EmphasizedText>storage API</EmphasizedText> so you can focus on development
 							</div>
 							<p>
-								We'll remove the boilerplate, store and delete your temporary data so you can focus on building amazing
+								Let us remove the boilerplate, store and delete your temporary data so you can focus on building amazing
 								products
 							</p>
 						</header>
