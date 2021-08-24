@@ -11,6 +11,7 @@ module.exports = {
 				bLight: "#3D3D3D",
 				offPrimary: "#2D9CDB",
 				transBlue: "#E6F7FF",
+				darkPrimary: "#0e2b38",
 			},
 		},
 	},

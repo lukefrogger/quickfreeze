@@ -76,6 +76,7 @@ export default function Documentation() {
 						</div>
 						<div>
 							<CodeSnippet
+								title="Adding a record to a bucket"
 								code={`const url = 'https://quickfreeze.io/api/bucket/';
 const bucketEndpoint = '{{bucket_endpoint}}';
 const data = {...record};
@@ -132,7 +133,7 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 
 						<div>
 							<CodeSnippet
-								title="[GET] Ice cubes"
+								title="Retrieve records from a bucket"
 								code={`const url = 'https://quickfreeze.io/api/bucket/';
 const bucketEndpoint = '{{bucket_endpoint}}';
 

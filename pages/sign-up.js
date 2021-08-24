@@ -55,7 +55,7 @@ export default function SignUp() {
 					</div>
 					<div className="w-full md:w-1/2 mx-auto bg-bLight p-8 rounded border border-blueTrans">
 						<header className="mb-8">
-							<SmallHeader>Beta Program</SmallHeader>
+							<SmallHeader>Ready to get started</SmallHeader>
 							<div className="text-3xl text-center my-2 font-bold">
 								Sign up below and you'll be the first to know when we're ready to launch
 							</div>

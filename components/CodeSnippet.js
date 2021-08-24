@@ -5,7 +5,7 @@ export default function CodeSnippet({ code, title }) {
 	return (
 		<div className="rounded-md border border-primary text-sm bg-primary">
 			<div className="flex justify-between p-2 ">
-				<di className="ml-2 text-bDark">{title}</di>
+				<di className="ml-2 text-darkPrimary">{title}</di>
 				{/* <div>
 					<svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 						<path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
