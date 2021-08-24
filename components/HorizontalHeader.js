@@ -8,12 +8,13 @@ export default function HorizontalHeader() {
 	return (
 		<Container>
 			<header className="flex p-4 justify-between mb-8">
-				<div className="flex items-center cursor-pointer">
-					<a href="/">
+				<a href="/">
+					<div className="flex items-center cursor-pointer">
 						<Image src={icon} alt="quick freeze logo" height={40} width={40} />
-					</a>
-					<div className="text-2xl text-primary ml-4">Quick Freeze</div>
-				</div>
+
+						<div className="text-2xl text-primary ml-4">Quick Freeze</div>
+					</div>
+				</a>
 				<nav className="flex text-lg">
 					{/* <div className="mr-4 p-2">Solutions</div> */}
 					<div className="mr-4 p-2">

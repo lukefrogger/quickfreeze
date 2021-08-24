@@ -9,12 +9,37 @@ export default function PricingTable({ type = "light" }) {
 			{ price: 10, title: "Pro", timeframe: "month" },
 		],
 		body: [
-			["Number of API Calls", "Unlimited", "Unlimited", "Unlimited"],
-			["Number of Buckets", "3 Buckets", "5 Buckets", "Unlimited"],
-			["Max Bucket Size", "100 kilobytes", "100 megabytes", "1 gigabyte"],
-			["Quick Freeze Storage", true, true, true],
-			["Deep Freeze Storage", false, true, true],
-			["Length of Storage", "15 days", "30 days", "Forever"],
+			[{ text: "Number of API Calls" }, "Unlimited", "Unlimited", "Unlimited"],
+			[{ text: "Number of Buckets" }, "3 Buckets", "5 Buckets", "Unlimited"],
+			[{ text: "Max Bucket Size" }, "100 kilobytes", "100 megabytes", "1 gigabyte"],
+			[{ text: "Quick Freeze Storage", tip: "Once data a read from a bucket, it is automatically deleted" }, true, true, true],
+			[
+				{
+					text: "Deep Freeze Storage",
+					tip: "Data can be stored for as long as needed and read from a bucket as many times as needed",
+				},
+				false,
+				true,
+				true,
+			],
+			[
+				{
+					text: "Max Expiration Date",
+					tip: "The length of time between when the data is created and when it will be automatically deleted",
+				},
+				"15 days",
+				"30 days",
+				"60 days",
+			],
+			[
+				{
+					text: "Custom Expiration Date",
+					tip: "Set custom lengths of time where data will automatically be removed from a bucket",
+				},
+				false,
+				false,
+				true,
+			],
 		],
 	};
 	const rowPadding = "py-4";
@@ -72,7 +97,30 @@ export default function PricingTable({ type = "light" }) {
 							return (
 								<td className={`${rowPadding} pr-12 ${item === true ? "text-primary" : "text-normal"}`} key={xi}>
 									{item === true && check}
-									{item === false ? close : item}
+									{item === false && close}
+									{item.text && item.tip ? (
+										<div className="flex relative">
+											{item.text}
+											<div className="flex flex-col items-center group">
+												<svg className="w-6 h-6 ml-4" viewBox="0 0 20 20" fill="currentColor">
+													<path
+														fillRule="evenodd"
+														d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+														clipRule="evenodd"
+													/>
+												</svg>
+												<div className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+													<span className="relative z-10 p-2 text-sm text-bDark whitespace-no-wrap bg-white rounded-sm">
+														{item.tip}
+													</span>
+													<div className="w-3 h-3 -mt-2 rotate-45 bg-white"></div>
+												</div>
+											</div>
+										</div>
+									) : (
+										item.text
+									)}
+									{item !== true && item !== false && !item.text && item}
 								</td>
 							);
 						})}

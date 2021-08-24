@@ -49,8 +49,8 @@ export default function SignUp() {
 							</div>
 						)}
 						<Message>
-							<strong>Quick Freeze is still under development.</strong> If you'd like join the upcoming beta program, sign up
-							and we'll keep you updated with newest details.
+							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
+							with newest details.
 						</Message>
 					</div>
 					<div className="w-full md:w-1/2 mx-auto bg-bLight p-8 rounded border border-blueTrans">

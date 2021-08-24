@@ -19,15 +19,15 @@ export default function Documentation() {
 					</header>
 					<div className="my-6">
 						<Message>
-							<strong>Quick Freeze is still under development.</strong> If you'd like join the upcoming beta program, sign up
-							and we'll keep you updated with newest details.
+							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
+							with newest details.
 						</Message>
 					</div>
 				</Container>
 			</section>
 			<section>
-				<Container padding="px-4">
-					<div className="text-2xl text-bold">Adding records to a bucket</div>
+				<Container padding="px-4 border-b pb-8">
+					<div className="text-2xl text-bold mb-4 mt-8">Adding records to a bucket</div>
 					<div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
 						<div>
 							<div className="">
@@ -40,11 +40,11 @@ export default function Documentation() {
 							</div>
 							<div>
 								2.{" "}
-								<Link href="/app/buckets">
-									<a targe="_blank" className="text-primary underline">
-										Create a bucket
-									</a>
-								</Link>{" "}
+								{/* <Link href="/app/buckets">
+									<a targe="_blank" className="text-primary underline"> */}
+								Create a bucket
+								{/* </a>
+								</Link>*/}{" "}
 								through the dashboard
 								<div className="ml-4">
 									<div>
@@ -65,21 +65,20 @@ export default function Documentation() {
 							</div>
 							<div>
 								3. Use your{" "}
-								<Link href="/app/account/tokens">
-									<a targe="_blank" className="text-primary underline">
-										Account Token
-									</a>
-								</Link>{" "}
-								and bucket endpoint to make a POST call with the body of the request holding an array of records you’d like
-								to freeze. Quick Freeze will turn them into “ice cubes” and store them.
+								{/* <Link href="/app/account/tokens">
+									<a targe="_blank" className="text-primary underline"> */}
+								account token
+								{/* </a>
+								</Link> */}{" "}
+								and bucket endpoint to make a POST request with the record you’d like to freeze as the body of the request.
+								Quick Freeze will turn it into an “ice cubes” and store it.
 							</div>
 						</div>
 						<div>
 							<CodeSnippet
-								code={`const url = 'https://quickfreeze.io/api/bucket';
-const bucketEndpoint = '/funkyBucket';
-// the data must be passed into the request as a list
-const data = [{...record}, {...record}];
+								code={`const url = 'https://quickfreeze.io/api/bucket/';
+const bucketEndpoint = '{{bucket_endpoint}}';
+const data = {...record};
 
 const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 	method: 'POST',
@@ -94,17 +93,17 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 					</div>
 				</Container>
 			</section>
-			<section className="mt-12">
-				<Container padding="px-4">
-					<div className="text-2xl text-bold">Retrieve records from a bucket</div>
+			<section className="mt-8">
+				<Container padding="px-4 border-b pb-8">
+					<div className="text-2xl text-bold mb-4">Retrieve records from a bucket</div>
 					<div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
 						<div>
 							1. Use your{" "}
-							<Link href="/app/account/tokens">
-								<a targe="_blank" className="text-primary underline">
-									account token
-								</a>
-							</Link>{" "}
+							{/* <Link href="/app/account/tokens">
+								<a targe="_blank" className="text-primary underline"> */}
+							account token
+							{/* </a>
+							</Link> */}{" "}
 							and a bucket's endpoint to construct a GET request.
 							<div className="ml-4">
 								<div>
@@ -133,8 +132,9 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 
 						<div>
 							<CodeSnippet
-								code={`const url = 'https://quickfreeze.io/api/bucket';
-const bucketEndpoint = '/funkyBucket';
+								title="[GET] Ice cubes"
+								code={`const url = 'https://quickfreeze.io/api/bucket/';
+const bucketEndpoint = '{{bucket_endpoint}}';
 
 const customSettings = {
     // Use with Deep Freeze to remove data once retrieved
@@ -156,9 +156,9 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 					</div>
 				</Container>
 			</section>
-			<section className="mt-12 mb-12">
+			<section className="mt-8 mb-12">
 				<Container padding="px-4">
-					<div className="text-2xl text-bold">Quick Freeze vs Deep Freeze: Storage options</div>
+					<div className="text-2xl text-bold my-4">Quick Freeze vs Deep Freeze: Storage options</div>
 					<p>
 						Depending on your subscription, when creating a bucket you’ll have the option to select Deep Freeze or Quick Freeze.
 						These two options control what happens to your data once it is successfully retrieved.
@@ -168,11 +168,12 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 							<div className="text-lg font-bold">Quick Freeze</div>
 							<p>- Once data a read from a bucket, it is automatically deleted</p>
 							<p>
-								- If you have access to Deep Freeze (requires a paid subscription) you may include the an optional parameter
-								to prevent your data from automatically deleting.
+								- If you have access to Deep Freeze (requires a paid subscription) you may include an optional parameter to
+								prevent your data from automatically deleting.
 							</p>
 						</div>
 						<CodeSnippet
+							title="Prevent deletion in a quick freeze bucket"
 							code={`const url = 'https://quickfreeze.io/api/bucket';
 const bucketEndpoint = '/funkyBucket';
 
@@ -192,11 +193,12 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 								needed
 							</p>
 							<p>
-								- Deep Freeze data is retrieveable up to it's expiration date which based on your subscription plan. If
-								you'd like to delete the data before that point, you can include an optional parameter in your request
+								- Deep Freeze data is retrieveable up to it's expiration date. If you'd like to delete the data before that
+								it's expiration date, you can include an optional parameter in your request
 							</p>
 						</div>
 						<CodeSnippet
+							title="Delete data in a deep freeze bucket"
 							code={`const url = 'https://quickfreeze.io/api/bucket';
 const bucketEndpoint = '/funkyBucket';
 

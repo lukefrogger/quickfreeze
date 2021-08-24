@@ -29,17 +29,17 @@ export default function Home() {
 						</div>
 						<div className="max-w-screen-md text-center mt-6">
 							<div className="text-xl ">
-								The fastest way to use a temorary data store for webhooks, server logs, data migrations, or anything else!
+								The easiest way to store temorary data from webhooks, server logs, data migrations, or anything else!
 							</div>
 							{/* <div className="mt-6">
 								<Message>
-									<strong>Quick Freeze is still under development.</strong> If you'd like join the upcoming beta program,
+									<strong>Quick Freeze is still under development.</strong> To stay up to date,
 									sign up and we'll keep you updated with newest details.
 								</Message>
 							</div> */}
 							<div className="mt-6">
 								<Link href="/sign-up">
-									<Button color="primary mr-4">Sign up Now</Button>
+									<Button color="primary mr-4">Sign up now</Button>
 								</Link>
 								<Link href="/docs">
 									<Button type="outline" color="white">
@@ -61,10 +61,10 @@ export default function Home() {
 				<Container>
 					<div className="flex flex-col items-center  ">
 						<header>
-							<div className="text-3xl text-center my-2 font-bold">Storing short term data shouldn’t be time consuming</div>
+							<div className="text-3xl text-center my-2 font-bold">Storing temporary data shouldn’t be time consuming</div>
 							<div className="max-w-screen-md text-center mt-2">
-								Setting up a database for short term data is time consuming and expensive. Without{" "}
-								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with...
+								Setting up a database for temporary data is time consuming and expensive. Without{" "}
+								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll to deal with...
 							</div>
 						</header>
 						<div className="grid grid-cols-2 lg:w-1/2 sm:w-full mt-8 ">
@@ -100,15 +100,15 @@ export default function Home() {
 											d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
 											clipRule="evenodd"
 										/>
-										<path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+										<path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" fill="#3D3D3D" />
 									</svg>
 								</span>
-								Setup a local file system
+								Local file storage
 							</div>
 							<div className="border border-bDark border-b-0 p-4 flex items-center">
 								<span className="mr-4">
 									<svg className="h-8 w-8" viewBox="0 0 20 20">
-										<path d="M13 7H7v6h6V7z" />
+										<path d="M13 7H7v6h6V7z" fill="#3D3D3D" />
 										<path
 											fillRule="evenodd"
 											fill="#3D3D3D"
@@ -144,7 +144,7 @@ export default function Home() {
 										/>
 									</svg>
 								</span>
-								Writing code to delete old data
+								Writing code to access data
 							</div>
 						</div>
 					</div>
@@ -158,7 +158,10 @@ export default function Home() {
 							<div className="text-3xl mb-4">
 								A <EmphasizedText>storage API</EmphasizedText> so you can focus on development
 							</div>
-							<p>Let us handle storing your short-term or temporary data so you can focus on building amazing products</p>
+							<p>
+								We'll remove the boilerplate, store and delete your temporary data so you can focus on building amazing
+								products
+							</p>
 						</header>
 						<div className="flex justify-around">
 							<VertLabeledIcon
@@ -176,11 +179,14 @@ export default function Home() {
 							/>
 							<VertLabeledIcon
 								color="primary"
-								label="Daily Backups"
+								label="Asynchronous"
 								icon={
 									<svg className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-										<path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+										<path
+											fillRule="evenodd"
+											d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+											clipRule="evenodd"
+										/>
 									</svg>
 								}
 							/>
@@ -210,8 +216,8 @@ export default function Home() {
 						</div>
 						<p>
 							Using the asynchronous nature of Quick Freeze, you can focus on creating the major parts of your application
-							while saving the important short-term data for later use. Whenever you're ready to use the data, a simple API
-							call will return it to you!
+							while setting up and storing the less-important data for later use. Whenever you're ready to use the data, a
+							simple API call will return it to you!
 						</p>
 					</header>
 					<div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
@@ -226,15 +232,15 @@ export default function Home() {
 						/>
 						<Solutions
 							title="Webhook Recieving"
-							text="Using Quick Freeze and the recieving application for webhooks is a quick and easy option. Once you’re ready, you can pull the data out."
+							text="Using Quick Freeze to recieve data from webhooks is a quick and easy option. Once you’re ready, you can GET the data with a simple API call."
 						/>
 						<Solutions
 							title="Batching Data Import/Export"
-							text="A lot of platforms have API limits. Quick Freeze can help do batched imports by temporarily holding your data until you’re ready to work with a sufficiantly sized batch."
+							text="A lot of platforms have API limits. Quick Freeze can help you batch transactions by temporarily holding your data until there is a sufficiantly sized batch."
 						/>
 						<Solutions
 							title="Job Queue Data"
-							text="Use Quick Freeze to store the jobs for a queuing application. Deploys will no longer be destructive since the application can get the jobs from Quick Freeze."
+							text="Quick Freeze can increase failover and help deploys by storing unfinished jobs in a queueing application."
 						/>
 					</div>
 				</Container>
@@ -281,8 +287,8 @@ export default function Home() {
 							</ul>
 						</Step>
 						<Step number="2">
-							Post data into your bucket using it’s endpoint and the token generated. The data will be stringified and stored
-							- it won’t be manipulated or read, but it’s bytes will be calculated for billing purposes.
+							Post data into your bucket using it’s endpoint and one of your tokens. The data will be stringified and stored -
+							it won’t be manipulated or read, but it’s bytes will be calculated for billing purposes.
 						</Step>
 						<Step number="3">
 							Fetch the data out of Quick Freeze with a simple API call. Depending on your{" "}

@@ -7,3 +7,12 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: antialiased;  
 }
+
+.rotate-45 {
+    --transform-rotate: 45deg;
+    transform: rotate(45deg);
+}
+
+.group:hover .group-hover\:flex {
+    display: flex;
+}
