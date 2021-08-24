@@ -10,7 +10,7 @@ export default function Button({ children, onClick, color, type, custom }) {
 	return (
 		<button
 			{...custom}
-			className={`py-2 px-8 rounded-md border ${color && `border-${color}`} ${
+			className={`pt-2 pb-2 pr-8 pl-8 rounded-md border ${color && `border-${color}`} ${
 				type === "outline" ? "bg-transparent" : `bg-${color}`
 			} ${color === "primary" && "text-white"}`}
 			onClick={onClick}
