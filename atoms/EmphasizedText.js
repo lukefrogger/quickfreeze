@@ -1,3 +1,3 @@
 export default function EmphasizedText({ children, weight }) {
-	return <span className={`font-${weight === "normal" ? "normal" : "bold"} text-primary`}>{children}</span>;
+	return <span className={`${weight === "normal" ? "font-normal" : "font-bold"} text-primary`}>{children}</span>;
 }
