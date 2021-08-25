@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "../atoms/Button";
 
 export default function PricingTable({ type = "light" }) {
@@ -129,19 +130,25 @@ export default function PricingTable({ type = "light" }) {
 				<tr className="border border-l-0 border-r-0 border-b-0 border-gray-300">
 					<td className="pt-6">&nbsp;</td>
 					<td className="pt-6">
-						<Button type="outline" onClick={() => signUp("free")}>
-							Sign Up
-						</Button>
+						<Link href="/sign-up" passHref>
+							<Button type="outline" onClick={() => signUp("free")}>
+								Sign Up
+							</Button>
+						</Link>
 					</td>
 					<td className="pt-6">
-						<Button color="primary" onClick={() => signUp("basic")}>
-							Sign Up
-						</Button>
+						<Link href="/sign-up" passHref>
+							<Button color="primary" onClick={() => signUp("basic")}>
+								Sign Up
+							</Button>
+						</Link>
 					</td>
 					<td className="pt-6">
-						<Button type="outline" onClick={() => signUp("pro")}>
-							Sign Up
-						</Button>
+						<Link href="/sign-up" passHref>
+							<Button type="outline" onClick={() => signUp("pro")}>
+								Sign Up
+							</Button>
+						</Link>
 					</td>
 				</tr>
 			</tbody>

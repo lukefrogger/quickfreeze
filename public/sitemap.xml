@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://quickfreeze.io/docs</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io/pricing</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io/privacy-policy</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io/sign-up-complete</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io/sign-up-fail</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io/sign-up</loc>
+	</url>
+
+	<url>
+		<loc>https://quickfreeze.io/terms-of-service</loc>
+	</url>
+</urlset>
