@@ -1,5 +1,5 @@
 module.exports = {
-	purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+	purge: ["./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./atoms/**/*.{js,jsx}"],
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		extend: {
@@ -12,6 +12,9 @@ module.exports = {
 				offPrimary: "#2D9CDB",
 				transBlue: "#E6F7FF",
 				darkPrimary: "#0e2b38",
+			},
+			fontFamily: {
+				sans: ["rubik", "sans-serif"],
 			},
 		},
 	},
