@@ -52,13 +52,13 @@ export default function Home() {
 					</div>
 				</Container>
 				<div className="w-full mt-4 bg-white relative">
-					<Image src={wedge} alt="frozen pixels" className="z-10 w-full" />
-					<div className="absolute top-2 lg:top-4 z-0 w-full">
+					<Image src={wedge} alt="frozen pixels" className="z-10" layout="responsive" />
+					<div className="absolute top-1 lg:top-4 z-0 w-full">
 						<PixelWedge />
 					</div>
 				</div>
 			</section>
-			<section className="bg-white text-bDark pt-8 pb-12 px-4">
+			<section className="bg-white text-bDark pt-8 pb-12 px-4  -mt-px">
 				<Container>
 					<div className="flex flex-col items-center  ">
 						<header>
@@ -164,7 +164,7 @@ export default function Home() {
 								products
 							</p>
 						</header>
-						<div className="flex justify-around">
+						<div className="flex justify-around flex-col md:flex-row">
 							<VertLabeledIcon
 								color="primary"
 								label="API Driven"

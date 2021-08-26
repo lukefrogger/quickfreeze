@@ -9,9 +9,9 @@ export default function HorizontalHeader() {
 
 	return (
 		<Container>
-			<nav class="flex items-center justify-between flex-wrap p-6 mb-8 w-full z-20 relative">
-				<div class="flex items-center flex-shrink-0 text-white mr-6">
-					<a class="text-white no-underline hover:text-white hover:no-underline" href="/">
+			<nav className="flex items-center justify-between flex-wrap p-6 mb-8 w-full z-20 relative">
+				<div className="flex items-center flex-shrink-0 text-white mr-6">
+					<a className="text-white no-underline hover:text-white hover:no-underline" href="/">
 						<div className="flex items-center cursor-pointer">
 							<Image src={icon} alt="quick freeze logo" height={40} width={40} />
 
@@ -20,13 +20,13 @@ export default function HorizontalHeader() {
 					</a>
 				</div>
 
-				<div class="block lg:hidden">
+				<div className="block lg:hidden">
 					<button
 						id="nav-toggle"
-						class="flex items-center px-3 py-3 text-primary bg-gray-800 rounded-full"
+						className="flex items-center px-3 py-3 text-primary bg-gray-800 rounded-full"
 						onClick={() => setNavToggle(!navToggle)}
 					>
-						<svg class="fill-current h-6 w-6" viewBox="0 0 20 20">
+						<svg className="fill-current h-6 w-6" viewBox="0 0 20 20">
 							<title>Menu</title>
 							<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
 						</svg>
@@ -34,39 +34,39 @@ export default function HorizontalHeader() {
 				</div>
 
 				<div
-					class={`w-full flex-grow absolute lg:top-4 bg-bDark right-0 lg:flex lg:items-center lg:w-auto ${
+					className={`w-full flex-grow absolute lg:top-4 bg-bDark right-0 lg:flex lg:items-center lg:w-auto ${
 						navToggle ? "-top-60" : "top-16"
 					} lg:block transition-all lg:border-0 border-b pl-4 pb-4 lg:pb-0 lg:pl-0 pt-6 lg:pt-0`}
 					style={{ zIndex: -1 }}
 				>
-					<ul class="list-reset lg:flex justify-end flex-1 items-center">
-						<li class="mr-3">
+					<ul className="list-reset lg:flex justify-end flex-1 items-center">
+						<li className="mr-3">
 							<a
-								class="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+								className="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
 								href="/pricing"
 							>
 								Pricing
 							</a>
 						</li>
-						<li class="mr-3">
+						<li className="mr-3">
 							<a
-								class="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+								className="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
 								href="/docs"
 							>
 								Docs
 							</a>
 						</li>
-						<li class="mr-3">
+						<li className="mr-3">
 							<a
-								class="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+								className="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
 								href="/login"
 							>
 								Login
 							</a>
 						</li>
-						<li class="mr-3">
+						<li className="mr-3">
 							<a
-								class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+								className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
 								href="/sign-up"
 							>
 								<Button color="primary">Sign Up</Button>
