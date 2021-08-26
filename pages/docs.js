@@ -146,7 +146,7 @@ const customSettings = {
 
 const response = await fetch(url+bucketEndpoint+'/iceCubes', {
     headers: {
-      'Authorization': 'Bearer {{web_token}}'
+      'Authorization': 'Bearer {{account_token}}'
     },
 	// body is only required when using custom settings
 	body: JSON.stringify(customSettings)
@@ -180,7 +180,7 @@ const bucketEndpoint = '/funkyBucket';
 
 const response = await fetch(url+bucketEndpoint+'/iceCubes', {
     headers: {
-      'Authorization': 'Bearer {{web_token}}'
+      'Authorization': 'Bearer {{account_token}}'
     },
 	// prevents the auto-deleting of the buckets data
 	body: JSON.stringify({preventDelete: true})
@@ -205,7 +205,7 @@ const bucketEndpoint = '/funkyBucket';
 
 const response = await fetch(url+bucketEndpoint+'/iceCubes', {
     headers: {
-      'Authorization': 'Bearer {{web_token}}'
+      'Authorization': 'Bearer {{account_token}}'
     },
 	// will delete the data in a Deep Freeze bucket
 	body: JSON.stringify({deleteOnComplete: true})

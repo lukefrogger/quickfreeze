@@ -13,7 +13,7 @@ export default function Footer() {
 							<Image src={icon} alt="quick freeze logo" height={80} width={80} />
 						</div>
 						<div className="border h-full mx-4" />
-						<div>Quick Freeze is temporary database-as-a-service that helps you manage short term and temporary data</div>
+						<div>Quick Freeze is a temporary database-as-a-service that helps you manage temporary data</div>
 					</div>
 					<div className="hidden lg:block">&nbsp;</div>
 					<div className="flex items-center">

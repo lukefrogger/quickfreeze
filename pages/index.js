@@ -52,8 +52,8 @@ export default function Home() {
 					</div>
 				</Container>
 				<div className="w-full mt-4 bg-white relative">
-					<Image src={wedge} alt="frozen pixels" className="z-10" />
-					<div className="absolute top-4 z-0 w-full">
+					<Image src={wedge} alt="frozen pixels" className="z-10 w-full" />
+					<div className="absolute top-2 lg:top-4 z-0 w-full">
 						<PixelWedge />
 					</div>
 				</div>
