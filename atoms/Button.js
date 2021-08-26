@@ -1,5 +1,5 @@
 export default function Button({ children, onClick, color, type, custom }) {
-	const classes = "px-8 py-2 rounded-md border";
+	const classes = "px-8 py-2 rounded-md border whitespace-nowrap";
 
 	if (type === "link") {
 		return (

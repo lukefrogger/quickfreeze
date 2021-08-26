@@ -100,7 +100,7 @@ export default function PricingTable({ type = "light" }) {
 									{item === true && check}
 									{item === false && close}
 									{item.text && item.tip ? (
-										<div className="flex relative">
+										<div className="flex relative items-center">
 											{item.text}
 											<div className="flex flex-col items-center group">
 												<svg className="w-6 h-6 ml-4" viewBox="0 0 20 20" fill="currentColor">
@@ -110,7 +110,7 @@ export default function PricingTable({ type = "light" }) {
 														clipRule="evenodd"
 													/>
 												</svg>
-												<div className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+												<div className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex ">
 													<span className="relative z-10 p-2 text-sm text-darkPrimary whitespace-no-wrap bg-white rounded-md bg-primary">
 														{item.tip}
 													</span>
