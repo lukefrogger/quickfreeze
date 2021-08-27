@@ -1,6 +1,6 @@
 import Image from "next/image";
 import icon from "../public/logo_trans.png";
-import SidebarLink from "../atoms/sidebarLink";
+import SidebarLink from "../atoms/SidebarLink";
 
 export default function Sidebar({ topThree }) {
 	return (

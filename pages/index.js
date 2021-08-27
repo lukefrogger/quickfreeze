@@ -7,7 +7,7 @@ import Button from "../atoms/Button";
 import EmphasizedText from "../atoms/EmphasizedText";
 import PixelWedge from "../atoms/PixelWedge";
 import wedge from "../public/wedge.png";
-import Container from "../atoms/container";
+import Container from "../atoms/Container";
 import SmallHeader from "../atoms/SmallHeader";
 import { VertLabeledIcon } from "../components/VertLabledIcon";
 import Solutions from "../atoms/Solutions";
