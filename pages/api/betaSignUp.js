@@ -1,4 +1,5 @@
 import sgMail from "@sendgrid/mail";
+import { supabase } from "../../services/supabase";
 
 export default async (req, res) => {
 	console.log(req.body);
@@ -10,6 +11,17 @@ export default async (req, res) => {
 
 	try {
 		//save to supabase
+		let { data } = await supabase.from("early-signups").select(`id, firstname, lastname, email`).eq("email", req.body.email).single();
+
+		if (!data) {
+			let { error } = await supabase
+				.from("early-signups")
+				.insert([{ firstname: req.body.first, lastname: req.body.last, email: req.body.email }]);
+
+			if (error) {
+				throw error;
+			}
+		}
 
 		const msg = {
 			to: req.body.email,
