@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Container from "../atoms/container";
+import Container from "../atoms/Container";
 import EmphasizedText from "../atoms/EmphasizedText";
 import SmallHeader from "../atoms/SmallHeader";
 import CodeSnippet from "../components/CodeSnippet";
@@ -123,10 +123,10 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 										<strong>deleteOnComplete:</strong> Use with Deep Freeze - this will delete the data once it is
 										retrieved. If never used, data will remain in the bucket until it reaches its expiration date
 									</div>
-									<div className="ml-8">
+									{/* <div className="ml-8">
 										<strong>preventDelete:</strong> Use with Quick Freeze to prevent deletion - your account must have
 										access to Deep Freeze to set this.
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</div>
@@ -138,10 +138,8 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 const bucketEndpoint = '{{bucket_endpoint}}';
 
 const customSettings = {
-    // Use with Deep Freeze to remove data once retrieved
-    deleteOnComplete: boolean,
-    // Use with Quick Freeze to prevent deletion
-    preventDelete: boolean 
+    // Use with Deep Freeze to remove data once retrieved. Default is FALSE
+    deleteOnComplete: true
 }
 
 const response = await fetch(url+bucketEndpoint+'/iceCubes', {
@@ -168,22 +166,16 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 						<div className="mt-4">
 							<div className="text-lg font-bold">Quick Freeze</div>
 							<p>- Once data a read from a bucket, it is automatically deleted</p>
-							<p>
-								- If you have access to Deep Freeze (requires a paid subscription) you may include an optional parameter to
-								prevent your data from automatically deleting.
-							</p>
 						</div>
 						<CodeSnippet
-							title="Prevent deletion in a quick freeze bucket"
+							title="Retrieve data from a quick freeze bucket"
 							code={`const url = 'https://quickfreeze.io/api/bucket';
-const bucketEndpoint = '/funkyBucket';
+const bucketEndpoint = '{{bucket_endpoint}}';
 
 const response = await fetch(url+bucketEndpoint+'/iceCubes', {
     headers: {
       'Authorization': 'Bearer {{account_token}}'
-    },
-	// prevents the auto-deleting of the buckets data
-	body: JSON.stringify({preventDelete: true})
+    }
   });
 }`}
 						/>
@@ -194,12 +186,12 @@ const response = await fetch(url+bucketEndpoint+'/iceCubes', {
 								needed
 							</p>
 							<p>
-								- Deep Freeze data is retrieveable up to its expiration date. If you would like to delete the data before
+								- Deep Freeze data can be retrieved up to its expiration date. If you would like to delete the data before
 								its expiration date, you can include an optional parameter in your request
 							</p>
 						</div>
 						<CodeSnippet
-							title="Delete data in a deep freeze bucket"
+							title="Retrieve and delete data in a deep freeze bucket"
 							code={`const url = 'https://quickfreeze.io/api/bucket';
 const bucketEndpoint = '/funkyBucket';
 

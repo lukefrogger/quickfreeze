@@ -3,7 +3,7 @@ import { agate } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 export default function CodeSnippet({ code, title }) {
 	return (
-		<div className="rounded-md border border-primary text-sm bg-primary">
+		<div className="rounded-md border border-primary text-sm bg-primary flex flex-col">
 			<div className="flex justify-between p-2 ">
 				<di className="ml-2 text-darkPrimary">{title}</di>
 				{/* <div>
@@ -13,7 +13,7 @@ export default function CodeSnippet({ code, title }) {
 					</svg>
 				</div> */}
 			</div>
-			<SyntaxHighlighter language="javascript" wrapLongLines={true} style={agate} className="rounded-bl-md rounded-br-md">
+			<SyntaxHighlighter language="javascript" wrapLongLines={true} style={agate} className="rounded-bl-md rounded-br-md h-full">
 				{code}
 			</SyntaxHighlighter>
 		</div>
