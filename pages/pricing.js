@@ -18,7 +18,7 @@ export default function Pricing() {
 					<div className="my-6">
 						<Message>
 							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
-							with newest details.
+							with the lastest information.
 						</Message>
 					</div>
 					<div>

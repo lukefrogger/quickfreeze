@@ -34,7 +34,7 @@ export default function Home() {
 							{/* <div className="mt-6">
 								<Message>
 									<strong>Quick Freeze is still under development.</strong> To stay up to date,
-									sign up and we'll keep you updated with newest details.
+									sign up and we'll keep you updated with lastest information.
 								</Message>
 							</div> */}
 							<div className="mt-6">
@@ -65,7 +65,7 @@ export default function Home() {
 							<div className="text-3xl text-center my-2 font-bold">Storing temporary data shouldn’t be time consuming</div>
 							<div className="max-w-screen-md text-center mt-2">
 								Setting up a database for temporary data is time consuming and expensive. Without{" "}
-								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll to deal with...
+								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with...
 							</div>
 						</header>
 						<div className="grid grid-cols-2 lg:w-1/2 sm:w-full mt-8 ">
@@ -237,11 +237,11 @@ export default function Home() {
 						/>
 						<Solutions
 							title="Batching Data Import/Export"
-							text="A lot of platforms have API limits. Quick Freeze can help you batch transactions by temporarily holding your data until there is a sufficiantly sized batch."
+							text="A lot of platforms have API limits. Quick Freeze can help you batch transactions by temporarily holding your data until there is a sufficiently sized batch."
 						/>
 						<Solutions
 							title="Job Queue Data"
-							text="Quick Freeze can increase failover and help deploys by storing unfinished jobs in a queueing application."
+							text="Quick Freeze can increase failover and help deployments by storing unfinished jobs in a queueing application."
 						/>
 					</div>
 				</Container>
@@ -279,7 +279,7 @@ export default function Home() {
 							<div className="text-primary mt-2">Freeze Options</div>
 							<ul>
 								<li>
-									<em>Quick Freeze:</em> Once data a read from a bucket, it is automatically deleted
+									<em>Quick Freeze:</em> Once data is read from a bucket, it is automatically deleted
 								</li>
 								<li>
 									<em>Deep Freeze:</em> Data can be stored for as long as needed and read from a bucket as many times as
@@ -289,7 +289,7 @@ export default function Home() {
 						</Step>
 						<Step number="2">
 							Post data into your bucket using it’s endpoint and one of your tokens. The data will be stringified and stored -
-							it won’t be manipulated or read, but it’s bytes will be calculated for billing purposes.
+							it won’t be manipulated or read, but its bytes will be calculated for billing purposes.
 						</Step>
 						<Step number="3">
 							Fetch the data out of Quick Freeze with a simple API call. Depending on your{" "}

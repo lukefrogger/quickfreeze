@@ -9,9 +9,9 @@ export default function HorizontalHeader() {
 
 	return (
 		<Container>
-			<nav className="flex items-center justify-between flex-wrap p-6 mb-8 w-full z-20 relative">
-				<div className="absolute w-full top-0 h-full left-0 bg-bDark" style={{ zIndex: -1 }}></div>
-				<div className="flex items-center flex-shrink-0 text-white mr-6">
+			<nav className="flex items-center justify-between flex-wrap p-6 mb-8 w-full relative">
+				<div className="absolute w-full top-0 h-full left-0 bg-bDark z-20 lg:z-10"></div>
+				<div className="flex items-center flex-shrink-0 text-white mr-6 z-30">
 					<a className="text-white no-underline hover:text-white hover:no-underline" href="/">
 						<div className="flex items-center cursor-pointer">
 							<Image src={icon} alt="quick freeze logo" height={40} width={40} />
@@ -21,7 +21,7 @@ export default function HorizontalHeader() {
 					</a>
 				</div>
 
-				<div className="block lg:hidden">
+				<div className="block lg:hidden z-30">
 					<button
 						id="nav-toggle"
 						className="flex items-center px-3 py-3 text-primary bg-gray-700 rounded-full"
@@ -35,10 +35,9 @@ export default function HorizontalHeader() {
 				</div>
 
 				<div
-					className={`w-full flex-grow absolute lg:top-4 lg:visibile bg-bDark right-0 lg:flex lg:items-center lg:w-auto visible ${
-						navToggle ? "-top-60 invisible" : "top-16"
-					} lg:block transition-all lg:border-0 border-b pl-4 pb-4 lg:pb-0 lg:pl-0 pt-6 lg:pt-0`}
-					style={{ zIndex: -2 }}
+					className={`w-full flex-grow absolute lg:top-4 lg:visible bg-bDark right-0 lg:flex lg:items-center lg:w-auto  ${
+						navToggle ? "-top-60 invisible" : "top-16 visible"
+					} lg:block transition-all lg:border-0 border-b pl-4 pb-4 lg:pb-0 lg:pl-0 pt-6 lg:pt-0 z-10 lg:z-20`}
 				>
 					<ul className="list-reset lg:flex justify-end flex-1 items-center">
 						<li className="mr-3">

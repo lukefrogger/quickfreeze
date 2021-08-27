@@ -50,7 +50,7 @@ export default function SignUp() {
 						)}
 						<Message>
 							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
-							with newest details.
+							with the latest details.
 						</Message>
 					</div>
 					<div className="w-full md:w-1/2 mx-auto bg-bLight p-8 rounded border border-blueTrans">
