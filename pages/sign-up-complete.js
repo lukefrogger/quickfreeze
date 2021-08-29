@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Container from "../atoms/container";
+import Container from "../atoms/Container";
 import FullScreenLayout from "../components/FullScreenLayout";
 import HorizontalHeader from "../components/HorizontalHeader";
 import Message from "../components/Message";

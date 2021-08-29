@@ -31,12 +31,6 @@ export default function Home() {
 							<div className="text-xl ">
 								The easiest way to store temorary data from webhooks, server logs, data migrations, or anything else!
 							</div>
-							{/* <div className="mt-6">
-								<Message>
-									<strong>Quick Freeze is still under development.</strong> To stay up to date,
-									sign up and we'll keep you updated with lastest information.
-								</Message>
-							</div> */}
 							<div className="mt-6">
 								<Link href="/sign-up" passHref>
 									<Button color="primary">Sign up now</Button>
