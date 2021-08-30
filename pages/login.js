@@ -29,7 +29,7 @@ export default function SignUp() {
 			console.log(values);
 			setTimeout(() => {
 				setLoading(false);
-			}, 2000);
+			}, 4000);
 		},
 	});
 	return (

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import icon from "../public/logo_trans.png";
 import SidebarLink from "../atoms/SidebarLink";
+import SmallHeader from "../atoms/SmallHeader";
 
 export default function Sidebar({ topThree }) {
 	return (
@@ -10,22 +11,13 @@ export default function Sidebar({ topThree }) {
 				<div className="ml-2 text-xl text-primary">Quick Freeze</div>
 			</div>
 			<nav>
-				<ul className="mb-6">
+				<ul className="mb-6 mt-4">
 					<li className="mb-1 pl-4">
-						<header className="font-extrabold text-gray-400">TRAYS</header>
+						<SmallHeader>trays</SmallHeader>
 					</li>
 					<li>
 						<SidebarLink href="/trays">All Trays</SidebarLink>
 					</li>
-					{/* <li>
-						<SidebarLink href="/recent1">Order-sync</SidebarLink>
-					</li>
-					<li>
-						<SidebarLink href="/recent2">Salesforce migration 1</SidebarLink>
-					</li>
-					<li>
-						<SidebarLink href="/recent3">Fetch forms temp db adfa adf asd asd </SidebarLink>
-					</li> */}
 					{topThree.map((tray, i) => (
 						<li key={`traylink${i}`}>
 							<SidebarLink href={tray.link}>{tray.name}</SidebarLink>
@@ -34,7 +26,7 @@ export default function Sidebar({ topThree }) {
 				</ul>
 				<ul className="mb-6">
 					<li className="mb-1 pl-4">
-						<header className="font-extrabold text-gray-400">ACCOUNT</header>
+						<SmallHeader>account</SmallHeader>
 					</li>
 					<li>
 						<SidebarLink href="/personal">Personal</SidebarLink>
@@ -48,13 +40,17 @@ export default function Sidebar({ topThree }) {
 				</ul>
 				<ul className="mb-6">
 					<li className="mb-1 pl-4">
-						<header className="font-extrabold text-gray-400">EXTRAS</header>
+						<SmallHeader>extras</SmallHeader>
 					</li>
 					<li>
-						<SidebarLink href="/docs">Documentation</SidebarLink>
+						<SidebarLink href="/docs" newTab={true}>
+							Documentation
+						</SidebarLink>
 					</li>
 					<li>
-						<SidebarLink href="/feedback">Feedback</SidebarLink>
+						<SidebarLink href="/feedback" newTab={true}>
+							Feedback
+						</SidebarLink>
 					</li>
 				</ul>
 			</nav>
