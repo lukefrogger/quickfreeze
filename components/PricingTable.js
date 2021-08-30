@@ -11,13 +11,13 @@ export default function PricingTable({ type = "light" }) {
 		],
 		body: [
 			[{ text: "Number of API Calls" }, "Unlimited", "Unlimited", "Unlimited"],
-			[{ text: "Number of Buckets" }, "3 Buckets", "5 Buckets", "Unlimited"],
-			[{ text: "Max Bucket Size" }, "100 kilobytes", "100 megabytes", "1 gigabyte"],
-			[{ text: "Quick Freeze Storage", tip: "Once data a read from a bucket, it is automatically deleted" }, true, true, true],
+			[{ text: "Number of Trays" }, "3 trays", "5 trays", "Unlimited"],
+			[{ text: "Max Tray Size" }, "100 kilobytes", "100 megabytes", "1 gigabyte"],
+			[{ text: "Quick Freeze Storage", tip: "Once data a read from a tray, it is automatically deleted" }, true, true, true],
 			[
 				{
 					text: "Deep Freeze Storage",
-					tip: "Data can be stored for as long as needed and read from a bucket as many times as needed",
+					tip: "Data can be stored for as long as needed and read from a tray as many times as needed",
 				},
 				false,
 				true,
@@ -35,7 +35,7 @@ export default function PricingTable({ type = "light" }) {
 			[
 				{
 					text: "Custom Expiration Date",
-					tip: "Set custom lengths of time where data will automatically be removed from a bucket",
+					tip: "Set custom lengths of time where data will automatically be removed from a tray",
 				},
 				false,
 				false,

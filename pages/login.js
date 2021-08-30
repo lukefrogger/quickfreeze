@@ -14,6 +14,7 @@ import * as Yup from "yup";
 export default function SignUp() {
 	const router = useRouter();
 	const [failed, setFailed] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const formik = useFormik({
 		initialValues: {
 			email: "",
@@ -24,7 +25,11 @@ export default function SignUp() {
 			email: Yup.string().email("Invalid email address").required("An email is required"),
 		}),
 		onSubmit: (values) => {
+			setLoading(true);
 			console.log(values);
+			setTimeout(() => {
+				setLoading(false);
+			}, 2000);
 		},
 	});
 	return (
@@ -60,7 +65,7 @@ export default function SignUp() {
 								onChange={formik.handleChange}
 								error={formik.touched.password && formik.errors.password}
 							/>
-							<Button color="primary" custom={{ type: "submit" }} full={true}>
+							<Button color="primary" custom={{ type: "submit" }} full={true} loading={loading}>
 								Login
 							</Button>
 						</form>

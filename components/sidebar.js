@@ -12,10 +12,10 @@ export default function Sidebar({ topThree }) {
 			<nav>
 				<ul className="mb-6">
 					<li className="mb-1 pl-4">
-						<header className="font-extrabold text-gray-400">BUCKETS</header>
+						<header className="font-extrabold text-gray-400">TRAYS</header>
 					</li>
 					<li>
-						<SidebarLink href="/buckets">All Buckets</SidebarLink>
+						<SidebarLink href="/trays">All Trays</SidebarLink>
 					</li>
 					{/* <li>
 						<SidebarLink href="/recent1">Order-sync</SidebarLink>
@@ -26,9 +26,9 @@ export default function Sidebar({ topThree }) {
 					<li>
 						<SidebarLink href="/recent3">Fetch forms temp db adfa adf asd asd </SidebarLink>
 					</li> */}
-					{topThree.map((bucket, i) => (
-						<li key={`bucketlink${i}`}>
-							<SidebarLink href={bucket.link}>{bucket.name}</SidebarLink>
+					{topThree.map((tray, i) => (
+						<li key={`traylink${i}`}>
+							<SidebarLink href={tray.link}>{tray.name}</SidebarLink>
 						</li>
 					))}
 				</ul>

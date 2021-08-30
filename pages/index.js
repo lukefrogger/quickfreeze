@@ -266,23 +266,23 @@ export default function Home() {
 					<div>
 						<Step number="1">
 							<p>
-								Create a bucket. To create a bucket you’ll need to give it a name and optionally customize the endpoint.
-								You’ll also select the <EmphasizedText weight="normal">Freeze option</EmphasizedText>, which defines what
-								happens when your data is read.
+								Create a tray. To create a tray you’ll need to give it a name and optionally customize the endpoint. You’ll
+								also select the <EmphasizedText weight="normal">Freeze option</EmphasizedText>, which defines what happens
+								when your data is read.
 							</p>
 							<div className="text-primary mt-2">Freeze Options</div>
 							<ul>
 								<li>
-									<em>Quick Freeze:</em> Once data is read from a bucket, it is automatically deleted
+									<em>Quick Freeze:</em> Once data is read from a tray, it is automatically deleted
 								</li>
 								<li>
-									<em>Deep Freeze:</em> Data can be stored for as long as needed and read from a bucket as many times as
+									<em>Deep Freeze:</em> Data can be stored for as long as needed and read from a tray as many times as
 									needed
 								</li>
 							</ul>
 						</Step>
 						<Step number="2">
-							Post data into your bucket using it’s endpoint and one of your tokens. The data will be stringified and stored -
+							Post data into your tray using it’s endpoint and one of your tokens. The data will be stringified and stored -
 							it won’t be manipulated or read, but its bytes will be calculated for billing purposes.
 						</Step>
 						<Step number="3">
