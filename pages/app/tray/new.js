@@ -73,7 +73,7 @@ export default function NewTray({ topThree, expiration }) {
 						<Select
 							name="expiration"
 							value={formik.values.expiration}
-							helpText="Select the length of days between when the data is added and when it will be automatically be deleted."
+							helpText="Select the length of days between when a record is added and when it will automatically be deleted."
 						>
 							{getExpirationDetails().map((opt) => (
 								<option value={opt.value}>{opt.label}</option>

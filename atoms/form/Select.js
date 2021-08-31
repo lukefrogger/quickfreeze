@@ -8,7 +8,7 @@ export default function Select({ label, name, required = true, value, onChange, 
 				name={name}
 				value={value}
 				onChange={onChange}
-				className={`block appearance-none mt-1 rounded-md text-gray-900 form-input w-full`}
+				className={`block appearance-none mt-1 rounded-md text-gray-600 form-input w-full`}
 				required={required ? "required" : ""}
 			>
 				{children}

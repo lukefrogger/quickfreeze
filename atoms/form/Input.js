@@ -9,7 +9,7 @@ export default function Input({ type, label, name, required = true, value, onCha
 				name={name}
 				value={value}
 				onChange={onChange}
-				className={`mt-1 rounded-md text-gray-900 form-input w-full`}
+				className={`mt-1 rounded-md text-gray-600 form-input w-full`}
 				required={required ? "required" : ""}
 				autoComplete="false"
 			/>

@@ -10,7 +10,7 @@ export default function SidebarLayout({ children, topThree }) {
 			</Head>
 			<main className="flex flex-row bg-bDark text-white">
 				<Sidebar topThree={topThree} />
-				<div className="container p-4 max-w-screen-lg">{children}</div>
+				<div className="container ml-4 p-4 max-w-screen-lg">{children}</div>
 			</main>
 		</>
 	);
