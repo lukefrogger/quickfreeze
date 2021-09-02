@@ -4,9 +4,13 @@ import { supabase } from "../services/supabase";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-	const [session, setSession] = useState();
-	const [user, setUser] = useState({});
+	const [session, setSession] = useState(null);
+	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+
+	const clearUser = () => {
+		setUser(null);
+	};
 
 	useEffect(() => {
 		const session = supabase.auth.session();
@@ -27,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 		};
 	}, []);
 
-	return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{ user, loading, clearUser }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

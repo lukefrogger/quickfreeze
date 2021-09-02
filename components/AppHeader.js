@@ -2,16 +2,19 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Container from "../atoms/Container";
+import { useAuth } from "../hooks/AuthContext";
 import icon from "../public/logo_white.png";
 import { supabase } from "../services/supabase";
 
 export default function AppHeader() {
 	const [navToggle, setNavToggle] = useState(true);
 	const router = useRouter();
+	const auth = useAuth();
 
-	const signOut = () => {
+	const signOut = async () => {
 		console.log("signOut");
-		const { error } = supabase.auth.signOut();
+		const { error } = await supabase.auth.signOut();
+		auth.clearUser();
 		router.replace("/");
 	};
 
@@ -89,7 +92,10 @@ export default function AppHeader() {
 									</a>
 								</li>
 								<li className="mr-3">
-									<div className="inline-block  no-underline hover:text-underline py-2 px-4" onClick={signOut}>
+									<div
+										className="inline-block  no-underline hover:text-underline py-2 px-4 cursor-pointer"
+										onClick={signOut}
+									>
 										Log Out
 									</div>
 								</li>

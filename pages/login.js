@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "../atoms/Button";
 import Container from "../atoms/Container";
-import Checkbox from "../atoms/form/Checkbox";
 import Input from "../atoms/form/Input";
 import FullScreenLayout from "../components/FullScreenLayout";
 import HorizontalHeader from "../components/HorizontalHeader";
@@ -11,18 +10,20 @@ import Message from "../components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../hooks/AuthContext";
+import { supabase } from "../services/supabase";
 
 export default function SignUp() {
 	const router = useRouter();
-	const user = useAuth();
+	const auth = useAuth();
 	const [failed, setFailed] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		if (user) {
+		if (auth.user) {
+			console.log(auth.user);
 			router.replace("/app");
 		}
-	}, [user]);
+	}, [auth.user]);
 
 	const formik = useFormik({
 		initialValues: {
@@ -33,12 +34,21 @@ export default function SignUp() {
 			password: Yup.string().required("A password is required"),
 			email: Yup.string().email("Invalid email address").required("An email is required"),
 		}),
-		onSubmit: (values) => {
+		onSubmit: async (values) => {
 			setLoading(true);
-			console.log(values);
-			setTimeout(() => {
-				setLoading(false);
-			}, 4000);
+			try {
+				const { error } = await supabase.auth.signIn({
+					email: values.email,
+					password: values.password,
+				});
+
+				if (error) {
+					throw error;
+				}
+			} catch (err) {
+				console.error("fail on login", err);
+				setFailed(true);
+			}
 		},
 	});
 	return (
@@ -47,13 +57,6 @@ export default function SignUp() {
 			<section className="mt-4 mb-24">
 				<Container>
 					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto bg-bLight p-8 mt-12 rounded border border-gray-500">
-						{failed && (
-							<div className="mb-4">
-								<Message warning={true}>
-									<strong>Oh no!</strong> We weren't able to save your information.
-								</Message>
-							</div>
-						)}
 						<header className="mb-8">
 							<div className="text-3xl text-center mb-2">Log into your account</div>
 						</header>
@@ -74,6 +77,13 @@ export default function SignUp() {
 								onChange={formik.handleChange}
 								error={formik.touched.password && formik.errors.password}
 							/>
+							{failed && (
+								<div className="mb-4">
+									<Message warning={true}>
+										<strong>Oh no!</strong> We weren't able to log you in.
+									</Message>
+								</div>
+							)}
 							<Button color="primary" custom={{ type: "submit" }} full={true} loading={loading}>
 								Login
 							</Button>
