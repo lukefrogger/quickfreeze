@@ -8,8 +8,8 @@ export default function Checkbox({ children, name, small = false, required = fal
 					value={value}
 					onChange={onChange}
 					className="rounded-md text-gray-900 form-input mr-2 mb-1 leading-tight"
-					required={required ? true : false}
-					disable={disabled}
+					required={required ? "required" : ""}
+					disable={disabled ? "true" : "false"}
 				/>
 				<span className={`text-gray-200 ${small ? "text-sm" : ""}`}>{children}</span>
 			</label>

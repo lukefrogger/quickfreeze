@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../atoms/Button";
 import Container from "../atoms/Container";
 import Checkbox from "../atoms/form/Checkbox";
@@ -10,11 +10,20 @@ import HorizontalHeader from "../components/HorizontalHeader";
 import Message from "../components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useAuth } from "../hooks/AuthContext";
 
 export default function SignUp() {
 	const router = useRouter();
+	const user = useAuth();
 	const [failed, setFailed] = useState(false);
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		if (user) {
+			router.replace("/app");
+		}
+	}, [user]);
+
 	const formik = useFormik({
 		initialValues: {
 			email: "",

@@ -10,10 +10,36 @@ import HorizontalHeader from "../components/HorizontalHeader";
 import Message from "../components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { supabase } from "../services/supabase";
 
-export default function Login() {
+export default function SignUp() {
 	const router = useRouter();
 	const [failed, setFailed] = useState(false);
+	const [loading, setLoading] = useState(false);
+	// const { error } = supabase.auth.signOut();
+
+	const upsertProfile = async (user, firstName, lastName, agreeToTerms) => {
+		try {
+			const rec = {
+				id: user.id,
+				email: user.email,
+				firstName,
+				lastName,
+				agreeToTerms,
+				updated_at: new Date(),
+			};
+			let { error } = await supabase.from("profiles").upsert(rec, {
+				returning: "minimal",
+			});
+
+			if (error) {
+				throw error;
+			}
+		} catch (err) {
+			console.error("fail on profilec creation", err);
+		}
+	};
+
 	const formik = useFormik({
 		initialValues: {
 			first: "",
@@ -29,8 +55,30 @@ export default function Login() {
 			email: Yup.string().email("Invalid email address").required("An email is required"),
 			agreeToTerms: Yup.boolean().required("You must agree to the terms").oneOf([true], "You must agree to the terms"),
 		}),
-		onSubmit: (values) => {
-			console.log(values);
+		onSubmit: async (values) => {
+			setLoading(true);
+
+			try {
+				const { user, error } = await supabase.auth.signUp({
+					email: values.email,
+					password: values.password,
+					redirectTo: `${window.location.origin}/app/`,
+				});
+				if (error) {
+					throw error;
+				}
+				const { data } = await supabase.from("profiles").select("email");
+				if (data && data.length === 0) {
+					await upsertProfile(user, values.first, values.last, values.agreeToTerms);
+				}
+
+				router.replace("/app");
+			} catch (err) {
+				console.error(err);
+				setFailed(err);
+			} finally {
+				setLoading(false);
+			}
 		},
 	});
 	return (
@@ -99,7 +147,7 @@ export default function Login() {
 									privacy policy
 								</a>
 							</Checkbox>
-							<Button color="primary" custom={{ type: "submit" }} full={true}>
+							<Button color="primary" custom={{ type: "submit" }} full={true} loading={loading}>
 								Get Started
 							</Button>
 						</form>

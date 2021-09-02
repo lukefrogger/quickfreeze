@@ -1,19 +1,11 @@
-import Link from "next/link";
-import Button from "../../atoms/Button";
-import SidebarLayout from "../../components/SidebarLayout";
+import AppHeader from "../../components/AppHeader";
+import FullScreenLayout from "../../components/FullScreenLayout";
 
 export default function Home({ topThreetrays }) {
 	return (
-		<SidebarLayout topThree={topThreetrays}>
-			<div className="flex justify-between">
-				<h2 className="text-2xl">All trays</h2>
-				<div>
-					<Link href="app/tray/new" passHref>
-						<Button color="primary">New Tray</Button>
-					</Link>
-				</div>
-			</div>
-		</SidebarLayout>
+		<FullScreenLayout>
+			<AppHeader />
+		</FullScreenLayout>
 	);
 }
 
