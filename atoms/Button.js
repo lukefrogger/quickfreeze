@@ -14,7 +14,7 @@ export default function Button({ children, onClick, color, type, custom, full, l
 
 	const selectType = (styleType) => {
 		if (color === "primary") {
-			return `border-primary ${styleType === "outline" ? "bg-transparent" : `bg-primary`} text-white`;
+			return `border-primary ${styleType === "outline" ? "bg-transparent text-primary" : `bg-primary text-white`}`;
 		} else if (color === "white") {
 			return `border-white ${styleType === "outline" ? "bg-transparent" : "g-white"} ${
 				styleType === "outline" ? "text-white" : "text-bDark"

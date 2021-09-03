@@ -5,7 +5,7 @@ import Button from "@/atoms/Button";
 import Container from "@/atoms/Container";
 import Input from "@/atoms/form/Input";
 import FullScreenLayout from "@/components/layouts/FullScreenLayout";
-import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 import Message from "@/components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";

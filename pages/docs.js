@@ -3,8 +3,8 @@ import Container from "@/atoms/Container";
 import EmphasizedText from "@/atoms/EmphasizedText";
 import SmallHeader from "@/atoms/SmallHeader";
 import CodeSnippet from "@/components/CodeSnippet";
-import FullScreenLayout from "@/components/layouts/layouts/FullScreenLayout";
-import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 import Message from "@/components/Message";
 
 export default function Documentation() {

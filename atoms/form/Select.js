@@ -1,4 +1,4 @@
-export default function Select({ label, name, required = true, value, onChange, error, helpText, children }) {
+export default function Select({ label, name, required, value, onChange, error, helpText, children }) {
 	return (
 		<div className="mb-4">
 			<label htmlFor={name} className="text-gray-200">
@@ -8,7 +8,7 @@ export default function Select({ label, name, required = true, value, onChange, 
 				name={name}
 				value={value}
 				onChange={onChange}
-				className={`block appearance-none mt-1 rounded-md text-gray-600 form-input w-full bg-lightWhite`}
+				className={`block mt-1 rounded-md form-input w-full bg-lightWhite placeholder-gray-400`}
 				required={required ? "required" : ""}
 			>
 				{children}

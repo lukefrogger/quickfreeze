@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Button from "../atoms/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-export default function PricingTable({ type = "light" }) {
+export default function PricingTable({ type = "light", setSelected }) {
 	const data = {
 		head: [
 			null,
@@ -43,28 +45,17 @@ export default function PricingTable({ type = "light" }) {
 			],
 		],
 	};
-	const rowPadding = "py-4";
-	const check = (
-		<svg className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-			<path
-				fillRule="evenodd"
-				d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-				clipRule="evenodd"
-			/>
-		</svg>
-	);
-	const close = (
-		<svg className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-			<path
-				fillRule="evenodd"
-				d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-				clipRule="evenodd"
-			/>
-		</svg>
-	);
+
+	const startPlan = (id) => {
+		setSelected(id);
+	};
+	const check = <FontAwesomeIcon icon={faCheckCircle} size="2x" />;
+	const close = <FontAwesomeIcon icon={faTimes} size="2x" />;
 
 	const signUp = (id) => {
 		console.log("sign up with id", id);
+		// router.replace(`/sign-up?plan=${id}`);
+		selected(id);
 	};
 
 	return (
@@ -97,7 +88,7 @@ export default function PricingTable({ type = "light" }) {
 						>
 							{row.map((item, xi) => {
 								return (
-									<td className={`${rowPadding} pr-12 ${item === true ? "text-primary" : "text-normal"}`} key={xi}>
+									<td className={`py-4 pr-12 ${item === true ? "text-primary" : "text-normal"}`} key={xi}>
 										{item === true && check}
 										{item === false && close}
 										{item.text && item.tip ? (
@@ -131,25 +122,29 @@ export default function PricingTable({ type = "light" }) {
 					<tr className="border border-l-0 border-r-0 border-b-0 border-gray-300">
 						<td className="pt-6">&nbsp;</td>
 						<td className="pt-6">
-							<Link href="/sign-up" passHref>
-								<Button type="outline" onClick={() => signUp("free")}>
-									Sign Up
-								</Button>
-							</Link>
+							{/* <Link href="/sign-up" passHref> */}
+							<Button type="outline" color={type === "light" ? "primary" : `white`} onClick={() => startPlan("free")}>
+								Sign Up
+							</Button>
+							{/* </Link> */}
 						</td>
 						<td className="pt-6">
-							<Link href="/sign-up" passHref>
-								<Button color="primary" onClick={() => signUp("basic")}>
-									Sign Up
-								</Button>
-							</Link>
+							{/* <Link href="/sign-up" passHref> */}
+							<Button color="primary" onClick={() => startPlan("prod_KA28c692TtvIqdbasic")}>
+								Sign Up
+							</Button>
+							{/* </Link> */}
 						</td>
 						<td className="pt-6">
-							<Link href="/sign-up" passHref>
-								<Button type="outline" onClick={() => signUp("pro")}>
-									Sign Up
-								</Button>
-							</Link>
+							{/* <Link href="/sign-up" passHref> */}
+							<Button
+								type="outline"
+								color={type === "light" ? "primary" : `white`}
+								onClick={() => startPlan("prod_KA28dBNizhC39P")}
+							>
+								Sign Up
+							</Button>
+							{/* </Link> */}
 						</td>
 					</tr>
 				</tbody>

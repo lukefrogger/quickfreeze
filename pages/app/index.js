@@ -1,21 +1,30 @@
-import AppHeader from "../../components/framing/AppHeader";
-import FullScreenLayout from "../../components/layouts/FullScreenLayout";
+import AppLayout from "@/components/layouts/AppLayout";
+import Card from "@/atoms/Card";
+import Link from "next/link";
 
-export default function Home({ topThreetrays }) {
+export default function Home({ trays }) {
 	return (
-		<FullScreenLayout>
-			<AppHeader />
-		</FullScreenLayout>
+		<AppLayout>
+			<h4 className="text-3xl mb-2">All Trays</h4>
+			{trays && trays.length > 0 ? (
+				<Card>stuff goes here</Card>
+			) : (
+				<div className="text-lg">
+					You don't any trays.{" "}
+					<Link href="/app/tray/new">
+						<a className="underline text-primary">Create a tray here</a>
+					</Link>{" "}
+					to get started!
+				</div>
+			)}
+		</AppLayout>
 	);
 }
 
 export async function getServerSideProps(context) {
-	const topThreetrays = [
-		{ name: "test 1", link: "/test1", deepFreeze: false, size: 3209 },
-		{ name: "Byoplanet test 1", link: "/byoplanet1", deepFreeze: false, size: 8340 },
-		{ name: "Salesforce migration - byoplanet", link: "/salesforcemig", deepFreeze: true, size: 32_420 },
-	];
+	const trays = [];
+
 	return {
-		props: { topThreetrays },
+		props: { trays },
 	};
 }

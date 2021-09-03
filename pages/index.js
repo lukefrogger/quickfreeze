@@ -1,5 +1,5 @@
-import FullScreenLayout from "@/components/layouts/layouts/FullScreenLayout";
-import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 // import { connectToDatabase } from "@/lib/mongodb";
 import icon from "../public/logo_big_trans.png";
 import Image from "next/image";
@@ -14,9 +14,17 @@ import Solutions from "@/atoms/Solutions";
 import Step from "@/atoms/Step";
 import PricingTable from "@/components/PricingTable";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import Message from "@/components/Message";
 
 export default function Home() {
+	const router = useRouter();
+
+	const getStarted = (planId) => {
+		console.log("get started with", planId);
+		router.replace(`/sign-up?plan=${planId}`);
+	};
+
 	return (
 		<FullScreenLayout>
 			<HorizontalHeader />
@@ -300,7 +308,7 @@ export default function Home() {
 						<div className="text-3xl mb-4">Simple and straightforward pricing</div>
 					</header>
 					<div>
-						<PricingTable />
+						<PricingTable setSelected={getStarted} />
 					</div>
 				</Container>
 			</section>
