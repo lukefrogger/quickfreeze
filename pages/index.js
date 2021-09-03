@@ -1,20 +1,20 @@
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
-// import { connectToDatabase } from "../lib/mongodb";
+import FullScreenLayout from "@/components/layouts/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+// import { connectToDatabase } from "@/lib/mongodb";
 import icon from "../public/logo_big_trans.png";
 import Image from "next/image";
-import Button from "../atoms/Button";
-import EmphasizedText from "../atoms/EmphasizedText";
-import PixelWedge from "../atoms/PixelWedge";
+import Button from "@/atoms/Button";
+import EmphasizedText from "@/atoms/EmphasizedText";
+import PixelWedge from "@/atoms/PixelWedge";
 import wedge from "../public/wedge.png";
-import Container from "../atoms/Container";
-import SmallHeader from "../atoms/SmallHeader";
-import { VertLabeledIcon } from "../components/VertLabledIcon";
-import Solutions from "../atoms/Solutions";
-import Step from "../atoms/Step";
-import PricingTable from "../components/PricingTable";
+import Container from "@/atoms/Container";
+import SmallHeader from "@/atoms/SmallHeader";
+import { VertLabeledIcon } from "@/components/VertLabledIcon";
+import Solutions from "@/atoms/Solutions";
+import Step from "@/atoms/Step";
+import PricingTable from "@/components/PricingTable";
 import Link from "next/link";
-// import Message from "../components/Message";
+// import Message from "@/components/Message";
 
 export default function Home() {
 	return (
@@ -59,7 +59,7 @@ export default function Home() {
 							<div className="text-3xl text-center my-2 font-bold">Storing temporary data shouldn’t be time consuming</div>
 							<div className="max-w-screen-md text-center mt-2">
 								Setting up a database for temporary data is time consuming and expensive. Without{" "}
-								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with...
+								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with@.
 							</div>
 						</header>
 						<div className="grid grid-cols-2 lg:w-1/2 sm:w-full mt-8 ">

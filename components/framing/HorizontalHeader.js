@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
-import Button from "../atoms/Button";
-import Container from "../atoms/Container";
+import Button from "@/atoms/Button";
+import Container from "@/atoms/Container";
 import icon from "../public/logo_trans.png";
 
 export default function HorizontalHeader() {

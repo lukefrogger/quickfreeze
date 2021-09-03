@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Container from "../atoms/Container";
-import { useAuth } from "../hooks/AuthContext";
-import icon from "../public/logo_white.png";
-import { supabase } from "../services/supabase";
+import Container from "@/atoms/Container";
+import { useAuth } from "@/hooks/AuthContext";
+import icon from "../../public/logo_white.png";
+import { supabase } from "@/services/supabase";
 
 export default function AppHeader() {
 	const [navToggle, setNavToggle] = useState(true);

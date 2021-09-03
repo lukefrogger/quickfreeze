@@ -1,6 +1,6 @@
-import Container from "../atoms/Container";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
+import Container from "@/atoms/Container";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/layouts/HorizontalHeader";
 
 export default function TermsOfService() {
 	return (

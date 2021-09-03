@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Footer from "./Footer";
+import Footer from "../framing/Footer";
 
 export default function FullScreenLayout({ children }) {
 	return (

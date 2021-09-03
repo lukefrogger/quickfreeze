@@ -1,5 +1,5 @@
-import AppHeader from "../../components/AppHeader";
-import FullScreenLayout from "../../components/FullScreenLayout";
+import AppHeader from "../../components/framing/AppHeader";
+import FullScreenLayout from "../../components/layouts/FullScreenLayout";
 
 export default function Home({ topThreetrays }) {
 	return (

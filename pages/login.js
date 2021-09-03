@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Button from "../atoms/Button";
-import Container from "../atoms/Container";
-import Input from "../atoms/form/Input";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
-import Message from "../components/Message";
+import Button from "@/atoms/Button";
+import Container from "@/atoms/Container";
+import Input from "@/atoms/form/Input";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import Message from "@/components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useAuth } from "../hooks/AuthContext";
-import { supabase } from "../services/supabase";
+import { useAuth } from "@/hooks/AuthContext";
+import { supabase } from "@/services/supabase";
 
 export default function SignUp() {
 	const router = useRouter();

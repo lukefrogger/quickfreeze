@@ -1,9 +1,9 @@
-import Container from "../atoms/Container";
-import SmallHeader from "../atoms/SmallHeader";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
-import Message from "../components/Message";
-import PricingTable from "../components/PricingTable";
+import Container from "@/atoms/Container";
+import SmallHeader from "@/atoms/SmallHeader";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import Message from "@/components/Message";
+import PricingTable from "@/components/PricingTable";
 
 export default function Pricing() {
 	return (

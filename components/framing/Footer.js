@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import Container from "../atoms/Container";
-import icon from "../public/logo_big_trans.png";
+import Container from "@/atoms/Container";
+import icon from "../../public/logo_big_trans.png";
 
 export default function Footer() {
 	return (

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import Container from "../atoms/Container";
-import EmphasizedText from "../atoms/EmphasizedText";
-import SmallHeader from "../atoms/SmallHeader";
-import CodeSnippet from "../components/CodeSnippet";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
-import Message from "../components/Message";
+import Container from "@/atoms/Container";
+import EmphasizedText from "@/atoms/EmphasizedText";
+import SmallHeader from "@/atoms/SmallHeader";
+import CodeSnippet from "@/components/CodeSnippet";
+import FullScreenLayout from "@/components/layouts/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import Message from "@/components/Message";
 
 export default function Documentation() {
 	return (
@@ -79,7 +79,7 @@ export default function Documentation() {
 								title="Adding a record to a tray"
 								code={`const url = 'https://quickfreeze.io/api/tray/';
 const trayEndpoint = '{{tray_endpoint}}';
-const data = {...record};
+const data = {@.record};
 
 const response = await fetch(url+trayEndpoint+'/iceCubes', {
 	method: 'POST',
