@@ -36,6 +36,7 @@ export default function SignUp() {
 		}),
 		onSubmit: async (values) => {
 			setLoading(true);
+			setFailed(false);
 			try {
 				const { error } = await supabase.auth.signIn({
 					email: values.email,
@@ -47,7 +48,12 @@ export default function SignUp() {
 				}
 			} catch (err) {
 				console.error("fail on login", err);
-				setFailed(true);
+				if (err.message) {
+					setFailed(err.message);
+				} else {
+					setFailed(true);
+				}
+				setLoading(false);
 			}
 		},
 	});
@@ -80,7 +86,13 @@ export default function SignUp() {
 							{failed && (
 								<div className="mb-4">
 									<Message warning={true}>
-										<strong>Oh no!</strong> We weren't able to log you in.
+										{failed === false ? (
+											<span>
+												<strong>Oh no!</strong> We weren't able to log you in.
+											</span>
+										) : (
+											<span>{failed}</span>
+										)}
 									</Message>
 								</div>
 							)}

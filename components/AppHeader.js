@@ -22,7 +22,7 @@ export default function AppHeader() {
 		<header>
 			<nav className="flex items-center justify-between flex-wrap w-full bg-primary relative">
 				<Container>
-					<nav className="flex items-center justify-between flex-wrap p-4">
+					<nav className="flex items-center justify-between flex-wrap py-4 lg:relative">
 						<div className="flex items-center flex-shrink-0 text-white mr-6 z-30">
 							<a className="text-white no-underline hover:text-white hover:no-underline" href="/app">
 								<div className="flex items-center cursor-pointer">
@@ -64,24 +64,10 @@ export default function AppHeader() {
 						<div
 							className={`w-full flex-grow absolute lg:top-4 lg:visible bg-primary right-0 lg:flex lg:items-center lg:w-auto  ${
 								navToggle ? "-top-60 invisible" : "top-16 visible"
-							} lg:block transition-all lg:border-0 border-b pl-4 pb-4 lg:pb-0 lg:pl-0 pt-6 lg:pt-0 z-10 lg:z-20`}
+							} lg:block transition-all lg:border-0 border-b pl-4 pb-4 lg:pb-0 lg:pl-0 pt-2 lg:pt-0 z-10 lg:z-20`}
 						>
 							<ul className="list-reset lg:flex justify-end flex-1 items-center text-center lg:text-left">
-								{/* <li className="mr-3 lg:hidden border-b">
-									<a
-										className="inline-block no-underline hover:text-underline py-2 px-4"
-										href="/app/trays"
-										target="_blank"
-									>
-										Trays
-									</a>
-								</li>
-								<li className="mr-3 lg:hidden border-b">
-									<a className="inline-block no-underline hover:text-underline py-2 px-4" href="/app/account">
-										Account
-									</a>
-								</li> */}
-								<li className="mr-3 border-b lg:border-0">
+								<li className="mr-3 border-b border-t lg:border-0">
 									<a className="inline-block no-underline hover:text-underline py-2 px-4" href="/docs" target="_blank">
 										Docs
 									</a>
