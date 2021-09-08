@@ -9,6 +9,8 @@ import AppLayout from "@/components/layouts/AppLayout";
 import { useEffect, useState } from "react";
 import { supabase } from "@/services/supabase";
 import Message from "@/components/Message";
+import Link from "next/link";
+import router from "next/router";
 
 export default function NewTray() {
 	const [validEndpoint, setValidEndpoint] = useState("");
@@ -18,12 +20,12 @@ export default function NewTray() {
 	const [limits, setLimits] = useState(false);
 	const [expirationLimits, setExpirationLimits] = useState([]);
 
-	const getLimits = async () => {
+	const getLimits = async (returnData) => {
 		try {
 			const { data, error } = await supabase
 				.from("profiles")
 				.select(
-					"id, subscriptions( id, status, product ( deepFreeze, numOfTrays, customExpirationLimit, expirationLimit) ), trays (id) email"
+					"id, subscriptions( id, status, product ( deepFreeze, numOfTrays, customExpirationLimit, expirationLimit) ), trays (id, endpoint)"
 				);
 			if (error) {
 				throw error;
@@ -31,14 +33,20 @@ export default function NewTray() {
 
 			const profile = data[0];
 			const activeSub = profile.subscriptions.find((item) => item.status === "active");
-			setLimits({
+			const temp = {
 				traysLeft: activeSub.product.numOfTrays - profile.trays.length,
 				customExpiration: activeSub.product.customExpirationLimit,
 				expirationLimit: activeSub.product.expirationLimit,
 				deepFreeze: activeSub.product.deepFreeze,
-			});
+			};
+
+			if (returnData) {
+				return { ...temp, trays: profile.trays };
+			}
+
+			setLimits(temp);
 		} catch (err) {
-			console.log("erro on limit fetch", err);
+			console.log("error on limit fetch", err);
 			return false;
 		}
 	};
@@ -60,12 +68,34 @@ export default function NewTray() {
 			setFail(false);
 			setLoading(true);
 			try {
-				const data = await getLimits();
-				if (!data) {
-					throw data;
+				const limit = await getLimits(true);
+				if (!limit) {
+					throw limit;
 				}
-				console.log(data);
-				// console.log(values);
+				console.log(limit);
+				console.log(values);
+
+				if (values.deepFreeze && !limit.deepFreeze) {
+					throw { message: "You're subscription doesn't have access to Deep Freeze" };
+				} else if (limit.traysLeft <= 0) {
+					throw { message: "You are using the maximum number of trays in your subscription" };
+				} else if (limit.trays.find((item) => item.endpoint === values.endpoint)) {
+					throw { message: "You've already used this endpoint" };
+				}
+
+				const { data, error } = await supabase.from("trays").insert({
+					profile: supabase.auth.currentUser.id,
+					name: values.name,
+					endpoint: values.endpoint,
+					deepFreeze: values.deepFreeze,
+					expirationLimit: values.expiration,
+					total_bytes: 0,
+				});
+				if (error) {
+					throw error;
+				}
+				console.log("created", data);
+				// router.replace("/app/tray/" + data.id);
 			} catch (err) {
 				console.log("ERROR", err);
 				setFail(err.message ? err.message : "There has been a problem while saving your new tray");
@@ -79,7 +109,7 @@ export default function NewTray() {
 		getLimits();
 	}, []);
 
-	const validateEndpoint = (text) => {
+	const validateEndpoint = async (text) => {
 		let newText = "";
 		for (let letter of Array.from(text)) {
 			if (regexTerm.test(letter) === true) {
@@ -95,14 +125,11 @@ export default function NewTray() {
 	};
 
 	useEffect(() => {
-		if (formik.values.endpoint) {
-			validateEndpoint(formik.values.endpoint);
-		}
+		validateEndpoint(formik.values.endpoint || "");
 	}, [formik.values.endpoint]);
 
 	useEffect(() => {
 		if (limits) {
-			console.log(limits);
 			if (!limits.customExpiration) {
 				setExpirationLimits([{ value: limits.expirationLimit, label: `${limits.expirationLimit} days` }]);
 			} else {
@@ -121,6 +148,7 @@ export default function NewTray() {
 			<h4 className="text-3xl mb-2">Create a tray</h4>
 			<Card>
 				<h4 className="mb-2 text-primary font-bold uppercase">Tray Details</h4>
+
 				<form onSubmit={formik.handleSubmit} noValidate>
 					<Input
 						type="text"
@@ -169,9 +197,19 @@ export default function NewTray() {
 							<Message warning={true}>{fail}</Message>
 						</div>
 					)}
-					<Button type="submit" color="primary" loading={loading}>
-						Create Tray
-					</Button>
+					{limits.traysLeft === 0 ? (
+						<Message>
+							You have created the max number of trays that your subscription allows.{" "}
+							<Link href="/app/account/">
+								<a className="underline">Upgrade here</a>
+							</Link>{" "}
+							to create more.
+						</Message>
+					) : (
+						<Button type="submit" color="primary" loading={loading}>
+							Create Tray
+						</Button>
+					)}
 				</form>
 			</Card>
 		</AppLayout>
