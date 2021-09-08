@@ -20,8 +20,8 @@ export default function SignUp() {
 
 	useEffect(() => {
 		if (auth.user) {
-			console.log(auth.user);
-			router.replace("/app");
+			const redirect = router.query.redirect;
+			router.replace(redirect ? redirect : "/app");
 		}
 	}, [auth.user]);
 

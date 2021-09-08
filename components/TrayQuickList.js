@@ -10,6 +10,8 @@ export default function TrayQuickList({}) {
 	const [term, setTerm] = useState("");
 	const [loading, setLoading] = useState(false);
 
+	const [list] = useState(["Fetch Forms temp", "Saleforce migration #1", "mig test"]);
+
 	useEffect(() => {
 		// supabase.from("trays").select("name");
 		console.log("get trays, order by last viewed");
@@ -45,11 +47,15 @@ export default function TrayQuickList({}) {
 					/>
 				</div>
 				<div className="flex flex-col">
-					{["Fetch Forms temp", "Saleforce migration #1", "mig test"].map((item, i) => (
-						<div className="p-2 hover:bg-white hover:bg-opacity-20 rounded-sm cursor-pointer" key={i}>
-							{item}
-						</div>
-					))}
+					{false ? (
+						list.map((item, i) => (
+							<div className="p-2 hover:bg-white hover:bg-opacity-20 rounded-sm cursor-pointer" key={i}>
+								{item}
+							</div>
+						))
+					) : (
+						<div className="p-2">You don't have any trays</div>
+					)}
 				</div>
 			</Card>
 		</div>

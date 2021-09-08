@@ -11,30 +11,29 @@ import Message from "@/components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "@/services/supabase";
+import { fetcher } from "@/services/api";
 
 export default function SignUp() {
 	const router = useRouter();
 	const [failed, setFailed] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const upsertProfile = async (user, firstName, lastName, agreeToTerms) => {
+	const createProfile = async (user, firstName, lastName, agreeToTerms, session) => {
 		try {
-			const rec = {
-				id: user.id,
-				email: user.email,
-				firstName,
-				lastName,
-				agreeToTerms,
-				updated_at: new Date(),
-			};
-			const { error } = await supabase.from("profiles").insert(rec);
+			const { error } = await supabase
+				.from("profiles")
+				.insert({ id: user.id, email: user.email, firstName, lastName, agreeToTerms, updated_at: new Date() });
 			if (error) {
 				throw error;
 			}
 
+			// TODO: Test this
+			const complete = await fetcher("/api/create-token", session.access_token, "POST");
+
+			const { data: prods } = await supabase.from("products").select(id).match({ name: "Free", active: true });
 			const { error: subError } = await supabase.from("subscriptions").insert({
 				user_id: user.id,
-				product_id: null,
+				product_id: prods ? prods[0] : null,
 				status: "active",
 			});
 			if (subError) {
@@ -65,7 +64,7 @@ export default function SignUp() {
 			setLoading(true);
 
 			try {
-				const { user, error } = await supabase.auth.signUp({
+				const { user, session, error } = await supabase.auth.signUp({
 					email: values.email,
 					password: values.password,
 					redirectTo: `${window.location.origin}/app/`,
@@ -73,9 +72,9 @@ export default function SignUp() {
 				if (error) {
 					throw error;
 				}
-				const { data } = await supabase.from("profiles").select("email");
+				const { data } = await supabase.from("profiles").select("id");
 				if (data && data.length === 0) {
-					await upsertProfile(user, values.first, values.last, values.agreeToTerms);
+					await createProfile(user, values.first, values.last, values.agreeToTerms, session);
 				}
 
 				// TODO: forward to billing if they selected a price

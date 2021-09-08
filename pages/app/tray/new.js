@@ -7,10 +7,41 @@ import Checkbox from "@/atoms/form/Checkbox";
 import Select from "@/atoms/form/Select";
 import AppLayout from "@/components/layouts/AppLayout";
 import { useEffect, useState } from "react";
+import { supabase } from "@/services/supabase";
+import Message from "@/components/Message";
 
-export default function NewTray({ expiration }) {
+export default function NewTray() {
 	const [validEndpoint, setValidEndpoint] = useState("");
 	const regexTerm = new RegExp(/[!@#$%^&*(),.?":{}|<>/]/);
+	const [fail, setFail] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [limits, setLimits] = useState(false);
+	const [expirationLimits, setExpirationLimits] = useState([]);
+
+	const getLimits = async () => {
+		try {
+			const { data, error } = await supabase
+				.from("profiles")
+				.select(
+					"id, subscriptions( id, status, product ( deepFreeze, numOfTrays, customExpirationLimit, expirationLimit) ), trays (id) email"
+				);
+			if (error) {
+				throw error;
+			}
+
+			const profile = data[0];
+			const activeSub = profile.subscriptions.find((item) => item.status === "active");
+			setLimits({
+				traysLeft: activeSub.product.numOfTrays - profile.trays.length,
+				customExpiration: activeSub.product.customExpirationLimit,
+				expirationLimit: activeSub.product.expirationLimit,
+				deepFreeze: activeSub.product.deepFreeze,
+			});
+		} catch (err) {
+			console.log("erro on limit fetch", err);
+			return false;
+		}
+	};
 
 	const formik = useFormik({
 		initialValues: {
@@ -25,10 +56,28 @@ export default function NewTray({ expiration }) {
 			deepFreeze: Yup.boolean(),
 			expiration: Yup.string().required("You must select an expiration timeframe"),
 		}),
-		onSubmit: (values) => {
-			console.log(values);
+		onSubmit: async (values) => {
+			setFail(false);
+			setLoading(true);
+			try {
+				const data = await getLimits();
+				if (!data) {
+					throw data;
+				}
+				console.log(data);
+				// console.log(values);
+			} catch (err) {
+				console.log("ERROR", err);
+				setFail(err.message ? err.message : "There has been a problem while saving your new tray");
+			} finally {
+				setLoading(false);
+			}
 		},
 	});
+
+	useEffect(() => {
+		getLimits();
+	}, []);
 
 	const validateEndpoint = (text) => {
 		let newText = "";
@@ -51,14 +100,21 @@ export default function NewTray({ expiration }) {
 		}
 	}, [formik.values.endpoint]);
 
-	const getExpirationDetails = () => {
-		const numberOfDays = expiration.to - expiration.from;
-		if (numberOfDays === 0) {
-			return [{ value: 15, label: "15 days" }];
-		} else {
-			return Array.from(new Array(numberOfDays)).map((empty, i) => ({ value: i + 1, label: `${i + 1} day${i + 1 > 1 ? "s" : ""}` }));
+	useEffect(() => {
+		if (limits) {
+			console.log(limits);
+			if (!limits.customExpiration) {
+				setExpirationLimits([{ value: limits.expirationLimit, label: `${limits.expirationLimit} days` }]);
+			} else {
+				setExpirationLimits(
+					Array.from(new Array(limits.expirationLimit)).map((empty, i) => ({
+						value: i + 1,
+						label: `${i + 1} day${i + 1 > 1 ? "s" : ""}`,
+					}))
+				);
+			}
 		}
-	};
+	}, [limits]);
 
 	return (
 		<AppLayout>
@@ -89,7 +145,8 @@ export default function NewTray({ expiration }) {
 						value={formik.values.deepFreeze}
 						onChange={formik.handleChange}
 						error={formik.touched.deepFreeze && formik.errors.deepFreeze}
-						// disabled if account is free
+						disabled={!limits.deepFreeze}
+						helpText="Data can be stored for as long as needed and read from a tray as many times as needed"
 					>
 						Use Deep Freeze
 					</Checkbox>
@@ -101,24 +158,22 @@ export default function NewTray({ expiration }) {
 						helpText="Select the length of days between when a record is added and when it will automatically be deleted."
 					>
 						<option>-- Select --</option>
-						{getExpirationDetails().map((opt) => (
+						{expirationLimits.map((opt) => (
 							<option value={opt.value} key={opt.value}>
 								{opt.label}
 							</option>
 						))}
 					</Select>
-					<Button type="submit" color="primary">
+					{fail && (
+						<div className="mb-4">
+							<Message warning={true}>{fail}</Message>
+						</div>
+					)}
+					<Button type="submit" color="primary" loading={loading}>
 						Create Tray
 					</Button>
 				</form>
 			</Card>
 		</AppLayout>
 	);
-}
-
-export async function getServerSideProps(context) {
-	const expiration = { from: 15, to: 15 };
-	return {
-		props: { expiration },
-	};
 }
