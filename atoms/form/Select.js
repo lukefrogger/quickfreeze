@@ -1,4 +1,4 @@
-export default function Select({ label, name, required, value, onChange, error, helpText, children }) {
+export default function Select({ label, name, required = true, value, onChange, error, helpText, children }) {
 	return (
 		<div className="mb-4">
 			<label htmlFor={name} className="text-gray-200">

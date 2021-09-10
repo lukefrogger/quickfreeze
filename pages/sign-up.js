@@ -79,9 +79,9 @@ export default function SignUp() {
 
 				// TODO: forward to billing if they selected a price
 				// if(window.location.search) {
-				// 	router.replace('/app/billling');
+				// 	router.push('/app/billling');
 				// }
-				router.replace("/app");
+				router.push("/app");
 			} catch (err) {
 				console.error(err);
 				setFailed(err);

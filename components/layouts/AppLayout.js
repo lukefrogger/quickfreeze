@@ -8,6 +8,7 @@ import { supabase } from "@/services/supabase";
 import FullScreenLayout from "./FullScreenLayout";
 import TrayQuickList from "../TrayQuickList";
 import { AuthGuard } from "@/hooks/AuthGuard";
+import Link from "next/link";
 
 export default function AppLayout({ children }) {
 	const [navToggle, setNavToggle] = useState(true);
@@ -37,18 +38,14 @@ export default function AppLayout({ children }) {
 									</a>
 									<ul className="list-reset flex ml-6 items-center">
 										<li className="mr-3">
-											<a
-												className="inline-block no-underline hover:text-underline py-2 px-4"
-												href="/app/trays"
-												target="_blank"
-											>
-												Trays
-											</a>
+											<Link href="/app/">
+												<a className="inline-block no-underline hover:text-underline py-2 px-4">Trays</a>
+											</Link>
 										</li>
 										<li className="mr-3">
-											<a className="inline-block no-underline hover:text-underline py-2 px-4" href="/app/account">
-												Account
-											</a>
+											<Link href="/app/account">
+												<a className="inline-block no-underline hover:text-underline py-2 px-4">Account</a>
+											</Link>
 										</li>
 									</ul>
 								</div>
@@ -102,7 +99,9 @@ export default function AppLayout({ children }) {
 				</header>
 				<Container>
 					<div className="flex">
-						<TrayQuickList />
+						<div className="hidden lg:block">
+							<TrayQuickList />
+						</div>
 						<div className="flex-auto">{children}</div>
 					</div>
 				</Container>

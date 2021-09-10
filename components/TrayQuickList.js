@@ -4,27 +4,65 @@ import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Input from "@/atoms/form/Input";
 import { useEffect, useState } from "react";
 import Card from "@/atoms/Card";
-// import { supabase } from "@/services/supabase";
+import Spinner from "@/atoms/Spinner";
+import Message from "./Message";
+import { supabase } from "@/services/supabase";
+import router from "next/router";
 
 export default function TrayQuickList({}) {
 	const [term, setTerm] = useState("");
 	const [loading, setLoading] = useState(false);
-
-	const [list] = useState(["Fetch Forms temp", "Saleforce migration #1", "mig test"]);
+	const [wholeList, setWholeList] = useState(false);
+	const [filteredList, setFilteredList] = useState([]);
+	const [fail, setFail] = useState(false);
 
 	useEffect(() => {
-		// supabase.from("trays").select("name");
-		console.log("get trays, order by last viewed");
+		setLoading(true);
+		const query = async () => {
+			try {
+				const { data, error } = await supabase.from("trays").select("name, endpoint").order("created", { ascending: false });
+				if (error) {
+					throw error;
+				}
+
+				setWholeList(data);
+				if (data.length > 8) {
+					setFilteredList(data.slice(7));
+				} else {
+					setFilteredList(data);
+				}
+			} catch (err) {
+				console.log(err);
+				setFail(err.message || "You're trays couldn't be found");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		query();
 	}, []);
 
 	useEffect(() => {
+		if (!wholeList) {
+			return;
+		}
+
 		if (term) {
-			console.log(term);
+			setFilteredList(wholeList.filter((item) => item.name.includes(term)));
+		} else {
+			if (wholeList.length > 8) {
+				setFilteredList(wholeList.slice(7));
+			} else {
+				setFilteredList(wholeList);
+			}
 		}
 	}, [term]);
 
 	const newTray = () => {
-		console.log("new tray create");
+		router.push("/app/tray/new");
+	};
+	const goToTray = (endpoint) => {
+		router.push(`/app/tray/${endpoint}`);
 	};
 
 	return (
@@ -47,10 +85,16 @@ export default function TrayQuickList({}) {
 					/>
 				</div>
 				<div className="flex flex-col">
-					{false ? (
-						list.map((item, i) => (
-							<div className="p-2 hover:bg-white hover:bg-opacity-20 rounded-sm cursor-pointer" key={i}>
-								{item}
+					{fail && <Message warning={true}>{fail}</Message>}
+					{!fail && loading && <Spinner size="3x" />}
+					{!fail && !loading && wholeList.length > 0 ? (
+						filteredList.map((item, i) => (
+							<div
+								className="p-2 hover:bg-white hover:bg-opacity-20 rounded-sm cursor-pointer"
+								key={item.endpoint}
+								onClick={() => goToTray(item.endpoint)}
+							>
+								{item.name}
 							</div>
 						))
 					) : (

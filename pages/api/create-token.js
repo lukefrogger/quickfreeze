@@ -20,7 +20,7 @@ export default async (req, res) => {
 			length: "3",
 		});
 		const createdDate = new Date().toISOString();
-		const sha = crypto.createHash("sha256").update(`${uniqueString}_${createdDate}`).digest("base64");
+		const sha = crypto.createHash("sha256").update(`${uniqueString}_${user}`).digest("base64");
 		const final = crypto.createHash("md5").update(sha).digest("hex");
 
 		const tokenRow = {
@@ -48,4 +48,5 @@ function decrypt(token) {
 	// temp = decrypt md5
 	// key_created = decrypt SHA256 (with an underscore)
 	// lookup token by created and key
+	// lookup endpoint by userId and endpoint used
 }

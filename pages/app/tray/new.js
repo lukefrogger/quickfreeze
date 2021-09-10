@@ -21,6 +21,7 @@ export default function NewTray() {
 	const [expirationLimits, setExpirationLimits] = useState([]);
 
 	const getLimits = async (returnData) => {
+		console.log(supabase.auth);
 		try {
 			const { data, error } = await supabase
 				.from("profiles")
@@ -29,6 +30,9 @@ export default function NewTray() {
 				);
 			if (error) {
 				throw error;
+			}
+			if (data.length === 0) {
+				return setFail("There was a problem getting your account information.");
 			}
 
 			const profile = data[0];
@@ -81,6 +85,8 @@ export default function NewTray() {
 					throw { message: "You are using the maximum number of trays in your subscription" };
 				} else if (limit.trays.find((item) => item.endpoint === values.endpoint)) {
 					throw { message: "You've already used this endpoint" };
+				} else if (values.expiration === "") {
+					throw { message: "You must select an expiration timeframe" };
 				}
 
 				const { data, error } = await supabase.from("trays").insert({
@@ -95,7 +101,7 @@ export default function NewTray() {
 					throw error;
 				}
 				console.log("created", data);
-				// router.replace("/app/tray/" + data.id);
+				router.replace("/app/tray/" + data.id);
 			} catch (err) {
 				console.log("ERROR", err);
 				setFail(err.message ? err.message : "There has been a problem while saving your new tray");
@@ -147,8 +153,12 @@ export default function NewTray() {
 		<AppLayout>
 			<h4 className="text-3xl mb-2">Create a tray</h4>
 			<Card>
+				{fail && (
+					<div className="mb-4">
+						<Message warning={true}>{fail}</Message>
+					</div>
+				)}
 				<h4 className="mb-2 text-primary font-bold uppercase">Tray Details</h4>
-
 				<form onSubmit={formik.handleSubmit} noValidate>
 					<Input
 						type="text"
@@ -180,10 +190,11 @@ export default function NewTray() {
 					</Checkbox>
 					<Select
 						name="expiration"
-						label="Days until Expired"
+						label="Days until data expires"
 						value={formik.values.expiration}
 						onChange={formik.handleChange}
 						helpText="Select the length of days between when a record is added and when it will automatically be deleted."
+						error={formik.touched.expiration && formik.errors.expiration}
 					>
 						<option>-- Select --</option>
 						{expirationLimits.map((opt) => (
@@ -192,11 +203,6 @@ export default function NewTray() {
 							</option>
 						))}
 					</Select>
-					{fail && (
-						<div className="mb-4">
-							<Message warning={true}>{fail}</Message>
-						</div>
-					)}
 					{limits.traysLeft === 0 ? (
 						<Message>
 							You have created the max number of trays that your subscription allows.{" "}
