@@ -6,8 +6,13 @@ export const fetcher = async (url, token, method) => {
 			credentials: "same-origin",
 		});
 
-		return await resp.json();
+		const data = await resp.json();
+		if (data.error) {
+			throw data.error;
+		}
+		return data;
 	} catch (err) {
 		console.log("API feetch error", err);
+		throw err;
 	}
 };

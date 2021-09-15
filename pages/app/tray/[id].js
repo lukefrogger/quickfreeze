@@ -3,6 +3,7 @@ import Card from "@/atoms/Card";
 import Input from "@/atoms/form/Input";
 import Select from "@/atoms/form/Select";
 import SmallHeader from "@/atoms/SmallHeader";
+import InlineCardField from "@/components/InlineForm/InlineCardField";
 import AppLayout from "@/components/layouts/AppLayout";
 import Message from "@/components/Message";
 import { supabase } from "@/services/supabase";
@@ -19,7 +20,6 @@ export default function Tray() {
 	const [tray, setTray] = useState({});
 	const [icon, setIcon] = useState(faCopy);
 	const [changes, setChanges] = useState({});
-	const [updateLoading, setUpdateLoading] = useState({});
 
 	useEffect(() => {
 		if (router.query.id) {
@@ -31,10 +31,9 @@ export default function Tray() {
 					if (error) {
 						throw error;
 					}
-					console.log(data[0]);
+
 					setTray(data[0]);
 					setChanges({});
-					setUpdateLoading({});
 				} catch (err) {
 					console.log(err);
 					setFail(err.message || "You're trays couldn't be found");
@@ -55,43 +54,16 @@ export default function Tray() {
 		}, 3000);
 	};
 
-	const changeValue = (key, value) => {
-		if (tray[key] === value) {
-			setChanges({
-				...changes,
-				[key]: false,
-			});
-			return;
-		}
-		setChanges({
-			...changes,
-			[key]: value,
-		});
-	};
-
-	const saveChange = async (key) => {
+	const saveChange = async (value, key) => {
 		try {
-			setUpdateLoading({
-				...loading,
-				[key]: true,
-			});
 			const { data, error } = await supabase
 				.from("trays")
-				.update({ [key]: changes[key] })
+				.update({ [key]: value })
 				.match({ profile: supabase.auth.currentUser.id, endpoint: tray.endpoint });
 
 			if (error) {
 				throw error;
 			}
-
-			setChanges({
-				...changes,
-				[key]: false,
-			});
-			setUpdateLoading({
-				...loading,
-				[key]: false,
-			});
 			setTray(data[0]);
 		} catch (err) {
 			setFail(err.message || "The changes to your tray could not be saved");
@@ -122,46 +94,13 @@ export default function Tray() {
 						</div>
 					)}
 					<div className="flex flex-wrap">
-						<div className="flex flex-wrap w-full mt-4">
-							<div className="lg:mb-4 flex items-center w-full lg:w-1/4">Name</div>
-							<div className="flex w-full lg:w-3/4">
-								<div className="flex-1">
-									<Input
-										value={changes.name || tray.name || ""}
-										type="text"
-										onChange={(e) => changeValue("name", e.target.value)}
-									/>
-								</div>
-								<div className="w-32 mb-3 flex justify-end items-center">
-									<div className={`${changes.name ? "block" : "hidden"}`}>
-										<Button color="primary" onClick={() => saveChange("name")} loading={updateLoading.name}>
-											Save
-										</Button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="flex flex-wrap w-full mt-4">
-							<div className="lg:mb-4 flex items-center w-full lg:w-1/4">Freeze Option</div>
-							<div className="flex w-full lg:w-3/4">
-								<div className="flex-1">
-									<Select
-										onChange={(e) => changeValue("deepFreeze", e.target.value)}
-										value={changes.deepFreeze || tray.deepFreeze}
-									>
-										<option value={false}>Quick Freeze</option>
-										<option value={true}>Deep Freeze</option>
-									</Select>
-								</div>
-								<div className="w-32 mb-3 flex justify-end items-center">
-									<div className={`${changes.deepFreeze ? "block" : "hidden"}`}>
-										<Button color="primary" onClick={() => saveChange("deepFreeze")} loading={updateLoading.deepFreeze}>
-											Save
-										</Button>
-									</div>
-								</div>
-							</div>
-						</div>
+						<InlineCardField initialValue={tray.name} label="Name" saveChange={(value) => saveChange(value, "name")} />
+						<InlineCardField
+							initialValue={tray.deepFreeze}
+							label="Freeze Option"
+							saveChange={(value) => saveChange(value, "deepFreeze")}
+							type="select"
+						/>
 						<div className="flex flex-wrap w-full mt-4">
 							<div className="lg:mb-4 flex items-center w-full lg:w-1/4">Ice Cubes</div>
 							<div className="flex w-full lg:w-3/4">
@@ -178,16 +117,5 @@ export default function Tray() {
 				</Card>
 			)}
 		</AppLayout>
-	);
-}
-function TrayFields({ field, name, button }) {
-	return (
-		<div className="flex flex-wrap w-full mt-4">
-			<div className="lg:mb-4 flex items-center w-full lg:w-1/4">{name}</div>
-			<div className="flex w-full lg:w-3/4">
-				<div className="flex-1">{field}</div>
-				<div className="w-32 mb-3 flex justify-end items-center">{button}</div>
-			</div>
-		</div>
 	);
 }

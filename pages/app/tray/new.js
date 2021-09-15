@@ -188,9 +188,10 @@ export default function NewTray() {
 					>
 						Use Deep Freeze
 					</Checkbox>
+					// TODO: DATA RETENTION
 					<Select
 						name="expiration"
-						label="Days until data expires"
+						label="Data Retention"
 						value={formik.values.expiration}
 						onChange={formik.handleChange}
 						helpText="Select the length of days between when a record is added and when it will automatically be deleted."

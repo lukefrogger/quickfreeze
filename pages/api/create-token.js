@@ -7,10 +7,13 @@ export default async (req, res) => {
 
 	/* Verify the request based on the token */
 	try {
-		const { data: user, error } = await supabase.auth.api.getUser(token);
-		if (error) {
+		const { data: appUser, error } = await supabase.auth.api.getUser(token);
+		if (error || !appUser || !appUser.id) {
 			throw error;
 		}
+		supabase.auth.session = () => ({
+			access_token: token,
+		});
 
 		/* SUPER SECRET TOKEN CREATION */
 		const uniqueString = uniqueNamesGenerator({
@@ -19,32 +22,36 @@ export default async (req, res) => {
 			separator: "-",
 			length: "3",
 		});
+
 		const createdDate = new Date().toISOString();
-		const sha = crypto.createHash("sha256").update(`${uniqueString}_${user}`).digest("base64");
+		const sha = crypto.createHash("sha256").update(`${uniqueString}_${appUser.id}`).digest("base64");
 		const final = crypto.createHash("md5").update(sha).digest("hex");
 
 		const tokenRow = {
 			key: uniqueString,
-			secret: final,
+			secret: `QF_${final}`,
 			created: createdDate,
-			user_id: user.id,
+			profile: appUser.id,
 		};
-		const { error: insertError } = await supabase.from("api_tokens").insert([tokenRow], { returning: "minimal" });
+
+		const { error: insertError, data } = await supabase.from("api_tokens").insert(tokenRow);
 		if (insertError) {
 			throw insertError;
 		}
 
-		return res.status(200).json({ success: true });
+		console.log(data);
+		return res.status(200).json({ success: true, record: { id: data[0].id, created: data[0].created, secret: data[0].secret } });
 	} catch (err) {
-		console.log(err);
+		console.log("error - create token", err);
 		if (err.message) {
-			return res.status(401).json({ error: error.message });
+			return res.status(401).json({ error: err.message });
 		}
 		return res.status(401).json({ error: err });
 	}
 };
 
 function decrypt(token) {
+	// remove QF_
 	// temp = decrypt md5
 	// key_created = decrypt SHA256 (with an underscore)
 	// lookup token by created and key

@@ -47,7 +47,7 @@ export default function Home() {
 			{!loading && trays.length > 0 && (
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 					{trays.map((tray) => (
-						<Card isButton="true" onClick={(e) => navTo(tray.endpoint)}>
+						<Card isButton="true" onClick={(e) => navTo(tray.endpoint)} key={tray.endpoint}>
 							<div className="text-primary uppercase">
 								<strong>{tray.deepFreeze ? "Deep" : "Quick"}</strong> Freeze
 							</div>
