@@ -27,7 +27,7 @@ export default function PricingTable({ type = "light", setSelected }) {
 			],
 			[
 				{
-					text: "Max Expiration Date",
+					text: "Data Retention",
 					tip: "The length of time between when the data is created and when it will be automatically deleted",
 				},
 				"15 days",
@@ -36,7 +36,7 @@ export default function PricingTable({ type = "light", setSelected }) {
 			],
 			[
 				{
-					text: "Custom Expiration Date",
+					text: "Custom Data Retention",
 					tip: "Set custom lengths of time where data will automatically be removed from a tray",
 				},
 				false,

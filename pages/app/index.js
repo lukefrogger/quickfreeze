@@ -54,7 +54,7 @@ export default function Home() {
 							<h5 className="text-xl">{tray.name}</h5>
 							<div className="mt-6">{parseBytes(tray.total_bytes)}</div>
 							<div className="mt-2">{tray.iceCubes || 0} ice cubes | Need to add this</div>
-							<div className="mt-2">{tray.expirationLimit} day expiration</div>
+							<div className="mt-2">{tray.expirationLimit} data retention</div>
 						</Card>
 					))}
 				</div>

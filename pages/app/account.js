@@ -7,6 +7,7 @@ import Message from "@/components/Message";
 import { supabase } from "@/services/supabase";
 import { useEffect, useState } from "react";
 import Tokens from "@/components/Tokens";
+import BillingDetails from "@/components/BillingDetails";
 
 export default function Account() {
 	const [fail, setFail] = useState(false);
@@ -16,7 +17,6 @@ export default function Account() {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		// setLoading(true);
 		setFail(false);
 		const query = async () => {
 			try {
@@ -96,6 +96,10 @@ export default function Account() {
 					<Card className="mt-4">
 						<SmallHeader>API Tokens</SmallHeader>
 						<Tokens tokens={tokens} />
+					</Card>
+					<Card className="mt-4">
+						<SmallHeader>Billing Details</SmallHeader>
+						<BillingDetails currentSub={sub} />
 					</Card>
 				</>
 			)}

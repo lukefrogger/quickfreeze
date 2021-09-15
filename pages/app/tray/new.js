@@ -66,7 +66,7 @@ export default function NewTray() {
 			name: Yup.string().required("Tray name required"),
 			endpoint: Yup.string().required("An endpoint is required"),
 			deepFreeze: Yup.boolean(),
-			expiration: Yup.string().required("You must select an expiration timeframe"),
+			expiration: Yup.string().required("You must select an data retention setting"),
 		}),
 		onSubmit: async (values) => {
 			setFail(false);
@@ -86,7 +86,7 @@ export default function NewTray() {
 				} else if (limit.trays.find((item) => item.endpoint === values.endpoint)) {
 					throw { message: "You've already used this endpoint" };
 				} else if (values.expiration === "") {
-					throw { message: "You must select an expiration timeframe" };
+					throw { message: "You must select an data retention setting" };
 				}
 
 				const { data, error } = await supabase.from("trays").insert({
@@ -188,7 +188,6 @@ export default function NewTray() {
 					>
 						Use Deep Freeze
 					</Checkbox>
-					// TODO: DATA RETENTION
 					<Select
 						name="expiration"
 						label="Data Retention"

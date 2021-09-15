@@ -120,7 +120,7 @@ const response = await fetch(url+trayEndpoint+'/iceCubes', {
 								<div>
 									<div className="ml-8">
 										<strong>deleteOnComplete:</strong> Use with Deep Freeze - this will delete the data once it is
-										retrieved. If never used, data will remain in the tray until it reaches its expiration date
+										retrieved. If never used, data will remain in the tray until it reaches it's data retention setting
 									</div>
 									{/* <div className="ml-8">
 										<strong>preventDelete:</strong> Use with Quick Freeze to prevent deletion - your account must have
@@ -185,8 +185,8 @@ const response = await fetch(url+trayEndpoint+'/iceCubes', {
 								needed
 							</p>
 							<p>
-								- Deep Freeze data can be retrieved up to its expiration date. If you would like to delete the data before
-								its expiration date, you can include an optional parameter in your request
+								- Deep Freeze data can be retrieved up to its data retention date. If you would like to delete the data
+								before its data retention date, you can include an optional parameter in your request
 							</p>
 						</div>
 						<CodeSnippet
