@@ -18,7 +18,7 @@ export default function Home() {
 		setLoading(true);
 		const query = async () => {
 			try {
-				const { data, error } = await supabase.from("trays").select("*").order("created", { ascending: false });
+				const { data, error } = await supabase.from("trays").select("*, ice_cubes(size)").order("created", { ascending: false });
 				if (error) {
 					throw error;
 				}
@@ -53,7 +53,7 @@ export default function Home() {
 							</div>
 							<h5 className="text-xl">{tray.name}</h5>
 							<div className="mt-6">{parseBytes(tray.total_bytes)}</div>
-							<div className="mt-2">{tray.iceCubes || 0} ice cubes | Need to add this</div>
+							<div className="mt-2">{tray.ice_cubes.length || 0} ice cubes</div>
 							<div className="mt-2">{tray.expirationLimit} data retention</div>
 						</Card>
 					))}
