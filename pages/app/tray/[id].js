@@ -1,9 +1,7 @@
-import Button from "@/atoms/Button";
 import Card from "@/atoms/Card";
-import Input from "@/atoms/form/Input";
-import Select from "@/atoms/form/Select";
 import SmallHeader from "@/atoms/SmallHeader";
 import InlineCardField from "@/components/InlineForm/InlineCardField";
+import InlineText from "@/components/InlineForm/InlineText";
 import AppLayout from "@/components/layouts/AppLayout";
 import Message from "@/components/Message";
 import { supabase } from "@/services/supabase";
@@ -15,30 +13,24 @@ import parseBytes from "scripts/parseBytes";
 
 export default function Tray() {
 	const router = useRouter();
-	const [loading, setLoading] = useState(false);
 	const [fail, setFail] = useState(false);
 	const [tray, setTray] = useState({});
 	const [icon, setIcon] = useState(faCopy);
-	const [changes, setChanges] = useState({});
 
 	useEffect(() => {
 		if (router.query.id) {
-			setLoading(true);
 			setFail(false);
 			const query = async () => {
 				try {
-					const { data, error } = await supabase.from("trays").select("*").eq("endpoint", router.query.id);
+					const { data, error } = await supabase.from("trays").select("*, ice_cubes (size)").eq("endpoint", router.query.id);
 					if (error) {
 						throw error;
 					}
 
 					setTray(data[0]);
-					setChanges({});
 				} catch (err) {
 					console.log(err);
 					setFail(err.message || "You're trays couldn't be found");
-				} finally {
-					setLoading(false);
 				}
 			};
 
@@ -95,24 +87,10 @@ export default function Tray() {
 					)}
 					<div className="flex flex-wrap">
 						<InlineCardField initialValue={tray.name} label="Name" saveChange={(value) => saveChange(value, "name")} />
-						<InlineCardField
-							initialValue={tray.deepFreeze}
-							label="Freeze Option"
-							saveChange={(value) => saveChange(value, "deepFreeze")}
-							type="select"
-						/>
-						<div className="flex flex-wrap w-full mt-4">
-							<div className="lg:mb-4 flex items-center w-full lg:w-1/4">Ice Cubes</div>
-							<div className="flex w-full lg:w-3/4">
-								<div className="flex-1 font-bold">{0} ice cubes | Need to add this</div>
-							</div>
-						</div>
-						<div className="flex flex-wrap w-full mt-4">
-							<div className="lg:mb-4 flex items-center w-full lg:w-1/4">Bucket Size</div>
-							<div className="flex w-full lg:w-3/4">
-								<div className="flex-1 font-bold">{parseBytes(tray.total_bytes)}</div>
-							</div>
-						</div>
+						<InlineText label="Freeze Option" value={tray.deepFreeze ? "Deep Freeze" : "Quick Freeze"} />
+						<InlineText label="Ice Cubes" value={`${0} ice cubes | Need to add this`} />
+						<InlineText label="Bucket Size" value={parseBytes(tray.total_bytes)} />
+						<InlineText label="Data Retention" value={`${tray.expirationLimit} days`} />
 					</div>
 				</Card>
 			)}

@@ -81,12 +81,7 @@ export default function Account() {
 					<Card>
 						<SmallHeader>Personal Information</SmallHeader>
 						<div className="flex flex-wrap">
-							<div className="flex flex-wrap w-full mt-4">
-								<div className="flex items-center w-full lg:w-1/4">Email Address</div>
-								<div className="flex w-full lg:w-3/4">
-									<div className="flex-1 font-bold">{profile.email}</div>
-								</div>
-							</div>
+							<InlineText label="Email Address" value={profile.email} />
 							<InlineCardField
 								initialValue={profile.phone}
 								label="Phone Number"
