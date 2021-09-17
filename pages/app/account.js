@@ -8,6 +8,7 @@ import { supabase } from "@/services/supabase";
 import { useEffect, useState } from "react";
 import Tokens from "@/components/Tokens";
 import BillingDetails from "@/components/BillingDetails";
+import InlineText from "@/components/InlineForm/InlineText";
 
 export default function Account() {
 	const [fail, setFail] = useState(false);

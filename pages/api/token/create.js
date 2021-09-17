@@ -1,11 +1,11 @@
 import { supabase } from "@/services/supabase";
+import { verifyRequest } from "lib/verifyRequest";
 const crypto = require("crypto");
 import { uniqueNamesGenerator, adjectives, colors, animals, starWars, names } from "unique-names-generator";
 
 export default async (req, res) => {
 	const token = req.headers.token;
 
-	/* Verify the request based on the token */
 	try {
 		const { data: appUser, error } = await supabase.auth.api.getUser(token);
 		if (error || !appUser || !appUser.id) {
@@ -14,6 +14,8 @@ export default async (req, res) => {
 		supabase.auth.session = () => ({
 			access_token: token,
 		});
+		const { user: appUser, session } = verifyRequest(token);
+		supabase.auth.session = session;
 
 		/* SUPER SECRET TOKEN CREATION */
 		const uniqueString = uniqueNamesGenerator({
@@ -22,14 +24,21 @@ export default async (req, res) => {
 			separator: "-",
 			length: "3",
 		});
+		// const iv = crypto.randomBytes(16);
 
 		const createdDate = new Date().toISOString();
-		const sha = crypto.createHash("sha256").update(`${uniqueString}_${appUser.id}`).digest("base64");
+		// const cipher = crypto.createCipheriv("aes-256-ctr", uniqueString, iv);
+		// const encrypted = Buffer.concat([cipher.update(appUser.id), cipher.final()]);
+
+		// const key = iv.toString("hex");
+		// const final = encrypted.toString("hex");
+
+		const sha = crypto.createHash("sha256").update(uniqueString).digest("base64");
 		const final = crypto.createHash("md5").update(sha).digest("hex");
 
+		/* TODO: find a way to decryupt and verify token */
 		const tokenRow = {
-			key: uniqueString,
-			secret: `QF_${final}`,
+			secret: final,
 			created: createdDate,
 			profile: appUser.id,
 		};
@@ -49,11 +58,3 @@ export default async (req, res) => {
 		return res.status(401).json({ error: err });
 	}
 };
-
-function decrypt(token) {
-	// remove QF_
-	// temp = decrypt md5
-	// key_created = decrypt SHA256 (with an underscore)
-	// lookup token by created and key
-	// lookup endpoint by userId and endpoint used
-}

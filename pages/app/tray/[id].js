@@ -88,7 +88,7 @@ export default function Tray() {
 					<div className="flex flex-wrap">
 						<InlineCardField initialValue={tray.name} label="Name" saveChange={(value) => saveChange(value, "name")} />
 						<InlineText label="Freeze Option" value={tray.deepFreeze ? "Deep Freeze" : "Quick Freeze"} />
-						<InlineText label="Ice Cubes" value={`${tray.ice_cubes.length || 0} ice cubes`} />
+						<InlineText label="Ice Cubes" value={`${tray.ice_cubes && tray.ice_cubes.length} ice cubes`} />
 						<InlineText label="Bucket Size" value={parseBytes(tray.total_bytes)} />
 						<InlineText label="Data Retention" value={`${tray.expirationLimit} days`} />
 					</div>

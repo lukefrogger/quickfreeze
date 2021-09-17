@@ -32,7 +32,7 @@ export default function Tokens({ tokens }) {
 		setFail(false);
 
 		try {
-			const isSuccess = await fetcher("/api/create-token", supabase.auth.session().access_token, "POST");
+			const isSuccess = await fetcher("/api/token/create", supabase.auth.session().access_token, "POST");
 			console.log(isSuccess);
 			setToks([...toks, isSuccess.record]);
 		} catch (err) {
@@ -63,6 +63,7 @@ export default function Tokens({ tokens }) {
 
 	return (
 		<>
+			{/* TODO: add stuff about keeping tokens safe here */}
 			<div className="flex flex-wrap w-full mt-4 text-sm">
 				<div className="flex items-center w-full lg:w-1/4">Created Date</div>
 				<div className="flex w-full lg:w-3/4">
@@ -78,7 +79,7 @@ export default function Tokens({ tokens }) {
 				<div className="flex flex-wrap w-full mt-4" key={tok.id}>
 					<div className="flex items-center w-full lg:w-1/4">{format(new Date(tok.created), "MMM d, yyyy")}</div>
 					<div className="flex w-full lg:w-3/4">
-						<div className="flex-1">{tok.secret}</div>
+						<div className="flex-1">QF_{tok.secret}</div>
 						<div className="w-28 flex justify-end items-center">
 							<div className="flex-1 text-danger ">
 								<FontAwesomeIcon
