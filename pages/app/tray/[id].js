@@ -63,7 +63,6 @@ export default function Tray() {
 			if (error) {
 				throw error;
 			}
-			console.log("tray found", data[0]);
 			setTray({ ...tray, [key]: value });
 		} catch (err) {
 			setFail(err.message || "The changes to your tray could not be saved");
@@ -93,7 +92,7 @@ export default function Tray() {
 
 	return (
 		<AppLayout>
-			<SmallHeader>bucket</SmallHeader>
+			<SmallHeader>Tray</SmallHeader>
 			<h4 className="text-3xl mb-2">{tray.name || router.query.id}</h4>
 			<div className="flex relative mb-6">
 				<div>Endpoint:</div>

@@ -4,12 +4,12 @@ function parseBytes(bytes, showLabel) {
 	}
 
 	const kilo = bytes / 1000;
-	if (kilo <= 1000) {
+	if (kilo < 1000) {
 		return Math.round(kilo * 100) / 100 + (showLabel ? " KB" : "");
 	}
 
 	const mega = kilo / 1000;
-	if (mega <= 1000) {
+	if (mega < 1000) {
 		return Math.round(mega * 100) / 100 + (showLabel ? " MB" : "");
 	}
 

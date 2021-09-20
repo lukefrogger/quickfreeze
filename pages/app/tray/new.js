@@ -81,7 +81,7 @@ export default function NewTray() {
 					throw { message: "You are using the maximum number of trays in your subscription" };
 				} else if (limit.trays.find((item) => item.endpoint === values.endpoint)) {
 					throw { message: "You've already used this endpoint" };
-				} else if (values.expiration === "") {
+				} else if (values.expiration === "" || values.expiration === 0) {
 					throw { message: "You must select an data retention setting" };
 				}
 
@@ -148,72 +148,72 @@ export default function NewTray() {
 	return (
 		<AppLayout>
 			<h4 className="text-3xl mb-2">Create a tray</h4>
-			<Card>
-				{fail && (
-					<div className="mb-4">
-						<Message warning={true}>{fail}</Message>
-					</div>
-				)}
-				<h4 className="mb-2 text-primary font-bold uppercase">Tray Details</h4>
-				<form onSubmit={formik.handleSubmit} noValidate>
-					<Input
-						type="text"
-						name="name"
-						label="Tray Name"
-						value={formik.values.trayName}
-						onChange={formik.handleChange}
-						error={formik.touched.name && formik.errors.name}
-					/>
-					<Input
-						type="text"
-						name="endpoint"
-						label="Tray Endpoint"
-						helpText="The endpoint must be unique to your account and URL safe."
-						value={validEndpoint}
-						onChange={formik.handleChange}
-						error={formik.touched.endpoint && formik.errors.endpoint}
-					/>
-					<h4 className="mb-2 mt-6 text-primary font-bold uppercase">Data Settings</h4>
-					<Checkbox
-						name="deepFreeze"
-						value={formik.values.deepFreeze}
-						onChange={formik.handleChange}
-						error={formik.touched.deepFreeze && formik.errors.deepFreeze}
-						disabled={!limits.deepFreeze}
-						helpText="Data can be stored for as long as needed and read from a tray as many times as needed"
-					>
-						Use Deep Freeze
-					</Checkbox>
-					<Select
-						name="expiration"
-						label="Data Retention"
-						value={formik.values.expiration}
-						onChange={formik.handleChange}
-						helpText="Select the length of days between when a record is added and when it will automatically be deleted."
-						error={formik.touched.expiration && formik.errors.expiration}
-					>
-						<option>-- Select --</option>
-						{expirationLimits.map((opt) => (
-							<option value={opt.value} key={opt.value}>
-								{opt.label}
-							</option>
-						))}
-					</Select>
-					{limits.traysLeft === 0 ? (
-						<Message>
-							You have created the max number of trays that your subscription allows.{" "}
-							<Link href="/app/account/">
-								<a className="underline">Upgrade here</a>
-							</Link>{" "}
-							to create more.
-						</Message>
-					) : (
+			{limits && limits.traysLeft === 0 ? (
+				<Message>
+					You have created the max number of trays that your subscription allows.{" "}
+					<Link href="/app/account/">
+						<a className="underline">Upgrade here</a>
+					</Link>{" "}
+					to create more.
+				</Message>
+			) : (
+				<Card>
+					{fail && (
+						<div className="mb-4">
+							<Message warning={true}>{fail}</Message>
+						</div>
+					)}
+					<h4 className="mb-2 text-primary font-bold uppercase">Tray Details</h4>
+					<form onSubmit={formik.handleSubmit} noValidate>
+						<Input
+							type="text"
+							name="name"
+							label="Tray Name"
+							value={formik.values.trayName}
+							onChange={formik.handleChange}
+							error={formik.touched.name && formik.errors.name}
+						/>
+						<Input
+							type="text"
+							name="endpoint"
+							label="Tray Endpoint"
+							helpText="The endpoint must be unique to your account and URL safe."
+							value={validEndpoint}
+							onChange={formik.handleChange}
+							error={formik.touched.endpoint && formik.errors.endpoint}
+						/>
+						<h4 className="mb-2 mt-6 text-primary font-bold uppercase">Data Settings</h4>
+						<Checkbox
+							name="deepFreeze"
+							value={formik.values.deepFreeze}
+							onChange={formik.handleChange}
+							error={formik.touched.deepFreeze && formik.errors.deepFreeze}
+							disabled={!limits.deepFreeze}
+							helpText="Data can be stored for as long as needed and read from a tray as many times as needed"
+						>
+							Use Deep Freeze
+						</Checkbox>
+						<Select
+							name="expiration"
+							label="Data Retention"
+							value={formik.values.expiration}
+							onChange={formik.handleChange}
+							helpText="Select the length of days between when a record is added and when it will automatically be deleted."
+							error={formik.touched.expiration && formik.errors.expiration}
+						>
+							<option>-- Select --</option>
+							{expirationLimits.map((opt) => (
+								<option value={opt.value} key={opt.value}>
+									{opt.label}
+								</option>
+							))}
+						</Select>
 						<Button type="submit" color="primary" loading={loading}>
 							Create Tray
 						</Button>
-					)}
-				</form>
-			</Card>
+					</form>
+				</Card>
+			)}
 		</AppLayout>
 	);
 }
