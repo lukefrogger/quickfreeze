@@ -69,14 +69,8 @@ export default function PricingTable({ type = "light", setSelected }) {
 	const check = <FontAwesomeIcon icon={faCheckCircle} size="2x" />;
 	const close = <FontAwesomeIcon icon={faTimes} size="2x" />;
 
-	const signUp = (id) => {
-		console.log("sign up with id", id);
-		// router.replace(`/sign-up?plan=${id}`);
-		selected(id);
-	};
-
 	return (
-		<div className="overflow-x-scroll">
+		<div className="overflow-x-auto">
 			<table className="table-auto w-full">
 				<thead>
 					<tr className="border-b-1 border-gray-400">

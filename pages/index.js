@@ -1,6 +1,5 @@
 import FullScreenLayout from "@/components/layouts/FullScreenLayout";
 import HorizontalHeader from "@/components/framing/HorizontalHeader";
-// import { connectToDatabase } from "@/lib/mongodb";
 import icon from "../public/logo_big_trans.png";
 import Image from "next/image";
 import Button from "@/atoms/Button";
@@ -15,7 +14,6 @@ import Step from "@/atoms/Step";
 import PricingTable from "@/components/PricingTable";
 import Link from "next/link";
 import { useRouter } from "next/router";
-// import Message from "@/components/Message";
 
 export default function Home() {
 	const router = useRouter();
