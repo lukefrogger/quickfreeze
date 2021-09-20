@@ -16,12 +16,16 @@ export default function Button({ children, onClick, color, type, custom, full, l
 		if (color === "primary") {
 			return `border-primary ${styleType === "outline" ? "bg-transparent text-primary" : `bg-primary text-white`}`;
 		} else if (color === "white") {
-			return `border-white ${styleType === "outline" ? "bg-transparent" : "g-white"} ${
+			return `border-white ${styleType === "outline" ? "bg-transparent" : "bg-white"} ${
 				styleType === "outline" ? "text-white" : "text-bDark"
+			}`;
+		} else if (color === "danger") {
+			return `border-danger ${styleType === "outline" ? "bg-transparent" : "bg-danger"} ${
+				styleType === "outline" ? "text-danger" : "text-white"
 			}`;
 		} else {
 			return `border-bDark ${styleType === "outline" ? "bg-transparent" : "bg-bDark"} ${
-				styleType === "outline" ? "text-bDark" : "text-whit"
+				styleType === "outline" ? "text-bDark" : "text-white"
 			}`;
 		}
 	};

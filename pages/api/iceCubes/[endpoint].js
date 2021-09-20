@@ -79,6 +79,7 @@ async function addIceCube(record, endpoint, profile) {
 			data: record,
 			tray: tray.id,
 			size: byteSize,
+			profile: profiles[0].id,
 		};
 		console.log(iceCube);
 

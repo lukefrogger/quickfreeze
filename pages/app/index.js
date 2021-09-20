@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/services/supabase";
 import Message from "@/components/Message";
 import Spinner from "@/atoms/Spinner";
-import parseBytes from "scripts/parseBytes";
+import { formatBytesWithLabel } from "scripts/parseBytes";
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -52,9 +52,9 @@ export default function Home() {
 								<strong>{tray.deepFreeze ? "Deep" : "Quick"}</strong> Freeze
 							</div>
 							<h5 className="text-xl">{tray.name}</h5>
-							<div className="mt-6">{parseBytes(tray.total_bytes)}</div>
-							<div className="mt-2">{tray.ice_cubes.length || 0} ice cubes</div>
-							<div className="mt-2">{tray.expirationLimit} data retention</div>
+							<div className="mt-6">{formatBytesWithLabel(tray.total_bytes)}</div>
+							<div className="mt-2">{(tray.ice_cubes && tray.ice_cubes.length) || 0} ice cubes</div>
+							<div className="mt-2">{tray.expirationLimit} day retention</div>
 						</Card>
 					))}
 				</div>

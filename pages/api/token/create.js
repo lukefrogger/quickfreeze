@@ -36,7 +36,6 @@ export default async (req, res) => {
 		const sha = crypto.createHash("sha256").update(uniqueString).digest("base64");
 		const final = crypto.createHash("md5").update(sha).digest("hex");
 
-		/* TODO: find a way to decryupt and verify token */
 		const tokenRow = {
 			secret: final,
 			created: createdDate,
