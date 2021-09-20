@@ -79,7 +79,11 @@ export default function AppLayout({ children }) {
 											</a>
 										</li>
 										<li className="mr-3 border-b lg:border-0">
-											<a className="inline-block no-underline hover:text-underline py-2 px-4" href="/app/docs">
+											<a
+												className="inline-block no-underline hover:text-underline py-2 px-4"
+												href={`mailto:support@quickfreeze.io?subject=Support%2Request`}
+												target="_blank"
+											>
 												Contact Us
 											</a>
 										</li>

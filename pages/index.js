@@ -33,7 +33,7 @@ export default function Home() {
 					<div className="flex flex-col items-center">
 						<Image src={icon} alt="quick freeze logo" height={250} width={250} />
 						<div className="text-4xl max-w-screen-md text-center mt-6">
-							An <EmphasizedText>API driven, temporary</EmphasizedText> database for short-term data
+							An <EmphasizedText>API driven </EmphasizedText> data-store for <EmphasizedText>temporary data</EmphasizedText>
 						</div>
 						<div className="max-w-screen-md text-center mt-6">
 							<div className="text-xl ">
