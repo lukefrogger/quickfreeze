@@ -25,8 +25,9 @@ export default async (req, res) => {
 		console.log("===> Error", err);
 		if (err.unauthorized === true) {
 			res.status(401).send({ success: false, message: "Unauthorized request" });
+		} else {
+			res.status(err ? 400 : 500).send({ success: false, message: err || "Internal Service Error" });
 		}
-		res.status(err ? 400 : 500).send({ success: false, message: err || "Internal Service Error" });
 	}
 };
 
@@ -45,8 +46,7 @@ async function verifyApiToken(token) {
 		}
 		return data[0].profile;
 	} catch (err) {
-		console.error(err);
-		throw err;
+		throw { err, unauthorized: true };
 	}
 }
 
@@ -81,7 +81,6 @@ async function addIceCube(record, endpoint, profile) {
 			size: byteSize,
 			profile: profiles[0].id,
 		};
-		console.log(iceCube);
 
 		const { error: cubeError, data: cube } = await supabaseAdmin.from("ice_cubes").insert(iceCube);
 		if (cubeError) {
