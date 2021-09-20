@@ -88,7 +88,7 @@ async function addIceCube(record, endpoint, profile) {
 		}
 		const { error: trayError } = await supabaseAdmin
 			.from("trays")
-			.update({ total_bytes: tray.total_bytes + byteSize })
+			.update({ total_bytes: tray.total_bytes + byteSize, updated_at: new Date() })
 			.eq("id", tray.id);
 		if (trayError) {
 			await supabaseAdmin.from("ice_cubes").delete({ id: cube.id });
@@ -97,7 +97,6 @@ async function addIceCube(record, endpoint, profile) {
 
 		return true;
 	} catch (err) {
-		console.error(err);
 		throw err;
 	}
 }

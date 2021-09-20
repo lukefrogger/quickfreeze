@@ -29,7 +29,8 @@ export default function Tray() {
 					const { data, error } = await supabase
 						.from("trays")
 						.select("*, ice_cubes (size), profile (id, usage_limits (*))")
-						.eq("endpoint", router.query.id);
+						.eq("endpoint", router.query.id)
+						.order("updated_at", { ascending: false });
 					if (error) {
 						throw error;
 					}

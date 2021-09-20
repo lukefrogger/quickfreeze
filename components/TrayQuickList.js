@@ -20,7 +20,7 @@ export default function TrayQuickList({}) {
 		setLoading(true);
 		const query = async () => {
 			try {
-				const { data, error } = await supabase.from("trays").select("name, endpoint").order("created", { ascending: false });
+				const { data, error } = await supabase.from("trays").select("name, endpoint").order("updated_at", { ascending: false });
 				if (error) {
 					throw error;
 				}
@@ -48,7 +48,7 @@ export default function TrayQuickList({}) {
 		}
 
 		if (term) {
-			setFilteredList(wholeList.filter((item) => item.name.includes(term)));
+			setFilteredList(wholeList.filter((item) => item.name.toLowerCase().includes(term.toLowerCase())));
 		} else {
 			if (wholeList.length > 8) {
 				setFilteredList(wholeList.slice(7));
