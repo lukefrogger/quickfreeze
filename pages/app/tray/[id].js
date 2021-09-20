@@ -64,16 +64,13 @@ export default function Tray() {
 				throw error;
 			}
 			console.log("tray found", data[0]);
-			setTray(data[0]);
+			setTray({ ...tray, [key]: value });
 		} catch (err) {
 			setFail(err.message || "The changes to your tray could not be saved");
 		}
 	};
 
 	const deleteTray = async (answer) => {
-		// Get all icecubes and delete
-		// delete tray
-		// route back to trays list
 		if (answer === "accept") {
 			try {
 				const { error: cubeError } = await supabase.from("ice_cubes").delete().eq("tray", tray.id);

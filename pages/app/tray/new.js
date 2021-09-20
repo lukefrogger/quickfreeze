@@ -21,13 +21,8 @@ export default function NewTray() {
 	const [expirationLimits, setExpirationLimits] = useState([]);
 
 	const getLimits = async (returnData) => {
-		console.log(supabase.auth);
 		try {
-			const { data, error } = await supabase
-				.from("profiles")
-				.select(
-					"id, subscriptions( id, status, product ( deepFreeze, numOfTrays, customExpirationLimit, expirationLimit) ), trays (id, endpoint)"
-				);
+			const { data, error } = await supabase.from("profiles").select("id, trays (id, endpoint), usage_limits(*)");
 			if (error) {
 				throw error;
 			}
@@ -36,12 +31,12 @@ export default function NewTray() {
 			}
 
 			const profile = data[0];
-			const activeSub = profile.subscriptions.find((item) => item.status === "active");
+			// console.log(data[0]);
 			const temp = {
-				traysLeft: activeSub.product.numOfTrays - profile.trays.length,
-				customExpiration: activeSub.product.customExpirationLimit,
-				expirationLimit: activeSub.product.expirationLimit,
-				deepFreeze: activeSub.product.deepFreeze,
+				traysLeft: profile.usage_limits.numOfTrays - profile.trays.length,
+				customExpiration: profile.usage_limits.customExpirationLimit,
+				expirationLimit: profile.usage_limits.expirationLimit,
+				deepFreeze: profile.usage_limits.deepFreeze,
 			};
 
 			if (returnData) {
@@ -51,6 +46,7 @@ export default function NewTray() {
 			setLimits(temp);
 		} catch (err) {
 			console.log("error on limit fetch", err);
+			setFail(err.message || "We could not load your profile information. You cannot create a tray right now. ");
 			return false;
 		}
 	};
@@ -100,8 +96,8 @@ export default function NewTray() {
 				if (error) {
 					throw error;
 				}
-				console.log("created", data);
-				router.replace("/app/tray/" + data.id);
+				console.log("created", data[0]);
+				router.replace("/app/tray/" + data[0].endpoint);
 			} catch (err) {
 				console.log("ERROR", err);
 				setFail(err.message ? err.message : "There has been a problem while saving your new tray");
