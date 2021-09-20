@@ -1,5 +1,5 @@
 import { supabase } from "@/services/supabase";
-import { verifyRequest } from "lib/verifyRequest";
+// import { verifyRequest } from "lib/verifyRequest";
 const crypto = require("crypto");
 import { uniqueNamesGenerator, adjectives, colors, animals, starWars, names } from "unique-names-generator";
 
@@ -14,8 +14,6 @@ export default async (req, res) => {
 		supabase.auth.session = () => ({
 			access_token: token,
 		});
-		const { user: appUser, session } = verifyRequest(token);
-		supabase.auth.session = session;
 
 		/* SUPER SECRET TOKEN CREATION */
 		const uniqueString = uniqueNamesGenerator({
