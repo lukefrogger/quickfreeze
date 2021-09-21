@@ -51,6 +51,8 @@ export default function NewTray() {
 		}
 	};
 
+	// TODO: create a path for a tokenless route
+
 	const formik = useFormik({
 		initialValues: {
 			name: "",

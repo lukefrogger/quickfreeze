@@ -6,6 +6,7 @@ export default async (req, res) => {
 
 	try {
 		if (req.method === "GET") {
+			// TODO: create route for tokenless endpoint
 			const profileId = await verifyApiToken(token);
 			const { data: tray, error: luError } = await supabaseAdmin
 				.from("trays")
