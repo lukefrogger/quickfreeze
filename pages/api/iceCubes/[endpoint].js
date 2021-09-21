@@ -6,17 +6,27 @@ export default async (req, res) => {
 
 	try {
 		if (req.method === "GET") {
-			// const iceCubes = await supabaseAdmin
-			// 	.from("trays")
-			// 	.select("deepFreeze, total_bytes, ice_cubes(id, data, size)")
-			// 	.eq({ endpoint, profile: user.id });
-			// console.log(iceCubes);
-			res.json("not setup");
+			const profileId = await verifyApiToken(token);
+			const { data: tray, error: luError } = await supabaseAdmin
+				.from("trays")
+				.select("*, ice_cubes(*)")
+				.match({ endpoint, profile: profileId });
+			if (luError || !tray || tray.length === 0) {
+				throw luError || "This is not a valid endpoint for your account.";
+			}
+			const deleteOnSuccess = req.body.deleteOnComplete;
+
+			res.send({
+				records: tray[0].ice_cubes.map((cube) => JSON.parse(cube.data) || {}),
+				success: true,
+			});
+
+			await deleteIceCubes(tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
 		} else if (req.method === "POST") {
 			const record = JSON.stringify(req.body);
 
-			const profile = await verifyApiToken(token);
-			const isSuccess = await addIceCube(record, endpoint, profile);
+			const profileId = await verifyApiToken(token);
+			const isSuccess = await addIceCube(record, endpoint, profileId);
 			res.send({ success: isSuccess, message: "The ice cube has been added to the tray." });
 		} else {
 			throw "Not a valid request";
@@ -96,6 +106,25 @@ async function addIceCube(record, endpoint, profile) {
 		}
 
 		return true;
+	} catch (err) {
+		throw err;
+	}
+}
+
+async function deleteIceCubes(isDeepFreeze, trayId, profile, deepFreezeDelete) {
+	if (isDeepFreeze && !deepFreezeDelete) {
+		return;
+	}
+
+	try {
+		const { error } = await supabaseAdmin.from("ice_cubes").delete().match({ profile, tray: trayId });
+		if (error) {
+			throw error;
+		}
+		const { error: tError } = await supabaseAdmin.from("trays").update({ total_bytes: 0, updated_at: new Date() }).eq("id", trayId);
+		if (tError) {
+			throw tError;
+		}
 	} catch (err) {
 		throw err;
 	}
