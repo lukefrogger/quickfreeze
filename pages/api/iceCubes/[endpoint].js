@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
+import add from "date-fns/add";
 
 export default async (req, res) => {
 	const token = req.headers.authorization;
@@ -91,6 +92,7 @@ async function addIceCube(record, endpoint, profile) {
 			tray: tray.id,
 			size: byteSize,
 			profile: profiles[0].id,
+			expirationDate: add(new Date(), { days: tray.expirationLimit }),
 		};
 
 		const { error: cubeError, data: cube } = await supabaseAdmin.from("ice_cubes").insert(iceCube);
