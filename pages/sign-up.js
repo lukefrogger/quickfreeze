@@ -11,7 +11,6 @@ import Message from "@/components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "@/services/supabase";
-import { fetcher } from "@/services/api";
 
 export default function SignUp() {
 	const router = useRouter();
@@ -27,17 +26,26 @@ export default function SignUp() {
 				throw error;
 			}
 
-			// TODO: Test this
-			const complete = await fetcher("/api/create-token", session.access_token, "POST");
-
-			const { data: prods } = await supabase.from("products").select(id).match({ name: "Free", active: true });
+			// TODO: test sign up
+			const { data: prods } = await supabase.from("products").select("*").match({ name: "Free", active: true });
 			const { error: subError } = await supabase.from("subscriptions").insert({
 				user_id: user.id,
-				product_id: prods ? prods[0] : null,
+				product_id: prods ? prods[0].id : null,
 				status: "active",
 			});
 			if (subError) {
 				throw subError;
+			}
+			const { error: uError } = await supabase.from("usage_limits").insert({
+				numOfTrays: prods[0].numOfTrays,
+				traySize: prods[0].traySize,
+				deepFreeze: prods[0].deepFreeze,
+				expirationLimit: prods[0].expirationLimit,
+				customExpirationLimit: prods[0].customExpirationLimit,
+				product: prods[0].id,
+			});
+			if (uError) {
+				throw uError;
 			}
 		} catch (err) {
 			console.error("fail on profilec creation", err);
@@ -95,7 +103,7 @@ export default function SignUp() {
 			<HorizontalHeader />
 			<section className="mt-4 mb-24">
 				<Container>
-					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto bg-bLight p-8 mt-12 rounded border border-gray-500">
+					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto bg-bLight p-8 mt-12 rounded-md border border-gray-500">
 						<header className="mb-8">
 							<div className="text-3xl text-center mb-2">Create an account</div>
 						</header>

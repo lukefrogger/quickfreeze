@@ -62,7 +62,7 @@ export default function SignUp() {
 			<HorizontalHeader />
 			<section className="mt-4 mb-24">
 				<Container>
-					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto bg-bLight p-8 mt-12 rounded border border-gray-500">
+					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto bg-bLight p-8 mt-12 rounded-md border border-gray-500">
 						<header className="mb-8">
 							<div className="text-3xl text-center mb-2">Log into your account</div>
 						</header>
