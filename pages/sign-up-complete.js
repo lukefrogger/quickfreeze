@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "@/atoms/Container";
 import FullScreenLayout from "@/components/layouts/FullScreenLayout";
-import HorizontalHeader from "@/components/layouts/HorizontalHeader";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 import Message from "@/components/Message";
 
 export default function SignUpComplete() {

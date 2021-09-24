@@ -25,7 +25,7 @@ export default async (req, res) => {
 		switch (payload.type) {
 			case "checkout.session.completed":
 				console.log("Checkout session completed");
-			// await updateProfileWithCustomer(subscription);
+				await updateProfileWithCustomer(subscription);
 
 			case "customer.subscription.deleted":
 				console.log(`Subscription is deleted`);
@@ -37,7 +37,7 @@ export default async (req, res) => {
 				break;
 			case "customer.subscription.updated":
 				console.log(`Update Subscription`);
-				// updateSubscription(subscription);
+				await updateSubscription(subscription);
 				break;
 		}
 		res.status(200).send();
