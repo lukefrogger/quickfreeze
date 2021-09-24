@@ -39,7 +39,7 @@ export default function SignUp() {
 			setFailed(false);
 			try {
 				const { error } = await supabase.auth.signIn({
-					email: values.email,
+					email: values.email.toLowerCase().trim(),
 					password: values.password,
 				});
 

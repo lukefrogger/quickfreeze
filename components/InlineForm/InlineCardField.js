@@ -4,7 +4,7 @@ import Phone from "@/atoms/form/Phone";
 import Select from "@/atoms/form/Select";
 import { useEffect, useState } from "react";
 
-export default function InlineCardField({ initialValue, label, saveChange, type = "text" }) {
+export default function InlineCardField({ initialValue, label, saveChange, type = "text", placeHolder }) {
 	const [value, setValue] = useState(initialValue);
 	const [changed, setChanged] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -56,7 +56,12 @@ export default function InlineCardField({ initialValue, label, saveChange, type 
 					)}
 					{type === "text" && <Input value={changed || value || ""} type="text" onChange={(e) => changeValue(e.target.value)} />}
 					{type === "phone" && (
-						<Phone value={changed || value || ""} onChange={(valObj) => changePhone(valObj)} error={phoneError} />
+						<Phone
+							value={changed || value || ""}
+							placeHolder={placeHolder || ""}
+							onChange={(valObj) => changePhone(valObj)}
+							error={phoneError}
+						/>
 					)}
 				</div>
 				<div className="w-32 mb-3 flex justify-end items-center">

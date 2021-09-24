@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/services/supabase";
 import { formatBytesWithLabel } from "scripts/parseBytes";
 
-export default function PricingTable({ type = "light", setSelected }) {
+export default function PricingTable({ type = "light", setSelected, stopLoading }) {
 	const [data, setData] = useState({});
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const query = async () => {
@@ -16,7 +17,7 @@ export default function PricingTable({ type = "light", setSelected }) {
 					throw error;
 				}
 
-				console.log(data);
+				// console.log(data);
 				// setProducts(data);
 				setData({
 					head: [null, ...data.map((prod) => ({ price: prod.price, title: prod.name, timeframe: prod.recurring }))],
@@ -52,6 +53,7 @@ export default function PricingTable({ type = "light", setSelected }) {
 							...data.map((prod) => prod.customExpirationLimit),
 						],
 					],
+					ids: data.map((prod) => prod.stripe_price),
 				});
 			} catch (err) {
 				console.log(err);
@@ -62,7 +64,15 @@ export default function PricingTable({ type = "light", setSelected }) {
 		query();
 	}, []);
 
+	// Catstrphic failure time
+	useEffect(() => {
+		if (stopLoading === true) {
+			setLoading(false);
+		}
+	}, [stopLoading]);
+
 	const startPlan = (id) => {
+		setLoading(true);
 		setSelected(id);
 	};
 
@@ -134,22 +144,43 @@ export default function PricingTable({ type = "light", setSelected }) {
 						))}
 					<tr className="border border-l-0 border-r-0 border-b-0 border-gray-300">
 						<td className="pt-6">&nbsp;</td>
-						<td className="pt-6">
-							{/* <Link href="/sign-up" passHref> */}
+						{data.ids &&
+							data.ids.map((id, i) => {
+								// Is odd
+								if (i % 2 != 0) {
+									return (
+										<td className="pt-6" key={i}>
+											<Button
+												type="outline"
+												color={type === "light" ? "primary" : `white`}
+												onClick={() => startPlan(id)}
+												loading={loading}
+											>
+												Sign Up
+											</Button>
+										</td>
+									);
+								} else {
+									return (
+										<td className="pt-6" key={i}>
+											<Button color="primary" onClick={() => startPlan(id)} loading={loading}>
+												Sign Up
+											</Button>
+										</td>
+									);
+								}
+							})}
+						{/* <td className="pt-6">
 							<Button type="outline" color={type === "light" ? "primary" : `white`} onClick={() => startPlan("free")}>
 								Sign Up
 							</Button>
-							{/* </Link> */}
 						</td>
 						<td className="pt-6">
-							{/* <Link href="/sign-up" passHref> */}
 							<Button color="primary" onClick={() => startPlan("prod_KA28c692TtvIqdbasic")}>
 								Sign Up
 							</Button>
-							{/* </Link> */}
 						</td>
 						<td className="pt-6">
-							{/* <Link href="/sign-up" passHref> */}
 							<Button
 								type="outline"
 								color={type === "light" ? "primary" : `white`}
@@ -157,8 +188,7 @@ export default function PricingTable({ type = "light", setSelected }) {
 							>
 								Sign Up
 							</Button>
-							{/* </Link> */}
-						</td>
+						</td> */}
 					</tr>
 				</tbody>
 			</table>

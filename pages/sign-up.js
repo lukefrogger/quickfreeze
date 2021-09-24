@@ -11,32 +11,17 @@ import Message from "@/components/Message";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "@/services/supabase";
+import capitalizeFirstLetter from "scripts/capitolizeFirstLetter";
 
 export default function SignUp() {
 	const router = useRouter();
 	const [failed, setFailed] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const createProfile = async (user, firstName, lastName, agreeToTerms, session) => {
+	const createProfile = async (user, firstName, lastName, agreeToTerms) => {
 		try {
-			const { error } = await supabase
-				.from("profiles")
-				.insert({ id: user.id, email: user.email, firstName, lastName, agreeToTerms, updated_at: new Date() });
-			if (error) {
-				throw error;
-			}
-
-			// TODO: test sign up
 			const { data: prods } = await supabase.from("products").select("*").match({ name: "Free", active: true });
-			const { error: subError } = await supabase.from("subscriptions").insert({
-				user_id: user.id,
-				product_id: prods ? prods[0].id : null,
-				status: "active",
-			});
-			if (subError) {
-				throw subError;
-			}
-			const { error: uError } = await supabase.from("usage_limits").insert({
+			const { error: uError, data: usage_limits } = await supabase.from("usage_limits").insert({
 				numOfTrays: prods[0].numOfTrays,
 				traySize: prods[0].traySize,
 				deepFreeze: prods[0].deepFreeze,
@@ -46,6 +31,29 @@ export default function SignUp() {
 			});
 			if (uError) {
 				throw uError;
+			}
+
+			const { error } = await supabase.from("profiles").insert({
+				id: user.id,
+				email: user.email,
+				firstName: capitalizeFirstLetter(firstName),
+				lastName: capitalizeFirstLetter(lastName),
+				agreeToTerms,
+				updated_at: new Date(),
+				usage_limits: usage_limits[0].id,
+			});
+			if (error) {
+				throw error;
+			}
+
+			const { error: subError } = await supabase.from("subscriptions").insert({
+				product: prods ? prods[0].id : null,
+				status: "active",
+				current_period_start: new Date(),
+				profile: user.id,
+			});
+			if (subError) {
+				throw subError;
 			}
 		} catch (err) {
 			console.error("fail on profilec creation", err);
@@ -70,19 +78,26 @@ export default function SignUp() {
 		}),
 		onSubmit: async (values) => {
 			setLoading(true);
+			setFailed(false);
 
 			try {
-				const { user, session, error } = await supabase.auth.signUp({
-					email: values.email,
+				let { user, error } = await supabase.auth.signUp({
+					email: values.email.toLowerCase().trim(),
 					password: values.password,
-					redirectTo: `${window.location.origin}/app/`,
 				});
-				if (error) {
+				if (error && error.message === "A user with this email address has already been registered") {
+					const { user: signedIn } = await supabase.auth.signIn({
+						email: values.email.toLowerCase().trim(),
+						password: values.password,
+					});
+					user = signedIn;
+				} else if (error) {
 					throw error;
 				}
+
 				const { data } = await supabase.from("profiles").select("id");
 				if (data && data.length === 0) {
-					await createProfile(user, values.first, values.last, values.agreeToTerms, session);
+					await createProfile(user, values.first, values.last, values.agreeToTerms);
 				}
 
 				// TODO: forward to billing if they selected a price

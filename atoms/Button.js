@@ -33,7 +33,7 @@ export default function Button({ children, onClick, color, type, custom, full, l
 	return (
 		<button
 			{...custom}
-			className={`${boilerplate} ${selectType(type)} ${loading && "bg-primary-light cursor-wait"}`}
+			className={`${boilerplate} ${selectType(type)} ${loading && "opacity-75 cursor-wait"}`}
 			onClick={onClick}
 			disabled={loading}
 		>

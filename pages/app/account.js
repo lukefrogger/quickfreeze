@@ -32,7 +32,6 @@ export default function Account() {
 					return setFail("There was a problem getting your account information.");
 				}
 
-				console.log(data[0]);
 				setProfile({
 					email: data[0].email,
 					phone: data[0].phone,
@@ -88,6 +87,7 @@ export default function Account() {
 								label="Phone Number"
 								type="phone"
 								saveChange={(value) => updateProfile(value, "phone")}
+								placeHolder="555-555-5555"
 							/>
 						</div>
 					</Card>

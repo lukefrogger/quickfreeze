@@ -3,12 +3,14 @@ import SmallHeader from "@/atoms/SmallHeader";
 import { useEffect, useState } from "react";
 import BillingLimitBar from "./BillingLimitBar";
 import format from "date-fns/format";
+import Link from "next/link";
 
 export default function BillingDetails({ currentSub, trays }) {
 	const [plan, setPlan] = useState(false);
 
 	useEffect(() => {
-		if (currentSub && trays) {
+		console.log("sub", currentSub);
+		if (currentSub && trays != undefined) {
 			console.log(currentSub);
 			setPlan(currentSub);
 		}
@@ -20,7 +22,7 @@ export default function BillingDetails({ currentSub, trays }) {
 
 	return (
 		<div className="flex flex-col lg:flex-row">
-			<div className="w-1/4 mr-8 overflow-hidden">
+			<div className="w-1/3 mr-8 overflow-hidden">
 				<div className="text-sm text-gray-300 mt-4">Current Plan</div>
 				<div className="text-2xl mb-2 border-b pb-2 ">{plan.product.name}</div>
 				<div className="flex items-center justify-between">
@@ -33,9 +35,11 @@ export default function BillingDetails({ currentSub, trays }) {
 				</div>
 				<div className="text-sm text-right text-primary">Billed monthly</div>
 				<div className="mt-8 flex">
-					<Button color="primary" type="outline" full>
-						Edit Subscription
-					</Button>
+					<Link href="/app/plans" passHref>
+						<Button color="primary" type="outline" full>
+							Manage Subscription
+						</Button>
+					</Link>
 				</div>
 			</div>
 			<div className="flex-1">
