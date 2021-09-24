@@ -47,7 +47,7 @@ export default function Plans() {
 				window.location.replace(session.url);
 			} else {
 				/* portal page to manage current sub */
-				// const resp = await fetcher('/api/create-checkout-session', supabase.auth.currentSession.access_token, 'POST');
+				// const resp = await fetcher('/api/create-customer-portal', supabase.auth.currentSession.access_token, 'POST');
 			}
 		} catch (err) {
 			console.log(err);

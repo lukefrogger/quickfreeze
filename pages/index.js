@@ -6,7 +6,6 @@ import Button from "@/atoms/Button";
 import EmphasizedText from "@/atoms/EmphasizedText";
 import PixelWedge from "@/atoms/PixelWedge";
 import wedge from "../public/wedge.png";
-import Container from "@/atoms/Container";
 import SmallHeader from "@/atoms/SmallHeader";
 import { VertLabeledIcon } from "@/components/VertLabledIcon";
 import Solutions from "@/atoms/Solutions";
@@ -14,6 +13,7 @@ import Step from "@/atoms/Step";
 import PricingTable from "@/components/PricingTable";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Container from "@/atoms/Container";
 
 export default function Home() {
 	const router = useRouter();
