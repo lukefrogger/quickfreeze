@@ -90,8 +90,8 @@ async function createSubscription(stripeSub) {
 			status: "active",
 			product: products[0].id,
 			cancel_at_period_end: stripeSub.cancel_at_period_end,
-			current_period_start: new Date(stripeSub.current_period_end * 1000),
-			current_period_end: new Date(stripeSub.current_period_start * 1000),
+			current_period_start: parseStripeDate(stripeSub.current_period_end),
+			current_period_end: parseStripeDate(stripeSub.current_period_start),
 		};
 		const { error: subError } = await supabaseAdmin.from("subscriptions").insert(newSub, { returning: "minimal" });
 		if (subError) {
