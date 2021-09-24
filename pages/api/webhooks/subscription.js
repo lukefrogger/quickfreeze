@@ -174,7 +174,7 @@ async function updateSubscription(stripeSub) {
 			cancel_at_period_end: stripeSub.cancel_at_period_end,
 			current_period_start: parseStripeDate(stripeSub.current_period_start),
 			current_period_end: parseStripeDate(stripeSub.current_period_end),
-			cancel_at: stripeSub.cancel_at,
+			cancel_at: parseStripeDate(stripeSub.cancel_at),
 			cancel_at_period_end: stripeSub.cancel_at_period_end,
 			canceled_at: parseStripeDate(stripeSub.canceled_at),
 			updated_at: new Date(),
