@@ -3,7 +3,7 @@ import { supabaseAdmin } from "@/services/supabase-admin";
 // const endpointSecret = process.env.WEBHOOK_SUB_KEY;
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY);
-const testing = process.env.NODE_ENV === "development" && true; // cannot be set to true in prod
+const testing = process.env.NODE_ENV === "development" && false; // cannot be set to true in prod
 
 export default async (req, res) => {
 	console.log(testing ? " 💥 💥 WEBHOOK SET TO TESTING" : "Running webhook");
