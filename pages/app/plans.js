@@ -32,12 +32,14 @@ export default function Plans() {
 		console.log("redirect with", id);
 
 		try {
-			if (!currentPlan.profile.stripe_customer) {
+			console.log(currentPlan.product.price === 0);
+			const customerId = currentPlan.profile.stripe_customer;
+			if (currentPlan.product.price === 0) {
 				/* checkout page to start new sub */
-				const temp = {};
 				const session = await fetcher("/api/create-checkout-session", supabase.auth.currentSession.access_token, "POST", {
 					hostUrl: window.location.origin,
-					customerEmail: currentPlan.profile.email,
+					customerEmail: !customerId ? currentPlan.profile.email : "",
+					customer: customerId,
 					priceId: id,
 				});
 				if (!session.success) {
