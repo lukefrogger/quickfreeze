@@ -122,7 +122,9 @@ export default function Tray() {
 							{tray.profile && tray.profile.usage_limits && (
 								<InlineText
 									label="Bucket Size"
-									value={`${formatBytes(tray.total_bytes)} / ${formatBytesWithLabel(tray.profile.usage_limits.traySize)}`}
+									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(
+										tray.profile.usage_limits.traySize
+									)}`}
 								/>
 							)}
 							<InlineText label="Data Retention" value={`${tray.expirationLimit} days`} />

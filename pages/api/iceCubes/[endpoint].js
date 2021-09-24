@@ -115,6 +115,7 @@ async function addIceCube(record, endpoint, profile) {
 }
 
 async function deleteIceCubes(isDeepFreeze, trayId, profile, deepFreezeDelete) {
+	console.log(isDeepFreeze, deepFreezeDelete);
 	if (isDeepFreeze && !deepFreezeDelete) {
 		return;
 	}
