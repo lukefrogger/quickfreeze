@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
+import parseStripeDate from "lib/parseStripeDate";
 
 // const endpointSecret = process.env.WEBHOOK_SUB_KEY;
 const Stripe = require("stripe");
@@ -171,11 +172,11 @@ async function updateSubscription(stripeSub) {
 			status: "active",
 			product: prod.id,
 			cancel_at_period_end: stripeSub.cancel_at_period_end,
-			current_period_start: new Date(stripeSub.current_period_start * 1000),
-			current_period_end: new Date(stripeSub.current_period_end * 1000),
+			current_period_start: parseStripeDate(stripeSub.current_period_start),
+			current_period_end: parseStripeDate(stripeSub.current_period_end),
 			cancel_at: stripeSub.cancel_at,
 			cancel_at_period_end: stripeSub.cancel_at_period_end,
-			canceled_at: stripeSub.canceled_at,
+			canceled_at: parseStripeDate(stripeSub.canceled_at),
 			updated_at: new Date(),
 		};
 		const { error: subError } = await supabaseAdmin
