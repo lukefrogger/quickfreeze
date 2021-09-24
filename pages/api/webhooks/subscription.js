@@ -53,7 +53,7 @@ async function updateProfileWithCustomer(checkoutSession) {
 		const { error: uError } = await supabaseAdmin
 			.from("profiles")
 			.update({ stripe_customer: checkoutSession.customer })
-			.eq("email", !testing ? checkoutSession.customer_email : "luke.frauhiger@gmail.com");
+			.eq("email", !testing ? checkoutSession.customer_details.email : "luke.frauhiger@gmail.com");
 		if (uError) {
 			throw uError;
 		}
@@ -175,7 +175,6 @@ async function updateSubscription(stripeSub) {
 			current_period_start: parseStripeDate(stripeSub.current_period_start),
 			current_period_end: parseStripeDate(stripeSub.current_period_end),
 			cancel_at: parseStripeDate(stripeSub.cancel_at),
-			cancel_at_period_end: stripeSub.cancel_at_period_end,
 			canceled_at: parseStripeDate(stripeSub.canceled_at),
 			updated_at: new Date(),
 		};

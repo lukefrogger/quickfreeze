@@ -1,5 +1,4 @@
 import Button from "@/atoms/Button";
-import SmallHeader from "@/atoms/SmallHeader";
 import { useEffect, useState } from "react";
 import BillingLimitBar from "./BillingLimitBar";
 import format from "date-fns/format";
@@ -47,8 +46,14 @@ export default function BillingDetails({ currentSub, trays }) {
 					<div className="flex-1">
 						<div className="text-sm text-gray-300 mt-4">Payment Details</div>
 						<div className="flex">
-							Your next statement will be issued on&nbsp;
-							<div className="font-semibold">{format(new Date(currentSub.current_period_end), "MMM d, yyyy")}</div>
+							{currentSub.cancel_at_period_end ? (
+								<span>
+									Your subscription will <span className="underline">cancel</span> on
+								</span>
+							) : (
+								<span>Your next statement will be issued on</span>
+							)}
+							<div className="font-semibold">&nbsp;{format(new Date(currentSub.current_period_end), "MMM d, yyyy")}</div>
 						</div>
 					</div>
 				)}
