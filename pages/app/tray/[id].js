@@ -147,13 +147,6 @@ export default function Tray() {
 										: [{ value: tray.deepFreeze, label: tray.deepFreeze ? "Deep Freeze" : "Quick Freeze" }]
 								}
 							/>
-							<InlineText label="Ice Cubes" value={(tray.ice_cubes && tray.ice_cubes.length) || 0} />
-							{tray.profile && tray.profile.usage_limits && (
-								<InlineText
-									label="Bucket Size"
-									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(limits.traySize)}`}
-								/>
-							)}
 							{limits && limits.customExpirationLimit ? (
 								<InlineCardField
 									initialValue={`${tray.expiration_limit || limits.expirationLimit}`}
@@ -164,6 +157,13 @@ export default function Tray() {
 								/>
 							) : (
 								<InlineText label="Data Retention" value={`${limits.expirationLimit || 0} days`} />
+							)}
+							<InlineText label="Ice Cubes" value={(tray.ice_cubes && tray.ice_cubes.length) || 0} />
+							{tray.profile && tray.profile.usage_limits && (
+								<InlineText
+									label="Bucket Size"
+									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(limits.traySize)}`}
+								/>
 							)}
 						</div>
 					</Card>
