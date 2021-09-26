@@ -43,6 +43,7 @@ export default function NewTray() {
 				return { ...temp, trays: profile.trays };
 			}
 
+			console.log(temp);
 			setLimits(temp);
 		} catch (err) {
 			console.log("error on limit fetch", err);
@@ -58,7 +59,7 @@ export default function NewTray() {
 			name: "",
 			endpoint: "",
 			deepFreeze: false,
-			expiration: 0,
+			expiration: "",
 		},
 		validationSchema: Yup.object({
 			name: Yup.string().required("Tray name required"),
@@ -70,21 +71,21 @@ export default function NewTray() {
 			setFail(false);
 			setLoading(true);
 			try {
-				const limit = await getLimits(true);
-				if (!limit) {
-					throw limit;
+				const refreshLimit = await getLimits(true);
+				if (!refreshLimit) {
+					throw refreshLimit;
 				}
-				console.log(limit);
+				console.log(refreshLimit);
 				console.log(values);
 
-				if (values.deepFreeze && !limit.deepFreeze) {
+				if (values.deepFreeze && !refreshLimit.deepFreeze) {
 					throw { message: "You're subscription doesn't have access to Deep Freeze" };
-				} else if (limit.traysLeft <= 0) {
+				} else if (refreshLimit.traysLeft <= 0) {
 					throw { message: "You are using the maximum number of trays in your subscription" };
-				} else if (limit.trays.find((item) => item.endpoint === values.endpoint)) {
+				} else if (refreshLimit.trays.find((item) => item.endpoint === values.endpoint)) {
 					throw { message: "You've already used this endpoint" };
-				} else if (limits.customExpirationLimit && (values.expiration === "" || values.expiration === 0)) {
-					throw { message: "You must select an data retention setting" };
+				} else if (refreshLimit.customExpiration && (values.expiration === "" || values.expiration === 0)) {
+					throw { message: "You must select an valid data retention setting" };
 				}
 
 				const { data, error } = await supabase.from("trays").insert({
@@ -196,7 +197,7 @@ export default function NewTray() {
 						>
 							Use Deep Freeze
 						</Checkbox>
-						{limits.customExpirationLimit && (
+						{limits.customExpiration && (
 							<Select
 								name="expiration"
 								label="Data Retention"

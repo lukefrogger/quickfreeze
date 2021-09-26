@@ -11,7 +11,6 @@ export default function InlineCardField({ initialValue, label, saveChange, type 
 	const [phoneError, setPhoneError] = useState(false);
 
 	useEffect(() => {
-		console.log("initial valu", initialValue);
 		setValue(initialValue);
 	}, [initialValue]);
 

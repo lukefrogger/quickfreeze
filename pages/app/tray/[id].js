@@ -154,11 +154,11 @@ export default function Tray() {
 									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(limits.traySize)}`}
 								/>
 							)}
-							{limits && limits.customExpirationLimit && tray.custom_expiration_limit ? (
+							{limits && limits.customExpirationLimit ? (
 								<InlineCardField
 									initialValue={`${tray.expiration_limit || limits.expirationLimit}`}
 									label="Data Retention"
-									saveChange={(value) => saveChange(value, "expirationLimit")}
+									saveChange={(value) => saveChange(value, "expiration_limit")}
 									type="select"
 									options={expirationLimits}
 								/>
