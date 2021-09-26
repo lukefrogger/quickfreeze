@@ -18,7 +18,10 @@ export default function Home() {
 		setLoading(true);
 		const query = async () => {
 			try {
-				const { data, error } = await supabase.from("trays").select("*, ice_cubes(size)").order("updated_at", { ascending: false });
+				const { data, error } = await supabase
+					.from("trays")
+					.select("*, ice_cubes(size), profile( usage_limits( expirationLimit, customExpirationLimit ) )")
+					.order("updated_at", { ascending: false });
 				if (error) {
 					throw error;
 				}
@@ -56,7 +59,13 @@ export default function Home() {
 							<div className="mt-2">
 								{(tray.ice_cubes && tray.ice_cubes.length) || 0} ice cube{tray.ice_cubes.length === 1 ? "" : "s"}
 							</div>
-							<div className="mt-2">{tray.expirationLimit} day retention</div>
+							{tray.profile.usage_limits.customExpirationLimit && tray.custom_expiration_limit ? (
+								<div className="mt-2">
+									{tray.expiration_limit || tray.profile.usage_limits.expirationLimit} day retention
+								</div>
+							) : (
+								<div className="mt-2">{tray.profile.usage_limits.expirationLimit} day retention</div>
+							)}
 						</Card>
 					))}
 				</div>

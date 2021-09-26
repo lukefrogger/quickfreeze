@@ -18,12 +18,12 @@ export default async (req, res) => {
 			}
 			const deleteOnSuccess = req.body.deleteOnComplete;
 
+			await deleteIceCubes(tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
+
 			res.send({
 				records: tray[0].ice_cubes.map((cube) => JSON.parse(cube.data) || {}),
 				success: true,
 			});
-
-			await deleteIceCubes(tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
 		} else if (req.method === "POST") {
 			const record = JSON.stringify(req.body);
 
@@ -87,12 +87,10 @@ async function addIceCube(record, endpoint, profile) {
 		}
 
 		const iceCube = {
-			created: new Date(),
 			data: record,
 			tray: tray.id,
 			size: byteSize,
 			profile: profiles[0].id,
-			expirationDate: add(new Date(), { days: tray.expirationLimit }),
 		};
 
 		const { error: cubeError, data: cube } = await supabaseAdmin.from("ice_cubes").insert(iceCube);
@@ -115,7 +113,7 @@ async function addIceCube(record, endpoint, profile) {
 }
 
 async function deleteIceCubes(isDeepFreeze, trayId, profile, deepFreezeDelete) {
-	console.log(isDeepFreeze, deepFreezeDelete);
+	console.log("no delete", isDeepFreeze && !deepFreezeDelete);
 	if (isDeepFreeze && !deepFreezeDelete) {
 		return;
 	}

@@ -11,7 +11,7 @@ import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { formatBytes, formatBytesWithLabel } from "scripts/parseBytes";
+import { formatBytesWithLabel } from "scripts/parseBytes";
 
 export default function Tray() {
 	const router = useRouter();
@@ -20,6 +20,8 @@ export default function Tray() {
 	const [icon, setIcon] = useState(faCopy);
 	const [deleteFail, setDeleteFail] = useState(false);
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+	const [expirationLimits, setExpirationLimits] = useState([]);
+	const [limits, setLimits] = useState(false);
 
 	useEffect(() => {
 		if (router.query.id) {
@@ -36,6 +38,20 @@ export default function Tray() {
 					}
 
 					setTray(data[0]);
+
+					const limits = data[0].profile.usage_limits;
+					setLimits(limits);
+
+					if (!limits.customExpirationLimit) {
+						setExpirationLimits([{ value: limits.expirationLimit, label: `${limits.expirationLimit} days` }]);
+					} else {
+						setExpirationLimits(
+							Array.from(new Array(limits.expirationLimit)).map((empty, i) => ({
+								value: i + 1,
+								label: `${i + 1} day${i + 1 > 1 ? "s" : ""}`,
+							}))
+						);
+					}
 				} catch (err) {
 					console.log(err);
 					setFail(err.message || "You're trays couldn't be found");
@@ -82,11 +98,11 @@ export default function Tray() {
 				if (trayError) {
 					throw trayError;
 				}
+				router.replace("/app/");
 			} catch (err) {
 				console.error(err);
 				setDeleteFail(err.message || "There was a problem deleting this tray");
 			}
-			router.replace("/app/");
 		}
 		setShowDeleteConfirm(false);
 	};
@@ -117,17 +133,38 @@ export default function Tray() {
 						)}
 						<div className="flex flex-wrap">
 							<InlineCardField initialValue={tray.name} label="Name" saveChange={(value) => saveChange(value, "name")} />
-							<InlineText label="Freeze Option" value={tray.deepFreeze ? "Deep Freeze" : "Quick Freeze"} />
+							<InlineCardField
+								initialValue={`${tray.deepFreeze}`}
+								label="Freeze Option"
+								saveChange={(value) => saveChange(value, "deepFreeze")}
+								type="select"
+								options={
+									limits.deepFreeze
+										? [
+												{ value: "true", label: "Deep Freeze" },
+												{ value: "false", label: "Quick Freeze" },
+										  ]
+										: [{ value: tray.deepFreeze, label: tray.deepFreeze ? "Deep Freeze" : "Quick Freeze" }]
+								}
+							/>
 							<InlineText label="Ice Cubes" value={(tray.ice_cubes && tray.ice_cubes.length) || 0} />
 							{tray.profile && tray.profile.usage_limits && (
 								<InlineText
 									label="Bucket Size"
-									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(
-										tray.profile.usage_limits.traySize
-									)}`}
+									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(limits.traySize)}`}
 								/>
 							)}
-							<InlineText label="Data Retention" value={`${tray.expirationLimit} days`} />
+							{limits && limits.customExpirationLimit && tray.custom_expiration_limit ? (
+								<InlineCardField
+									initialValue={`${tray.expiration_limit || limits.expirationLimit}`}
+									label="Data Retention"
+									saveChange={(value) => saveChange(value, "expirationLimit")}
+									type="select"
+									options={expirationLimits}
+								/>
+							) : (
+								<InlineText label="Data Retention" value={`${limits.expirationLimit || 0} days`} />
+							)}
 						</div>
 					</Card>
 					<Card className="mt-4">

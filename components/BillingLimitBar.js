@@ -17,7 +17,7 @@ export default function BillingLimitBar({ title, limit, currentNum }) {
 			) : (
 				<div className="flex justify-between text-2xl text-semibold mb-2">
 					<div className="">
-						<FontAwesomeIcon icon={faInfinity} size="md" />
+						<FontAwesomeIcon icon={faInfinity} />
 						&nbsp;
 						{title}
 					</div>

@@ -4,13 +4,14 @@ import Phone from "@/atoms/form/Phone";
 import Select from "@/atoms/form/Select";
 import { useEffect, useState } from "react";
 
-export default function InlineCardField({ initialValue, label, saveChange, type = "text", placeHolder }) {
+export default function InlineCardField({ initialValue, label, saveChange, type = "text", placeHolder, options }) {
 	const [value, setValue] = useState(initialValue);
 	const [changed, setChanged] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [phoneError, setPhoneError] = useState(false);
 
 	useEffect(() => {
+		console.log("initial valu", initialValue);
 		setValue(initialValue);
 	}, [initialValue]);
 
@@ -50,8 +51,11 @@ export default function InlineCardField({ initialValue, label, saveChange, type 
 				<div className="flex-1">
 					{type === "select" && (
 						<Select onChange={(e) => changeValue(e.target.value)} value={changed || value}>
-							<option value={false}>Quick Freeze</option>
-							<option value={true}>Deep Freeze</option>
+							{options.map((opt, i) => (
+								<option value={opt.value} key={i}>
+									{opt.label}
+								</option>
+							))}
 						</Select>
 					)}
 					{type === "text" && <Input value={changed || value || ""} type="text" onChange={(e) => changeValue(e.target.value)} />}

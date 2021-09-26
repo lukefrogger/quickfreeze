@@ -83,7 +83,7 @@ export default function NewTray() {
 					throw { message: "You are using the maximum number of trays in your subscription" };
 				} else if (limit.trays.find((item) => item.endpoint === values.endpoint)) {
 					throw { message: "You've already used this endpoint" };
-				} else if (values.expiration === "" || values.expiration === 0) {
+				} else if (limits.customExpirationLimit && (values.expiration === "" || values.expiration === 0)) {
 					throw { message: "You must select an data retention setting" };
 				}
 
@@ -92,7 +92,8 @@ export default function NewTray() {
 					name: values.name,
 					endpoint: values.endpoint,
 					deepFreeze: values.deepFreeze,
-					expirationLimit: values.expiration,
+					expiration_limit: values.expiration === 0 ? null : values.expiration,
+					custom_expiration_limit: !!values.expiration,
 					total_bytes: 0,
 				});
 				if (error) {
@@ -195,21 +196,23 @@ export default function NewTray() {
 						>
 							Use Deep Freeze
 						</Checkbox>
-						<Select
-							name="expiration"
-							label="Data Retention"
-							value={formik.values.expiration}
-							onChange={formik.handleChange}
-							helpText="Select the length of days between when a record is added and when it will automatically be deleted."
-							error={formik.touched.expiration && formik.errors.expiration}
-						>
-							<option>-- Select --</option>
-							{expirationLimits.map((opt) => (
-								<option value={opt.value} key={opt.value}>
-									{opt.label}
-								</option>
-							))}
-						</Select>
+						{limits.customExpirationLimit && (
+							<Select
+								name="expiration"
+								label="Data Retention"
+								value={formik.values.expiration}
+								onChange={formik.handleChange}
+								helpText="Select the length of days between when a record is added and when it will automatically be deleted."
+								error={formik.touched.expiration && formik.errors.expiration}
+							>
+								<option>-- Select --</option>
+								{expirationLimits.map((opt) => (
+									<option value={opt.value} key={opt.value}>
+										{opt.label}
+									</option>
+								))}
+							</Select>
+						)}
 						<Button type="submit" color="primary" loading={loading}>
 							Create Tray
 						</Button>
