@@ -1,26 +1,20 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import Input from "@/atoms/form/Input";
-import Card from "@/atoms/Card";
-import Button from "@/atoms/Button";
-import Checkbox from "@/atoms/form/Checkbox";
-import Select from "@/atoms/form/Select";
 import AppLayout from "@/components/layouts/AppLayout";
 import { useEffect, useState } from "react";
 import { supabase } from "@/services/supabase";
 import Message from "@/components/Message";
 import Link from "next/link";
-import router from "next/router";
+import Standard from "@/components/trayForms/Standard";
+import Button from "@/atoms/Button";
+import Tokenless from "@/components/trayForms/Tokenless";
 
 export default function NewTray() {
-	const [validEndpoint, setValidEndpoint] = useState("");
-	const regexTerm = new RegExp(/[!@#$%^&*(),.?":{}|<>/]/);
 	const [fail, setFail] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [limits, setLimits] = useState(false);
 	const [expirationLimits, setExpirationLimits] = useState([]);
+	const [currentTab, setCurrentTab] = useState(1);
 
-	const getLimits = async (returnData) => {
+	const getLimits = async () => {
 		try {
 			const { data, error } = await supabase.from("profiles").select("id, trays (id, endpoint), usage_limits(*)");
 			if (error) {
@@ -31,112 +25,32 @@ export default function NewTray() {
 			}
 
 			const profile = data[0];
-			// console.log(data[0]);
 			const temp = {
+				trays: profile.trays,
 				traysLeft: profile.usage_limits.numOfTrays - profile.trays.length,
-				customExpiration: profile.usage_limits.customExpirationLimit,
+				customExpirationLimit: profile.usage_limits.customExpirationLimit,
 				expirationLimit: profile.usage_limits.expirationLimit,
 				deepFreeze: profile.usage_limits.deepFreeze,
 			};
 
-			if (returnData) {
-				return { ...temp, trays: profile.trays };
-			}
-
-			console.log(temp);
 			setLimits(temp);
 		} catch (err) {
 			console.log("error on limit fetch", err);
 			setFail(err.message || "We could not load your profile information. You cannot create a tray right now. ");
 			return false;
+		} finally {
+			setLoading(false);
 		}
 	};
 
-	// TODO: create a path for a tokenless route
-
-	const formik = useFormik({
-		initialValues: {
-			name: "",
-			endpoint: "",
-			deepFreeze: false,
-			expiration: "",
-		},
-		validationSchema: Yup.object({
-			name: Yup.string().required("Tray name required"),
-			endpoint: Yup.string().required("An endpoint is required"),
-			deepFreeze: Yup.boolean(),
-			expiration: Yup.string().required("You must select an data retention setting"),
-		}),
-		onSubmit: async (values) => {
-			setFail(false);
-			setLoading(true);
-			try {
-				const refreshLimit = await getLimits(true);
-				if (!refreshLimit) {
-					throw refreshLimit;
-				}
-				console.log(refreshLimit);
-				console.log(values);
-
-				if (values.deepFreeze && !refreshLimit.deepFreeze) {
-					throw { message: "You're subscription doesn't have access to Deep Freeze" };
-				} else if (refreshLimit.traysLeft <= 0) {
-					throw { message: "You are using the maximum number of trays in your subscription" };
-				} else if (refreshLimit.trays.find((item) => item.endpoint === values.endpoint)) {
-					throw { message: "You've already used this endpoint" };
-				} else if (refreshLimit.customExpiration && (values.expiration === "" || values.expiration === 0)) {
-					throw { message: "You must select an valid data retention setting" };
-				}
-
-				const { data, error } = await supabase.from("trays").insert({
-					profile: supabase.auth.currentUser.id,
-					name: values.name,
-					endpoint: values.endpoint,
-					deepFreeze: values.deepFreeze,
-					expiration_limit: values.expiration === 0 ? null : values.expiration,
-					custom_expiration_limit: !!values.expiration,
-					total_bytes: 0,
-				});
-				if (error) {
-					throw error;
-				}
-				console.log("created", data[0]);
-				router.replace("/app/tray/" + data[0].endpoint);
-			} catch (err) {
-				console.log("ERROR", err);
-				setFail(err.message ? err.message : "There has been a problem while saving your new tray");
-			} finally {
-				setLoading(false);
-			}
-		},
-	});
-
 	useEffect(() => {
+		setLoading(true);
 		getLimits();
 	}, []);
 
-	const validateEndpoint = async (text) => {
-		let newText = "";
-		for (let letter of Array.from(text)) {
-			if (regexTerm.test(letter) === true) {
-				console.log("failed");
-			} else if (letter === " ") {
-				newText += "_";
-			} else {
-				newText += letter;
-			}
-		}
-		formik.setFieldValue("endpoint", newText);
-		setValidEndpoint(newText);
-	};
-
-	useEffect(() => {
-		validateEndpoint(formik.values.endpoint || "");
-	}, [formik.values.endpoint]);
-
 	useEffect(() => {
 		if (limits) {
-			if (!limits.customExpiration) {
+			if (!limits.customExpirationLimit) {
 				setExpirationLimits([{ value: limits.expirationLimit, label: `${limits.expirationLimit} days` }]);
 			} else {
 				setExpirationLimits(
@@ -152,7 +66,12 @@ export default function NewTray() {
 	return (
 		<AppLayout>
 			<h4 className="text-3xl mb-2">Create a tray</h4>
-			{limits && limits.traysLeft === 0 ? (
+			{fail && (
+				<div className="mb-4 mt-2">
+					<Message warning={true}>{fail}</Message>
+				</div>
+			)}
+			{limits && limits.traysLeft === 0 && (
 				<Message>
 					You have created the max number of trays that your subscription allows.{" "}
 					<Link href="/app/account/">
@@ -160,65 +79,35 @@ export default function NewTray() {
 					</Link>{" "}
 					to create more.
 				</Message>
-			) : (
-				<Card>
-					{fail && (
-						<div className="mb-4">
-							<Message warning={true}>{fail}</Message>
+			)}
+			{limits && !loading && (
+				<>
+					<div className="w-full p-2 bg-black bg-opacity-20 border border-black border-opacity-10  rounded-lg">
+						<div className="flex">
+							<div>
+								<Button
+									color="primary"
+									type={currentTab !== 1 ? "transparent" : null}
+									color={currentTab === 1 ? "primary" : null}
+									onClick={() => setCurrentTab(1)}
+								>
+									Standard
+								</Button>
+							</div>
+							<div className="ml-2">
+								<Button
+									type={currentTab !== 2 ? "transparent" : null}
+									color={currentTab === 2 ? "primary" : null}
+									onClick={() => setCurrentTab(2)}
+								>
+									Tokenless
+								</Button>
+							</div>
 						</div>
-					)}
-					<h4 className="mb-2 text-primary font-bold uppercase">Tray Details</h4>
-					<form onSubmit={formik.handleSubmit} noValidate>
-						<Input
-							type="text"
-							name="name"
-							label="Tray Name"
-							value={formik.values.trayName}
-							onChange={formik.handleChange}
-							error={formik.touched.name && formik.errors.name}
-						/>
-						<Input
-							type="text"
-							name="endpoint"
-							label="Tray Endpoint"
-							helpText="The endpoint must be unique to your account and URL safe."
-							value={validEndpoint}
-							onChange={formik.handleChange}
-							error={formik.touched.endpoint && formik.errors.endpoint}
-						/>
-						<h4 className="mb-2 mt-6 text-primary font-bold uppercase">Data Settings</h4>
-						<Checkbox
-							name="deepFreeze"
-							value={formik.values.deepFreeze}
-							onChange={formik.handleChange}
-							error={formik.touched.deepFreeze && formik.errors.deepFreeze}
-							disabled={!limits.deepFreeze}
-							helpText="Data can be stored for as long as needed and read from a tray as many times as needed"
-						>
-							Use Deep Freeze
-						</Checkbox>
-						{limits.customExpiration && (
-							<Select
-								name="expiration"
-								label="Data Retention"
-								value={formik.values.expiration}
-								onChange={formik.handleChange}
-								helpText="Select the length of days between when a record is added and when it will automatically be deleted."
-								error={formik.touched.expiration && formik.errors.expiration}
-							>
-								<option>-- Select --</option>
-								{expirationLimits.map((opt) => (
-									<option value={opt.value} key={opt.value}>
-										{opt.label}
-									</option>
-								))}
-							</Select>
-						)}
-						<Button type="submit" color="primary" loading={loading}>
-							Create Tray
-						</Button>
-					</form>
-				</Card>
+					</div>
+					{currentTab === 1 && <Standard expirationLimits={expirationLimits} limits={limits} />}
+					{currentTab === 2 && <Tokenless expirationLimits={expirationLimits} limits={limits} />}
+				</>
 			)}
 		</AppLayout>
 	);

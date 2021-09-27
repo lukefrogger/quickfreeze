@@ -12,6 +12,14 @@ export default function Button({ children, onClick, color, type, custom, full, l
 		);
 	}
 
+	if (type === "transparent") {
+		return (
+			<button {...custom} onClick={onClick} className={`${boilerplate} border-transparent text-gray-300`}>
+				{children}
+			</button>
+		);
+	}
+
 	const selectType = (styleType) => {
 		if (color === "primary") {
 			return `border-primary ${styleType === "outline" ? "bg-transparent text-primary" : `bg-primary text-white`}`;

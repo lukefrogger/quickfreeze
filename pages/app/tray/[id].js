@@ -63,7 +63,7 @@ export default function Tray() {
 	}, [router.query.id]);
 
 	const copyEndpoint = () => {
-		navigator.clipboard.writeText(`https://quickfreeze.io/api/iceCubes/${tray.endpoint}`);
+		navigator.clipboard.writeText(`https://quickfreeze.io/api${tray.unique_endpoint ? "/u/" : "/"}ice_cubes/${tray.endpoint}`);
 		setIcon(faCheck);
 		setTimeout(() => {
 			setIcon(faCopy);
@@ -114,7 +114,8 @@ export default function Tray() {
 			<div className="flex relative mb-6">
 				<div>Endpoint:</div>
 				<div className="text-primary cursor-pointer flex" onClick={copyEndpoint}>
-					&nbsp; /{tray.endpoint || router.query.id}
+					&nbsp; {tray.unique_endpoint ? "/u/ice_cubes/" : "/ice_cubes/"}
+					{tray.endpoint || router.query.id}
 					{tray.endpoint && (
 						<span className="ml-1 flex">
 							<FontAwesomeIcon icon={icon} size="sm" />
@@ -165,6 +166,7 @@ export default function Tray() {
 									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(limits.traySize)}`}
 								/>
 							)}
+							<InlineText label="Requires Token" value={tray.unique_endpoint ? "No" : "Yes"} />
 						</div>
 					</Card>
 					<Card className="mt-4">
