@@ -1,5 +1,4 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
-import add from "date-fns/add";
 
 export default async (req, res) => {
 	const token = req.headers.authorization;
@@ -10,14 +9,15 @@ export default async (req, res) => {
 			const profileId = await verifyApiToken(token);
 			const { data: tray, error: luError } = await supabaseAdmin
 				.from("trays")
-				.select("*, ice_cubes(*)")
+				.select("*, ice_cubes(*), profile( usage_limits(*) )")
 				.match({ endpoint, profile: profileId });
 			if (luError || !tray || tray.length === 0) {
 				throw luError || "This is not a valid endpoint for your account.";
 			}
 			const deleteOnSuccess = req.body.deleteOnComplete;
 
-			await deleteIceCubes(tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
+			const canBeDeepFreeze = tray[0].profile.usage_limits.customExpirationLimit;
+			await deleteIceCubes(canBeDeepFreeze && tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
 
 			res.send({
 				records: tray[0].ice_cubes.map((cube) => JSON.parse(cube.data) || {}),
