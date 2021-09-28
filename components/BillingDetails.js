@@ -28,11 +28,11 @@ export default function BillingDetails({ currentSub, trays }) {
 					<div className="text-lg text-bold mr-4">Total</div>
 					<div className="flex items-end">
 						<div className="mb-1">$</div>
-						<div className="text-3xl mr-1 ">{plan.product.price}</div>
-						<div className="mb-1">/{plan.product.recurring}</div>
+						<div className="text-3xl mr-1 ">{plan.amount}</div>
+						<div className="mb-1">/{plan.interval}</div>
 					</div>
 				</div>
-				<div className="text-sm text-right text-primary">Billed monthly</div>
+				{/* <div className="text-sm text-right text-primary">Billed monthly</div> */}
 				<div className="mt-8 flex">
 					<Link href="/app/plans" passHref>
 						<Button color="primary" type="outline" full>
