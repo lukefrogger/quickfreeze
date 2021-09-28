@@ -1,6 +1,6 @@
-import Container from "../atoms/container";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
+import Container from "@/atoms/Container";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 
 export default function TermsOfService() {
 	return (
@@ -9,7 +9,7 @@ export default function TermsOfService() {
 			<div className="mt-4 max-w-prose mx-auto">
 				<Container>
 					<div>
-						<div className="text-4xl text-primary text-center">Terms of Service</div>
+						<div className="text-4xl text-primary text-center">Terms of Use</div>
 						<div className="text-center">Last updated: Aug 19th, 2021</div>
 					</div>
 					<div className="my-8">
@@ -93,8 +93,8 @@ export default function TermsOfService() {
 					<div className="my-8">
 						<div className="text-2xl">TERMINATION</div>
 						<p>
-							If at any time we feel you have violated these Terms of Service, then we shall immediately terminate your use of
-							our website and any related communications as we deem appropriate. It is within our sole discretion to allow any
+							If at any time we feel you have violated these Terms of Use, then we shall immediately terminate your use of our
+							website and any related communications as we deem appropriate. It is within our sole discretion to allow any
 							user’s access of our website, and we may revoke this access at any time without notice, and if necessary, block
 							your IP address from further visits to our site(s).
 						</p>

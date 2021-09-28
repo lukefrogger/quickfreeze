@@ -1,73 +1,200 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Button from "../atoms/Button";
-import Container from "../atoms/container";
-import Input from "../atoms/form/Input";
-import SmallHeader from "../atoms/SmallHeader";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
-import Message from "../components/Message";
+import Button from "@/atoms/Button";
+import Container from "@/atoms/Container";
+import Checkbox from "@/atoms/form/Checkbox";
+import Input from "@/atoms/form/Input";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
+import Message from "@/components/Message";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { supabase } from "@/services/supabase";
+import capitalizeFirstLetter from "scripts/capitolizeFirstLetter";
 
 export default function SignUp() {
 	const router = useRouter();
 	const [failed, setFailed] = useState(false);
+	const [loading, setLoading] = useState(false);
 
-	const signUp = async (event) => {
-		event.preventDefault();
-		setFailed(false);
-		const res = await fetch("/api/betaSignUp", {
-			body: JSON.stringify({
-				first: event.target.elements.first.value,
-				last: event.target.elements.last.value,
-				email: event.target.elements.email.value,
-			}),
-			headers: {
-				"Content-Type": "application/json",
-			},
-			method: "POST",
-		});
+	const createProfile = async (user, firstName, lastName, agreeToTerms) => {
+		try {
+			const { data: prods } = await supabase.from("products").select("*").match({ name: "Free", active: true });
+			const { error: uError, data: usage_limits } = await supabase.from("usage_limits").insert({
+				numOfTrays: prods[0].numOfTrays,
+				traySize: prods[0].traySize,
+				deepFreeze: prods[0].deepFreeze,
+				expirationLimit: prods[0].expirationLimit,
+				customExpirationLimit: prods[0].customExpirationLimit,
+				product: prods[0].id,
+			});
+			if (uError) {
+				throw uError;
+			}
 
-		const result = await res.json();
-		if (result.success) {
-			router.push("/sign-up-complete");
-		} else {
-			setFailed(true);
+			const { error } = await supabase.from("profiles").insert({
+				id: user.id,
+				email: user.email,
+				firstName: capitalizeFirstLetter(firstName),
+				lastName: capitalizeFirstLetter(lastName),
+				agreeToTerms,
+				updated_at: new Date(),
+				usage_limits: usage_limits[0].id,
+			});
+			if (error) {
+				throw error;
+			}
+
+			const { error: subError } = await supabase.from("subscriptions").insert({
+				product: prods ? prods[0].id : null,
+				status: "active",
+				current_period_start: new Date(),
+				profile: user.id,
+			});
+			if (subError) {
+				throw subError;
+			}
+		} catch (err) {
+			console.error("fail on profilec creation", err);
+			throw err;
 		}
-		console.log(result);
 	};
+
+	const formik = useFormik({
+		initialValues: {
+			first: "",
+			last: "",
+			email: "",
+			password: "",
+			agreeToTerms: false,
+		},
+		validationSchema: Yup.object({
+			first: Yup.string().required("First name required"),
+			last: Yup.string().required("Last name required"),
+			password: Yup.string().min(8, "Password is too short - should be 8 characters minimum.").required("A password is required"),
+			email: Yup.string().email("Invalid email address").required("An email is required"),
+			agreeToTerms: Yup.boolean().required("You must agree to the terms").oneOf([true], "You must agree to the terms"),
+		}),
+		onSubmit: async (values) => {
+			setLoading(true);
+			setFailed(false);
+
+			try {
+				let { user, error } = await supabase.auth.signUp({
+					email: values.email.toLowerCase().trim(),
+					password: values.password,
+				});
+				if (error && error.message === "A user with this email address has already been registered") {
+					const { user: signedIn } = await supabase.auth.signIn({
+						email: values.email.toLowerCase().trim(),
+						password: values.password,
+					});
+					user = signedIn;
+				} else if (error) {
+					throw error;
+				}
+
+				const { data } = await supabase.from("profiles").select("id");
+				if (data && data.length === 0) {
+					await createProfile(user, values.first, values.last, values.agreeToTerms);
+				}
+
+				// TODO: forward to billing if they selected a price
+				// if(window.location.search) {
+				// 	router.push('/app/billling');
+				// }
+				router.push("/app");
+			} catch (err) {
+				console.error(err);
+				setFailed(err);
+			} finally {
+				setLoading(false);
+			}
+		},
+	});
 	return (
 		<FullScreenLayout>
 			<HorizontalHeader />
-			<section className="mt-4">
+			<section className="mt-4 mb-24">
 				<Container>
-					<div className="w-full md:w-1/2 mx-auto mb-8">
-						{failed && (
-							<div className="mb-4">
-								<Message warning={true}>
-									<strong>Oh no!</strong> We weren't able to save your information.
-								</Message>
-							</div>
-						)}
-						<Message>
-							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
-							with the latest details.
-						</Message>
-					</div>
-					<div className="w-full md:w-1/2 mx-auto bg-bLight p-8 rounded border border-blueTrans">
+					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto bg-bLight p-8 mt-12 rounded-md border border-gray-500">
 						<header className="mb-8">
-							<SmallHeader>Ready to get started</SmallHeader>
-							<div className="text-3xl text-center my-2 font-bold">
-								Sign up below and you'll be the first to know when we're ready to launch
-							</div>
+							<div className="text-3xl text-center mb-2">Create an account</div>
 						</header>
-						<form onSubmit={signUp}>
-							<Input type="text" name="first" label="First Name" />
-							<Input type="text" name="last" label="Last Name" />
-							<Input type="email" name="email" label="Email Address" />
-							<Button color="primary" custom={{ type: "submit" }}>
-								Submit
+						<form onSubmit={formik.handleSubmit} noValidate>
+							<Input
+								type="text"
+								name="first"
+								label="First Name"
+								value={formik.values.first}
+								onChange={formik.handleChange}
+								error={formik.touched.first && formik.errors.first}
+							/>
+							<Input
+								type="text"
+								name="last"
+								label="Last Name"
+								value={formik.values.last}
+								onChange={formik.handleChange}
+								error={formik.touched.last && formik.errors.last}
+							/>
+							<Input
+								type="email"
+								name="email"
+								label="Email Address"
+								value={formik.values.email}
+								onChange={formik.handleChange}
+								error={formik.touched.email && formik.errors.email}
+							/>
+							<Input
+								type="password"
+								name="password"
+								label="Password"
+								value={formik.values.password}
+								onChange={formik.handleChange}
+								error={formik.touched.password && formik.errors.password}
+							/>
+							<Checkbox
+								small={true}
+								name="agreeToTerms"
+								required={true}
+								value={formik.values.agreeToTerms}
+								onChange={formik.handleChange}
+								error={formik.touched.agreeToTerms && formik.errors.agreeToTerms}
+							>
+								I agree to the{" "}
+								<a href="/terms-of-use" target="_blank" className="underline">
+									terms of use
+								</a>{" "}
+								and{" "}
+								<a href="/privacy-policy" target="_blank" className="underline">
+									privacy policy
+								</a>
+							</Checkbox>
+							{failed && (
+								<div className="mb-4">
+									<Message warning={true}>
+										{failed.message ? (
+											<span>{failed.message}</span>
+										) : (
+											<span>
+												<strong>Oh no!</strong> We weren't able to save your information.
+											</span>
+										)}
+									</Message>
+								</div>
+							)}
+							<Button color="primary" custom={{ type: "submit" }} full={true} loading={loading}>
+								Get Started
 							</Button>
 						</form>
+					</div>
+					<div className="w-full md:w-1/2 lg:w-1/3 mx-auto mt-4 text-center text-gray-400">
+						Already have an account?{" "}
+						<Link href="/login" passHref>
+							<a className="underline">Sign in</a>
+						</Link>
 					</div>
 				</Container>
 			</section>

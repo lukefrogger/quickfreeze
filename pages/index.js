@@ -1,22 +1,28 @@
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
-// import { connectToDatabase } from "../lib/mongodb";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 import icon from "../public/logo_big_trans.png";
 import Image from "next/image";
-import Button from "../atoms/Button";
-import EmphasizedText from "../atoms/EmphasizedText";
-import PixelWedge from "../atoms/PixelWedge";
+import Button from "@/atoms/Button";
+import EmphasizedText from "@/atoms/EmphasizedText";
+import PixelWedge from "@/atoms/PixelWedge";
 import wedge from "../public/wedge.png";
-import Container from "../atoms/Container";
-import SmallHeader from "../atoms/SmallHeader";
-import { VertLabeledIcon } from "../components/VertLabledIcon";
-import Solutions from "../atoms/Solutions";
-import Step from "../atoms/Step";
-import PricingTable from "../components/PricingTable";
+import SmallHeader from "@/atoms/SmallHeader";
+import { VertLabeledIcon } from "@/components/VertLabledIcon";
+import Solutions from "@/atoms/Solutions";
+import Step from "@/atoms/Step";
+import PricingTable from "@/components/PricingTable";
 import Link from "next/link";
-// import Message from "../components/Message";
+import { useRouter } from "next/router";
+import Container from "@/atoms/Container";
 
 export default function Home() {
+	const router = useRouter();
+
+	const getStarted = (planId) => {
+		console.log("get started with", planId);
+		router.replace(`/sign-up?plan=${planId}`);
+	};
+
 	return (
 		<FullScreenLayout>
 			<HorizontalHeader />
@@ -25,18 +31,12 @@ export default function Home() {
 					<div className="flex flex-col items-center">
 						<Image src={icon} alt="quick freeze logo" height={250} width={250} />
 						<div className="text-4xl max-w-screen-md text-center mt-6">
-							An <EmphasizedText>API driven, temporary</EmphasizedText> database for short-term data
+							An <EmphasizedText>API driven </EmphasizedText> data-store for <EmphasizedText>temporary data</EmphasizedText>
 						</div>
 						<div className="max-w-screen-md text-center mt-6">
 							<div className="text-xl ">
 								The easiest way to store temorary data from webhooks, server logs, data migrations, or anything else!
 							</div>
-							{/* <div className="mt-6">
-								<Message>
-									<strong>Quick Freeze is still under development.</strong> To stay up to date,
-									sign up and we'll keep you updated with lastest information.
-								</Message>
-							</div> */}
 							<div className="mt-6">
 								<Link href="/sign-up" passHref>
 									<Button color="primary">Sign up now</Button>
@@ -65,7 +65,7 @@ export default function Home() {
 							<div className="text-3xl text-center my-2 font-bold">Storing temporary data shouldn’t be time consuming</div>
 							<div className="max-w-screen-md text-center mt-2">
 								Setting up a database for temporary data is time consuming and expensive. Without{" "}
-								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with...
+								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with these things:
 							</div>
 						</header>
 						<div className="grid grid-cols-2 lg:w-1/2 sm:w-full mt-8 ">
@@ -272,23 +272,23 @@ export default function Home() {
 					<div>
 						<Step number="1">
 							<p>
-								Create a bucket. To create a bucket you’ll need to give it a name and optionally customize the endpoint.
-								You’ll also select the <EmphasizedText weight="normal">Freeze option</EmphasizedText>, which defines what
-								happens when your data is read.
+								Create a tray. To create a tray you’ll need to give it a name and optionally customize the endpoint. You’ll
+								also select the <EmphasizedText weight="normal">Freeze option</EmphasizedText>, which defines what happens
+								when your data is read.
 							</p>
 							<div className="text-primary mt-2">Freeze Options</div>
 							<ul>
 								<li>
-									<em>Quick Freeze:</em> Once data is read from a bucket, it is automatically deleted
+									<em>Quick Freeze:</em> Once data is read from a tray, it is automatically deleted
 								</li>
 								<li>
-									<em>Deep Freeze:</em> Data can be stored for as long as needed and read from a bucket as many times as
+									<em>Deep Freeze:</em> Data can be stored for as long as needed and read from a tray as many times as
 									needed
 								</li>
 							</ul>
 						</Step>
 						<Step number="2">
-							Post data into your bucket using it’s endpoint and one of your tokens. The data will be stringified and stored -
+							Post data into your tray using it’s endpoint and one of your tokens. The data will be stringified and stored -
 							it won’t be manipulated or read, but its bytes will be calculated for billing purposes.
 						</Step>
 						<Step number="3">
@@ -306,7 +306,7 @@ export default function Home() {
 						<div className="text-3xl mb-4">Simple and straightforward pricing</div>
 					</header>
 					<div>
-						<PricingTable />
+						<PricingTable setSelected={getStarted} />
 					</div>
 				</Container>
 			</section>

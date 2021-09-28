@@ -1,6 +1,6 @@
-import Container from "../atoms/container";
-import FullScreenLayout from "../components/FullScreenLayout";
-import HorizontalHeader from "../components/HorizontalHeader";
+import Container from "@/atoms/Container";
+import FullScreenLayout from "@/components/layouts/FullScreenLayout";
+import HorizontalHeader from "@/components/framing/HorizontalHeader";
 
 export default function PrivacyPolicy() {
 	return (
