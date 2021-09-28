@@ -92,6 +92,8 @@ async function createSubscription(stripeSub) {
 			cancel_at_period_end: stripeSub.cancel_at_period_end,
 			current_period_start: parseStripeDate(stripeSub.current_period_end),
 			current_period_end: parseStripeDate(stripeSub.current_period_start),
+			interval: stripeSub.items.data[0].plan.interval,
+			amount: stripeSub.items.data[0].plan.amount / 100,
 		};
 		const { error: subError } = await supabaseAdmin.from("subscriptions").insert(newSub, { returning: "minimal" });
 		if (subError) {
