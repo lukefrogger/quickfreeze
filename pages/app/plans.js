@@ -82,7 +82,7 @@ export default function Plans() {
 					setSelected={redirectToCheckout}
 					type="dark"
 					stopLoading={fail !== false}
-					currentPriceId={currentPlan.product.stripe_price}
+					currentPriceId={currentPlan.product && currentPlan.product.stripe_price}
 				/>
 			)}
 		</AppLayout>
