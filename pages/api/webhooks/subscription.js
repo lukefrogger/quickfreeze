@@ -240,6 +240,9 @@ async function deleteSubscription(stripeSub) {
 
 		/* Cancel paid plan */
 		const activeSubs = profile.subscriptions.filter((sub) => sub.stripe_id === stripeSub.id);
+		if (activeSubs.length === 0) {
+			return;
+		}
 		const { error } = await supabaseAdmin
 			.from("subscriptions")
 			.update({ status: "canceled" }, { returning: "minimal" })

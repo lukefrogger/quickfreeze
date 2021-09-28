@@ -45,11 +45,14 @@ export default function Plans() {
 				if (!session.success) {
 					throw session;
 				}
-				console.log(session);
 				window.location.replace(session.url);
 			} else {
 				/* portal page to manage current sub */
-				// const resp = await fetcher('/api/create-customer-portal', supabase.auth.currentSession.access_token, 'POST');
+				const redirect = await fetcher("/api/create-customer-portal", supabase.auth.currentSession.access_token, "POST");
+				if (!redirect.success) {
+					throw redirect;
+				}
+				window.location.replace(redirect.url);
 			}
 		} catch (err) {
 			console.log(err);
@@ -74,7 +77,14 @@ export default function Plans() {
 				</div>
 			)}
 			{error && <Message warning="true">{error}</Message>}
-			{!error && <PricingTable setSelected={redirectToCheckout} type="dark" stopLoading={fail !== false} />}
+			{!error && (
+				<PricingTable
+					setSelected={redirectToCheckout}
+					type="dark"
+					stopLoading={fail !== false}
+					currentPriceId={currentPlan.product.stripe_price}
+				/>
+			)}
 		</AppLayout>
 	);
 }

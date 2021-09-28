@@ -77,7 +77,7 @@ export default function Documentation() {
 						<div>
 							<CodeSnippet
 								title="Adding a record to a tray"
-								code={`const url = 'https://quickfreeze.io/api/iceCubes/';
+								code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
 const trayEndpoint = '{{tray_endpoint}}';
 const data = {...record};
 
@@ -129,7 +129,7 @@ const response = await fetch(url+trayEndpoint, {
 						<div>
 							<CodeSnippet
 								title="Retrieve records from a tray"
-								code={`const url = 'https://quickfreeze.io/api/iceCubes/';
+								code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
 const trayEndpoint = '{{tray_endpoint}}';
 
 const customSettings = {
@@ -164,7 +164,7 @@ const response = await fetch(url+trayEndpoint, {
 						</div>
 						<CodeSnippet
 							title="Retrieve data from a quick freeze tray"
-							code={`const url = 'https://quickfreeze.io/api/iceCubes/';
+							code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
 const trayEndpoint = '{{tray_endpoint}}';
 
 const response = await fetch(url+trayEndpoint, {
@@ -187,7 +187,7 @@ const response = await fetch(url+trayEndpoint, {
 						</div>
 						<CodeSnippet
 							title="Retrieve and delete data in a deep freeze tray"
-							code={`const url = 'https://quickfreeze.io/api/iceCubes/';
+							code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
 const trayEndpoint = '{{tray_endpoint}}';
 
 const response = await fetch(url+trayEndpoint, {

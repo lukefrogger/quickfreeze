@@ -65,7 +65,7 @@ export default function Home() {
 							<div className="text-3xl text-center my-2 font-bold">Storing temporary data shouldn’t be time consuming</div>
 							<div className="max-w-screen-md text-center mt-2">
 								Setting up a database for temporary data is time consuming and expensive. Without{" "}
-								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with@.
+								<EmphasizedText>Quick Freeze</EmphasizedText> you’ll have to deal with these things:
 							</div>
 						</header>
 						<div className="grid grid-cols-2 lg:w-1/2 sm:w-full mt-8 ">

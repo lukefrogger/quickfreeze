@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/services/supabase";
 import { formatBytesWithLabel } from "scripts/parseBytes";
 
-export default function PricingTable({ type = "light", setSelected, stopLoading }) {
+export default function PricingTable({ type = "light", setSelected, stopLoading, currentPriceId }) {
 	const [data, setData] = useState({});
 	const [loading, setLoading] = useState(false);
 
@@ -146,8 +146,10 @@ export default function PricingTable({ type = "light", setSelected, stopLoading 
 						<td className="pt-6">&nbsp;</td>
 						{data.ids &&
 							data.ids.map((id, i) => {
-								// Is odd
-								if (i % 2 != 0) {
+								if (currentPriceId === id) {
+									return <div className="mt-8 font-semibold text-primary">Current Plan</div>;
+								} else if (i % 2 != 0) {
+									// Is odd
 									return (
 										<td className="pt-6" key={i}>
 											<Button
@@ -170,25 +172,6 @@ export default function PricingTable({ type = "light", setSelected, stopLoading 
 									);
 								}
 							})}
-						{/* <td className="pt-6">
-							<Button type="outline" color={type === "light" ? "primary" : `white`} onClick={() => startPlan("free")}>
-								Sign Up
-							</Button>
-						</td>
-						<td className="pt-6">
-							<Button color="primary" onClick={() => startPlan("prod_KA28c692TtvIqdbasic")}>
-								Sign Up
-							</Button>
-						</td>
-						<td className="pt-6">
-							<Button
-								type="outline"
-								color={type === "light" ? "primary" : `white`}
-								onClick={() => startPlan("prod_KA28dBNizhC39P")}
-							>
-								Sign Up
-							</Button>
-						</td> */}
 					</tr>
 				</tbody>
 			</table>
