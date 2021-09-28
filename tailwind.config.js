@@ -5,6 +5,8 @@ module.exports = {
 		extend: {
 			colors: {
 				primary: "#00B2FF",
+				pDark: "#126C93",
+				"primary-light": "#4fc6fd",
 				danger: "#F22A2A",
 				transDanger: "#f22a2a73",
 				bDark: "#272727",
@@ -12,6 +14,7 @@ module.exports = {
 				offPrimary: "#2D9CDB",
 				transBlue: "#E6F7FF",
 				darkPrimary: "#0e2b38",
+				lightWhite: "#505050",
 			},
 			fontFamily: {
 				sans: ["rubik", "sans-serif"],

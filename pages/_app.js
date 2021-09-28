@@ -1,11 +1,16 @@
+import { AuthProvider } from "../hooks/AuthContext";
 import "../styles/index.css";
 
-export function reportWebVitals(metric) {
-	console.log(metric);
+// export function reportWebVitals(metric) {
+// 	console.log(metric);
+// }
+
+function HomePage({ Component, pageProps }) {
+	return (
+		<AuthProvider>
+			<Component {...pageProps} />
+		</AuthProvider>
+	);
 }
 
-function MyApp({ Component, pageProps }) {
-	return <Component {...pageProps} />;
-}
-
-export default MyApp;
+export default HomePage;

@@ -1,5 +1,7 @@
 {
   "private": true,
+  "name": "quickfreeze",
+  "version": "1.0,0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -8,16 +10,28 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
     "@sendgrid/mail": "^7.4.6",
     "@supabase/supabase-js": "^1.22.3",
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/line-clamp": "^0.2.1",
     "crypto-js": "^4.1.1",
+    "date-fns": "^2.23.0",
+    "formik": "^2.2.9",
     "jsonwebtoken": "^8.5.1",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-syntax-highlighter": "^15.4.4"
+    "react-icons": "^4.2.0",
+    "react-number-format": "^4.7.3",
+    "react-syntax-highlighter": "^15.4.4",
+    "stripe": "^8.176.0",
+    "swr": "^1.0.0",
+    "unique-names-generator": "^4.6.0",
+    "yup": "^0.32.9"
   },
   "license": "MIT",
   "devDependencies": {
