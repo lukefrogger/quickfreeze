@@ -74,13 +74,13 @@ export default function NewTray() {
 			{limits && limits.traysLeft === 0 && (
 				<Message>
 					You have created the max number of trays that your subscription allows.{" "}
-					<Link href="/app/account/">
+					<Link href="/app/plans/">
 						<a className="underline">Upgrade here</a>
 					</Link>{" "}
 					to create more.
 				</Message>
 			)}
-			{limits && !loading && (
+			{limits && limits.traysLeft > 0 && !loading && (
 				<>
 					<div className="w-full p-2 bg-black bg-opacity-20 border border-black border-opacity-10  rounded-lg">
 						<div className="flex">

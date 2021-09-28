@@ -1,11 +1,23 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/atoms/Button";
 import Container from "@/atoms/Container";
 import icon from "../../public/logo_trans.png";
+import { supabase } from "@/services/supabase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function HorizontalHeader() {
 	const [navToggle, setNavToggle] = useState(true);
+	const [loggedIn, setLoggedIn] = useState(false);
+
+	useEffect(() => {
+		if (supabase.auth.currentSession && supabase.auth.currentSession.access_token) {
+			setLoggedIn(true);
+		} else {
+			setLoggedIn(false);
+		}
+	}, [supabase.auth.currentSession]);
 
 	return (
 		<Container>
@@ -42,7 +54,7 @@ export default function HorizontalHeader() {
 					<ul className="list-reset lg:flex justify-end flex-1 items-center">
 						<li className="mr-3">
 							<a
-								className="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+								className="inline-block text-gray-400 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
 								href="/pricing"
 							>
 								Pricing
@@ -50,28 +62,40 @@ export default function HorizontalHeader() {
 						</li>
 						<li className="mr-3">
 							<a
-								className="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+								className="inline-block text-gray-400 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
 								href="/docs"
 							>
 								Docs
 							</a>
 						</li>
-						<li className="mr-3">
-							<a
-								className="inline-block text-gray-500 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
-								href="/login"
-							>
-								Login
-							</a>
-						</li>
-						<li className="mr-3">
-							<a
-								className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
-								href="/sign-up"
-							>
-								<Button color="primary">Sign Up</Button>
-							</a>
-						</li>
+						{!loggedIn ? (
+							<>
+								<li className="mr-3">
+									<a
+										className="inline-block text-gray-400 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+										href="/login"
+									>
+										Login
+									</a>
+								</li>
+								<li className="mr-3">
+									<a
+										className="inline-block no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+										href="/sign-up"
+									>
+										<Button color="primary">Sign Up</Button>
+									</a>
+								</li>
+							</>
+						) : (
+							<li className="mr-3">
+								<a className="inline-block no-underline py-2 px-4 flex items-center" href="/app/">
+									<Button color="primary" type="outline">
+										Dashboard
+									</Button>
+								</a>
+							</li>
+						)}
 					</ul>
 				</div>
 			</nav>
