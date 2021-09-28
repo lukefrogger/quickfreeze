@@ -51,6 +51,8 @@ export default function SignUp() {
 				status: "active",
 				current_period_start: new Date(),
 				profile: user.id,
+				interval: "forever",
+				amount: 0,
 			});
 			if (subError) {
 				throw subError;
