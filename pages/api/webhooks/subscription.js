@@ -178,6 +178,8 @@ async function updateSubscription(stripeSub) {
 			current_period_end: parseStripeDate(stripeSub.current_period_end),
 			cancel_at: parseStripeDate(stripeSub.cancel_at),
 			canceled_at: parseStripeDate(stripeSub.canceled_at),
+			interval: stripeSub.items.data[0].plan.interval,
+			amount: stripeSub.items.data[0].plan.amount / 100,
 			updated_at: new Date(),
 		};
 		const { error: subError } = await supabaseAdmin
