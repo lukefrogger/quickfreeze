@@ -1,0 +1,13 @@
+name: Delete expired ice cubes at 11pm est
+on:
+  schedule:
+    - cron: '0 4 */1 * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete expired ice cubes
+        run: |
+          curl --request POST \
+          --url 'https://quickfreeze.io/api/webhooks.exporation' \
+          --header 'authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
