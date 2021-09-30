@@ -5,7 +5,6 @@ import SmallHeader from "@/atoms/SmallHeader";
 import CodeSnippet from "@/components/CodeSnippet";
 import FullScreenLayout from "@/components/layouts/FullScreenLayout";
 import HorizontalHeader from "@/components/framing/HorizontalHeader";
-import Message from "@/components/Message";
 
 export default function Documentation() {
 	return (
@@ -17,12 +16,6 @@ export default function Documentation() {
 						<SmallHeader>Documentation</SmallHeader>
 						<div className="text-3xl mb-4">Using the Quick Freeze API</div>
 					</header>
-					<div className="my-6">
-						<Message>
-							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
-							with lastest details.
-						</Message>
-					</div>
 				</Container>
 			</section>
 			<section>
@@ -57,8 +50,8 @@ export default function Documentation() {
 											<strong>Quick Freeze:</strong> Once data a read from a tray, it is automatically deleted
 										</div>
 										<div className="ml-8">
-											<strong>Deep Freeze:</strong> (requires a paid plan) Data can be stored for as long as needed
-											and read from a tray as many times as needed
+											<strong>Deep Freeze:</strong> Requires a paid plan - data can be read from a tray as many times
+											as needed
 										</div>
 									</div>
 								</div>
@@ -71,17 +64,16 @@ export default function Documentation() {
 									</a>
 								</Link>{" "}
 								and tray endpoint to make a POST request with the record you’d like to freeze as the body of the request.
-								Quick Freeze will turn it into an “ice cubes” and store it.
+								Quick Freeze will turn it into an “ice cube” and store it.
 							</div>
 						</div>
 						<div>
 							<CodeSnippet
 								title="Adding a record to a tray"
-								code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
-const trayEndpoint = '{{tray_endpoint}}';
+								code={`const trayEndpoint = '{{tray_endpoint}}';
 const data = {...record};
 
-const response = await fetch(url+trayEndpoint, {
+const response = await fetch(trayEndpoint, {
 	method: 'POST',
 	headers: {
 		'Content-Type': 'application/json',
@@ -99,7 +91,7 @@ const response = await fetch(url+trayEndpoint, {
 					<div className="text-2xl text-bold mb-4">Retrieve records from a tray</div>
 					<div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
 						<div>
-							1. Use your{" "}
+							1. Use an{" "}
 							<Link href="/app/account">
 								<a targe="_blank" className="text-primary underline">
 									account token
@@ -129,17 +121,17 @@ const response = await fetch(url+trayEndpoint, {
 						<div>
 							<CodeSnippet
 								title="Retrieve records from a tray"
-								code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
-const trayEndpoint = '{{tray_endpoint}}';
+								code={`const trayEndpoint = '{{tray_endpoint}}';
 
 const customSettings = {
-    // Use with Deep Freeze to remove data once retrieved. Default is FALSE
+    // Use with Deep Freeze to delete fetched data.
     deleteOnComplete: true
 }
 
-const response = await fetch(url+trayEndpoint, {
+const response = await fetch(trayEndpoint, {
     headers: {
-      'Authorization': 'Bearer {{account_token}}'
+		'Content-Type': 'application/json',
+		'Authorization': 'Bearer {{account_token}}'
     },
 	// body is only required when using custom settings
 	body: JSON.stringify(customSettings)
@@ -169,6 +161,7 @@ const trayEndpoint = '{{tray_endpoint}}';
 
 const response = await fetch(url+trayEndpoint, {
     headers: {
+	  'Content-Type': 'application/json',
       'Authorization': 'Bearer {{account_token}}'
     }
   });
@@ -176,22 +169,19 @@ const response = await fetch(url+trayEndpoint, {
 						/>
 						<div className="mt-4">
 							<div className="text-lg font-bold">Deep Freeze</div>
-							<p>
-								- (requires a paid plan) Data can be stored for as long as needed and read from a tray as many times as
-								needed
-							</p>
+							<p>- Requires a paid plan: data can be read from a tray as many times as needed</p>
 							<p>
 								- Deep Freeze data can be retrieved up to its data retention date. If you would like to delete the data
-								before its data retention date, you can include an optional parameter in your request
+								before its expiration date, you can include an optional parameter in your request
 							</p>
 						</div>
 						<CodeSnippet
 							title="Retrieve and delete data in a deep freeze tray"
-							code={`const url = 'https://quickfreeze.io/api/ice_cubes/';
-const trayEndpoint = '{{tray_endpoint}}';
+							code={`const trayEndpoint = '{{tray_endpoint}}';
 
-const response = await fetch(url+trayEndpoint, {
+const response = await fetch(trayEndpoint, {
     headers: {
+	  'Content-Type': 'application/json',
       'Authorization': 'Bearer {{account_token}}'
     },
 	// will delete the data in a Deep Freeze tray

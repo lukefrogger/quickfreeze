@@ -34,7 +34,7 @@ export default function PricingTable({ type = "light", setSelected, stopLoading,
 						[
 							{
 								text: "Deep Freeze Storage",
-								tip: "Data can be stored for as long as needed and read from a tray as many times as needed",
+								tip: "Data can be read from a tray as many times as needed",
 							},
 							...data.map((prod) => prod.deepFreeze),
 						],

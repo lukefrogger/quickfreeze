@@ -24,12 +24,6 @@ export default function Pricing({}) {
 						<SmallHeader>Pricing</SmallHeader>
 						<div className="text-3xl mb-4">Simple and straightforward pricing</div>
 					</header>
-					<div className="my-6">
-						<Message>
-							<strong>Quick Freeze is still under development.</strong> To stay up to date, sign up and we'll keep you updated
-							with the lastest information.
-						</Message>
-					</div>
 					<div>
 						<PricingTable type="dark" setSelected={getStarted} />
 					</div>
