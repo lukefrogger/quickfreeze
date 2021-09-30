@@ -47,6 +47,7 @@ async function verifyApiToken(token) {
 	if (!token || !token.includes("QF_")) {
 		false;
 	}
+	console.log(token);
 	const formatted = token.split("Bearer ")[1];
 	const secret = formatted.split("QF_")[1];
 
