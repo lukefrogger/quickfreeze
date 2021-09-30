@@ -6,7 +6,7 @@ import isBefore from "date-fns/isBefore";
 
 import isSameDay from "date-fns/isSameDay";
 
-const testing = process.env.NODE_ENV === "development" && true; // cannot be set to true in prod
+const testing = process.env.NODE_ENV === "development" && false; // cannot be set to true in prod
 
 export default async (req, res) => {
 	console.log(testing ? " 💥 💥 WEBHOOK SET TO TESTING" : "Running webhook");

@@ -7,11 +7,13 @@ const sendEmail = async (to, templateId, customData) => {
 		return false;
 	}
 
-	console.log("to", to);
 	try {
 		await sgMail.send({
 			to,
-			from: "support@quickfreeze.io",
+			from: {
+				email: "support@quickfreeze.io",
+				name: "Quick Freeze Assistant",
+			},
 			templateId,
 			dynamic_template_data: customData,
 		});

@@ -16,7 +16,11 @@ export default async (req, res) => {
 	}
 
 	try {
-		// get all data needed
+		const { authorization } = req.headers;
+		if (authorization !== `Bearer ${process.env.CRON_KEY}`) {
+			throw "Unauthorized Request";
+		}
+
 		const { data, error } = await supabaseAdmin
 			.from("profiles")
 			.select(
@@ -27,7 +31,6 @@ export default async (req, res) => {
 		}
 
 		const traysByProfile = [];
-		let deleteIds = [];
 
 		for (let i = 0; i < data.length; i++) {
 			const limits = data[i].usage_limits;
@@ -41,14 +44,9 @@ export default async (req, res) => {
 					expirationDays = tray.expiration_limit || limits.expirationLimit;
 				}
 
-				const expirationDate = sub(new Date(), { days: expirationDays });
 				const warningDate = sub(new Date(), { days: expirationDays - 1 });
 
-				const { expired, warning } = filterIceCubes(expirationDate, warningDate, tray.ice_cubes);
-
-				if (expired.length > 0) {
-					deleteIds = [...deleteIds, ...expired.map((item) => item.id)];
-				}
+				const warning = filterIceCubes(warningDate, tray.ice_cubes);
 
 				// cache trays to be added later
 				if (warning.length > 0) {
@@ -56,7 +54,7 @@ export default async (req, res) => {
 						name: tray.name,
 						endpoint: tray.endpoint,
 						trayId: tray.id,
-						warning,
+						cubes: warning,
 					});
 				}
 			}
@@ -72,7 +70,6 @@ export default async (req, res) => {
 		}
 		console.log("Melting Trays", traysByProfile);
 
-		await deleteIceCubes(deleteIds);
 		for (let i = 0; i < traysByProfile.length; i++) {
 			await sendWarningEmail(traysByProfile[i].email, traysByProfile[i].trays);
 		}
@@ -85,11 +82,10 @@ export default async (req, res) => {
 };
 
 async function sendWarningEmail(email, trays) {
-	const needNotif = trays.filter((tray) => tray.warning.length > 0);
 	const template = "d-6d3c07125b94492c932a390622c30976";
 
 	const cData = {
-		trays: needNotif.map((tray) => ({ name: tray.name, endpoint: tray.endpoint, ice_cubes: tray.warning.length })),
+		trays: trays.map((tray) => ({ name: tray.name, endpoint: tray.endpoint, ice_cubes: tray.cubes.length })),
 	};
 	console.log("trays for email", email, cData);
 	try {
@@ -99,28 +95,15 @@ async function sendWarningEmail(email, trays) {
 	}
 }
 
-async function deleteIceCubes(deleteIds) {
-	console.log("deleteIds", deleteIds);
-
-	try {
-		await supabaseAdmin.from("ice_cubes").delete().in("id", deleteIds);
-	} catch (err) {
-		console.log(err);
-	}
-}
-
-function filterIceCubes(expirationDate, warningDate, cubes) {
-	const expired = [];
+function filterIceCubes(warningDate, cubes) {
 	const melting = [];
 	for (let i = 0; i < cubes.length; i++) {
 		const cubeCreated = add(new Date(cubes[i].expiration_start), { days: 1 });
 
-		if (isSameDay(cubeCreated, expirationDate) || isBefore(cubeCreated, expirationDate)) {
-			expired.push(cubes[i]);
-		} else if (isSameDay(cubeCreated, warningDate)) {
+		if (isSameDay(cubeCreated, warningDate)) {
 			melting.push(cubes[i]);
 		}
 	}
 
-	return { expired, warning: melting };
+	return melting;
 }
