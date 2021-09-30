@@ -1,13 +1,13 @@
-name: Delete expired ice cubes at 11pm est
+name: Send warning email
 on:
   schedule:
-    - cron: '0 4 */1 * *'
+    - cron: '0 14 */1 * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete expired ice cubes
+      - name: Send warning email at 10am est
         run: |
           curl --request POST \
-          --url 'https://quickfreeze.io/api/webhooks/expiration' \
+          --url 'https://quickfreeze.io/api/webhooks/notification' \
           --header 'authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
