@@ -1,6 +1,7 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
 
 export default async (req, res) => {
+	console.log(req.headers);
 	const token = req.headers.authorization;
 	const endpoint = req.query.endpoint;
 
@@ -47,6 +48,7 @@ async function verifyApiToken(token) {
 	if (!token || !token.includes("QF_")) {
 		false;
 	}
+	console.log(token);
 	const formatted = token.split("Bearer ")[1];
 	const secret = formatted.split("QF_")[1];
 
