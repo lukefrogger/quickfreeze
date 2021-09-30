@@ -1,6 +1,7 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
 
 export default async (req, res) => {
+	console.log(req.headers);
 	const token = req.headers.authorization;
 	const endpoint = req.query.endpoint;
 
