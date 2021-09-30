@@ -2,11 +2,10 @@ import { supabaseAdmin } from "@/services/supabase-admin";
 import emailer from "@/services/emailer";
 import sub from "date-fns/sub";
 import add from "date-fns/add";
-import isBefore from "date-fns/isBefore";
 
 import isSameDay from "date-fns/isSameDay";
 
-const testing = process.env.NODE_ENV === "development" && true; // cannot be set to true in prod
+const testing = process.env.NODE_ENV === "development" && false; // cannot be set to true in prod
 
 export default async (req, res) => {
 	console.log(testing ? " 💥 💥 WEBHOOK SET TO TESTING" : "Running webhook");
@@ -68,10 +67,13 @@ export default async (req, res) => {
 				});
 			}
 		}
-		console.log("Melting Trays", traysByProfile);
+		// console.log("Melting Trays", traysByProfile);
 
 		for (let i = 0; i < traysByProfile.length; i++) {
 			await sendWarningEmail(traysByProfile[i].email, traysByProfile[i].trays);
+			await supabaseAdmin
+				.from("logs")
+				.insert({ message: "Email notification", json: traysByProfile[i].trays, profile: traysByProfile[i].id });
 		}
 
 		res.status(200).send();
