@@ -15,6 +15,8 @@ export default async (req, res) => {
 	}
 
 	try {
+		await supabaseAdmin.from("logs").insert({ message: "Start notification cron" });
+
 		const { authorization } = req.headers;
 		if (authorization !== `Bearer ${process.env.CRON_KEY}`) {
 			throw "Unauthorized Request";

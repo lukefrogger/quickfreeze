@@ -1,9 +1,7 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
-import emailer from "@/services/emailer";
 import sub from "date-fns/sub";
 import add from "date-fns/add";
 import isBefore from "date-fns/isBefore";
-
 import isSameDay from "date-fns/isSameDay";
 
 const testing = process.env.NODE_ENV === "development" && false; // cannot be set to true in prod
@@ -16,6 +14,8 @@ export default async (req, res) => {
 	}
 
 	try {
+		await supabaseAdmin.from("logs").insert({ message: "Start expiration cron" });
+
 		const { authorization } = req.headers;
 		if (authorization !== `Bearer ${process.env.CRON_KEY}`) {
 			throw "Unauthorized Request";
