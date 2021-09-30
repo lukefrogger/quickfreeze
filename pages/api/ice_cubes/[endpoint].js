@@ -46,7 +46,7 @@ export default async (req, res) => {
 async function verifyApiToken(token) {
 	/* Make sure the token exists and they it's been copied from the frontend - which includes the "QF_" */
 	if (!token || !token.includes("QF_")) {
-		false;
+		throw "You must include a token in this request";
 	}
 	console.log(token);
 	const formatted = token.split("Bearer ")[1];
