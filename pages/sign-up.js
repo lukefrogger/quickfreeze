@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "@/services/supabase";
 import capitalizeFirstLetter from "scripts/capitolizeFirstLetter";
+import { fetcher } from "@/services/api";
 
 export default function SignUp() {
 	const router = useRouter();
@@ -57,6 +58,8 @@ export default function SignUp() {
 			if (subError) {
 				throw subError;
 			}
+
+			await fetcher("/api/emails/welcome", "", "POST", { firstName, lastName, email: user.email });
 		} catch (err) {
 			console.error("fail on profilec creation", err);
 			throw err;
