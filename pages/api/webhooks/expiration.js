@@ -32,9 +32,11 @@ export default async (req, res) => {
 
 		let deleteIds = [];
 
+		const traysByProfile = [];
 		for (let i = 0; i < data.length; i++) {
 			const limits = data[i].usage_limits;
 
+			const tempTrays = [];
 			for (let t = 0; t < data[i].trays.length; t++) {
 				const tray = data[i].trays[t];
 
@@ -48,13 +50,31 @@ export default async (req, res) => {
 				const expired = filterIceCubes(expirationDate, tray.ice_cubes);
 
 				if (expired.length > 0) {
+					tempTrays.push({
+						name: tray.name,
+						trayId: tray.id,
+						cubes: expired,
+					});
 					deleteIds = [...deleteIds, ...expired.map((item) => item.id)];
 				}
+			}
+
+			if (tempTrays.length > 0) {
+				traysByProfile.push({
+					id: data[i].id,
+					trays: tempTrays,
+				});
 			}
 		}
 
 		if (deleteIds.length > 0) {
 			await deleteIceCubes(deleteIds);
+		}
+
+		for (let i = 0; i < traysByProfile.length; i++) {
+			await supabaseAdmin
+				.from("logs")
+				.insert({ message: "Delete ice cubes", json: traysByProfile[i].trays, profile: traysByProfile[i].id });
 		}
 
 		res.status(200).send();
