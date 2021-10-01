@@ -12,7 +12,7 @@ const sendEmail = async (to, templateId, customData) => {
 			to,
 			from: {
 				email: "support@quickfreeze.io",
-				name: "Quick Freeze Assistant",
+				name: "Quick Freeze Support",
 			},
 			templateId,
 			dynamic_template_data: customData,
