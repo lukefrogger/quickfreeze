@@ -81,7 +81,7 @@ export default async (req, res) => {
 		res.status(200).send();
 	} catch (err) {
 		console.log("=> Error: ", err.message);
-		await supabaseAdmin.from("failures").insert({ stack: err, message: err.message || err, raw: err });
+		await supabaseAdmin.from("failures").insert({ stack: err, message: "Send notification cron" || err, raw: err });
 		return res.status(400).send(`Webhook Error: ${err.message}`);
 	}
 };

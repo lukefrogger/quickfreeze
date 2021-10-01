@@ -10,4 +10,4 @@ jobs:
         run: |
           curl --request POST \
           --url 'https://quickfreeze.io/api/webhooks/expiration' \
-          --header 'authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
+          --header 'authorization: Bearer ${{ secrets.CRON_KEY }}'
