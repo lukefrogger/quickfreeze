@@ -1,12 +1,23 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
+import Cors from "cors";
+import initMiddleware from "lib/init-middleware";
+
+const cors = initMiddleware(
+	Cors({
+		methods: ["GET", "POST"],
+		origin: "*",
+	})
+);
 
 export default async (req, res) => {
-	const token = req.headers.authorization;
-	const endpoint = req.query.endpoint;
-
 	try {
+		await cors(req, res);
+		const token = req.headers.authorization;
+		const endpoint = req.query.endpoint;
+
+		const profileId = await verifyApiToken(token);
+
 		if (req.method === "GET") {
-			const profileId = await verifyApiToken(token);
 			const { data: tray, error: luError } = await supabaseAdmin
 				.from("trays")
 				.select("*, ice_cubes(*), profile( usage_limits(*) )")
@@ -19,25 +30,24 @@ export default async (req, res) => {
 			const canBeDeepFreeze = tray[0].profile.usage_limits.customExpirationLimit;
 			await deleteIceCubes(canBeDeepFreeze && tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
 
-			res.send({
+			res.json({
 				records: tray[0].ice_cubes.map((cube) => JSON.parse(cube.data) || {}),
 				success: true,
 			});
 		} else if (req.method === "POST") {
 			const record = JSON.stringify(req.body);
 
-			const profileId = await verifyApiToken(token);
 			const isSuccess = await addIceCube(record, endpoint, profileId);
-			res.send({ success: isSuccess, message: "The ice cube has been added to the tray." });
+			res.json({ success: isSuccess, message: "The ice cube has been added to the tray." });
 		} else {
 			throw "Not a valid request";
 		}
 	} catch (err) {
 		console.log("===> Error", err);
 		if (err.unauthorized === true) {
-			res.status(401).send({ success: false, message: "Unauthorized request" });
+			res.status(401).json({ success: false, message: "Unauthorized request" });
 		} else {
-			res.status(err ? 400 : 500).send({ success: false, message: err || "Internal Service Error" });
+			res.status(err ? 200 : 500).json({ success: false, message: err || "Internal Service Error" });
 		}
 	}
 };

@@ -1,9 +1,19 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
+import Cors from "cors";
+import initMiddleware from "lib/init-middleware";
 
+const cors = initMiddleware(
+	Cors({
+		methods: ["GET", "POST"],
+		origin: "*",
+	})
+);
 export default async (req, res) => {
-	const endpoint = req.query.endpoint;
-
 	try {
+		await cors(req, res);
+
+		const endpoint = req.query.endpoint;
+
 		if (req.method === "GET") {
 			const { data: trays, error: luError } = await supabaseAdmin
 				.from("trays")
