@@ -109,7 +109,7 @@ export default function Tray() {
 
 	return (
 		<AppLayout>
-			<SmallHeader>Tray</SmallHeader>
+			<SmallHeader>{tray.unique_endpoint ? "Tokenless" : "Standard"} Tray</SmallHeader>
 			<h4 className="text-3xl mb-2">{tray.name || router.query.id}</h4>
 			<div className="flex relative mb-6">
 				<div>Endpoint:</div>

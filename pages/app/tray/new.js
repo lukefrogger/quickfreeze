@@ -106,7 +106,15 @@ export default function NewTray() {
 						</div>
 					</div>
 					{currentTab === 1 && <Standard expirationLimits={expirationLimits} limits={limits} />}
-					{currentTab === 2 && <Tokenless expirationLimits={expirationLimits} limits={limits} />}
+					{currentTab === 2 && (
+						<>
+							<Message className="mt-4">
+								Tokenless trays don't require a token to POST data into the tray. You still must include a token to GET the
+								data, though.
+							</Message>
+							<Tokenless expirationLimits={expirationLimits} limits={limits} />
+						</>
+					)}
 				</>
 			)}
 		</AppLayout>

@@ -30,7 +30,6 @@ export default async (req, res) => {
 			const canBeDeepFreeze = tray[0].profile.usage_limits.customExpirationLimit;
 			await deleteIceCubes(canBeDeepFreeze && tray[0].deepFreeze, tray[0].id, profileId, deleteOnSuccess);
 
-			// test this
 			tray[0].ice_cubes.sort((a, b) => {
 				var createdA = new Date(a.created).getTime();
 				var createdB = new Date(b.created).getTime();
