@@ -147,7 +147,11 @@ export default function PricingTable({ type = "light", setSelected, stopLoading,
 						{data.ids &&
 							data.ids.map((id, i) => {
 								if (currentPriceId === id) {
-									return <div className="mt-8 font-semibold text-primary">Current Plan</div>;
+									return (
+										<div className="mt-8 font-semibold text-primary" key={i}>
+											Current Plan
+										</div>
+									);
 								} else if (i % 2 != 0) {
 									// Is odd
 									return (

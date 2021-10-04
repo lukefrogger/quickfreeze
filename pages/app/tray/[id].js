@@ -63,7 +63,7 @@ export default function Tray() {
 	}, [router.query.id]);
 
 	const copyEndpoint = () => {
-		navigator.clipboard.writeText(`https://quickfreeze.io/api${tray.unique_endpoint ? "/u/" : "/"}ice_cubes/${tray.endpoint}`);
+		navigator.clipboard.writeText(`https://quickfreeze.io/api${tray.unique_endpoint ? "/tokenless/" : "/"}ice_cubes/${tray.endpoint}`);
 		setIcon(faCheck);
 		setTimeout(() => {
 			setIcon(faCopy);
@@ -114,7 +114,7 @@ export default function Tray() {
 			<div className="flex relative mb-6">
 				<div>Endpoint:</div>
 				<div className="text-primary cursor-pointer flex" onClick={copyEndpoint}>
-					&nbsp; {tray.unique_endpoint ? "/u/ice_cubes/" : "/ice_cubes/"}
+					&nbsp; {tray.unique_endpoint ? "/tokenless/ice_cubes/" : "/ice_cubes/"}
 					{tray.endpoint || router.query.id}
 					{tray.endpoint && (
 						<span className="ml-1 flex">

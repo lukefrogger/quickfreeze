@@ -52,6 +52,7 @@ export default function Standard({ expirationLimits, limits }) {
 					deepFreeze: values.deepFreeze,
 					custom_expiration_limit: !!values.expiration,
 					total_bytes: 0,
+					type: "standard",
 				};
 				if (values.expiration) {
 					newTray.expiration_limit = values.expiration;

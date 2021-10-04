@@ -20,7 +20,7 @@ export default async (req, res) => {
 			const { data: trays, error: luError } = await supabaseAdmin
 				.from("trays")
 				.select("*, ice_cubes(*), profile( id, usage_limits(*) )")
-				.match({ endpoint, profile: profileId });
+				.match({ endpoint, profile: profileId, type: "tokenless" });
 			if (luError || !trays || trays.length === 0) {
 				throw luError || "This is not a valid endpoint.";
 			}
@@ -73,9 +73,9 @@ async function addIceCube(record, endpoint) {
 		const { data: trays, error } = await supabaseAdmin
 			.from("trays")
 			.select("*, profile( id, usage_limits(traySize) )")
-			.match({ endpoint });
+			.match({ endpoint, type: "tokenless" });
 		if (error || trays.length === 0) {
-			throw error || "A tray with with this endpoint could not found";
+			throw error || "A tokenless tray could not be found";
 		}
 
 		const tray = trays[0];
