@@ -27,6 +27,7 @@ export default async (req, res) => {
 					quantity: 1,
 				},
 			],
+			allow_promotion_codes: true,
 			mode: "subscription",
 			success_url: `${hostUrl}/app/account`,
 			cancel_url: `${hostUrl}/app/plans`,
