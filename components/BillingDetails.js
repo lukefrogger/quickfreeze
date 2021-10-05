@@ -4,7 +4,7 @@ import BillingLimitBar from "./BillingLimitBar";
 import format from "date-fns/format";
 import Link from "next/link";
 
-export default function BillingDetails({ currentSub, trays }) {
+export default function BillingDetails({ currentSub, trays, limits }) {
 	const [plan, setPlan] = useState(false);
 
 	useEffect(() => {
@@ -59,7 +59,7 @@ export default function BillingDetails({ currentSub, trays }) {
 				)}
 				<div className="flex-1 mt-4">
 					<div className="text-sm text-gray-300 mt-4">Subscription Limits</div>
-					<BillingLimitBar limit={plan.product.numOfTrays} currentNum={trays} title="trays" />
+					<BillingLimitBar limit={limits.numOfTrays} currentNum={trays} title="trays" />
 				</div>
 			</div>
 		</div>

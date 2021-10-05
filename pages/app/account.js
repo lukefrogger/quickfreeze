@@ -17,6 +17,7 @@ export default function Account() {
 	const [tokens, setTokens] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [trays, setTrays] = useState(false);
+	const [limits, setLimits] = useState(false);
 
 	useEffect(() => {
 		setFail(false);
@@ -24,7 +25,9 @@ export default function Account() {
 			try {
 				const { data, error } = await supabase
 					.from("profiles")
-					.select("id, email, phone, subscriptions( *, product (*) ), trays (id, endpoint), api_tokens(id, created, secret)");
+					.select(
+						"id, email, phone, subscriptions( *, product (*) ), usage_limits(*), trays (id, endpoint), api_tokens(id, created, secret)"
+					);
 				if (error) {
 					throw error;
 				}
@@ -39,6 +42,7 @@ export default function Account() {
 				setSub(data[0].subscriptions.find((item) => item.status === "active"));
 				setTokens(data[0].api_tokens);
 				setTrays(data[0].trays);
+				setLimits(data[0].usage_limits);
 			} catch (err) {
 				console.log(err);
 				setFail(err.message || "You're trays couldn't be found");
@@ -97,7 +101,7 @@ export default function Account() {
 					</Card>
 					<Card className="mt-4">
 						<SmallHeader>Billing Details</SmallHeader>
-						<BillingDetails currentSub={sub} trays={trays.length} />
+						<BillingDetails currentSub={sub} trays={trays.length} limits={limits} />
 					</Card>
 				</>
 			)}
