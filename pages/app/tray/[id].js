@@ -63,7 +63,9 @@ export default function Tray() {
 	}, [router.query.id]);
 
 	const copyEndpoint = () => {
-		navigator.clipboard.writeText(`https://quickfreeze.io/api${tray.unique_endpoint ? "/tokenless/" : "/"}ice_cubes/${tray.endpoint}`);
+		navigator.clipboard.writeText(
+			`https://quickfreeze.io/api${tray.type === "tokenless" ? "/tokenless/" : "/"}ice_cubes/${tray.endpoint}`
+		);
 		setIcon(faCheck);
 		setTimeout(() => {
 			setIcon(faCopy);
@@ -109,12 +111,12 @@ export default function Tray() {
 
 	return (
 		<AppLayout>
-			<SmallHeader>{tray.unique_endpoint ? "Tokenless" : "Standard"} Tray</SmallHeader>
+			<SmallHeader>{tray.type === "tokenless" ? "Tokenless" : "Standard"} Tray</SmallHeader>
 			<h4 className="text-3xl mb-2">{tray.name || router.query.id}</h4>
 			<div className="flex relative mb-6">
 				<div>Endpoint:</div>
 				<div className="text-primary cursor-pointer flex" onClick={copyEndpoint}>
-					&nbsp; {tray.unique_endpoint ? "/tokenless/ice_cubes/" : "/ice_cubes/"}
+					&nbsp; {tray.type === "tokenless" ? "/tokenless/ice_cubes/" : "/ice_cubes/"}
 					{tray.endpoint || router.query.id}
 					{tray.endpoint && (
 						<span className="ml-1 flex">
@@ -166,7 +168,7 @@ export default function Tray() {
 									value={`${formatBytesWithLabel(tray.total_bytes)} / ${formatBytesWithLabel(limits.traySize)}`}
 								/>
 							)}
-							<InlineText label="Requires Token" value={tray.unique_endpoint ? "No" : "Yes"} />
+							<InlineText label="Requires Token" value={tray.type === "tokenless" ? "No" : "Yes"} />
 						</div>
 					</Card>
 					<Card className="mt-4">
