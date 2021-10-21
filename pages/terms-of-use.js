@@ -10,7 +10,7 @@ export default function TermsOfService() {
 				<Container>
 					<div>
 						<div className="text-4xl text-primary text-center">Terms of Use</div>
-						<div className="text-center">Last updated: Aug 19th, 2021</div>
+						<div className="text-center">Last updated: Oct 21th, 2021</div>
 					</div>
 					<div className="my-8">
 						<p>By using this site, you agree to the following terms and conditions:</p>
@@ -18,10 +18,10 @@ export default function TermsOfService() {
 					<div className="my-8">
 						<div className="text-2xl">GENERAL PROVISIONS</div>
 						<p>
-							This website is owned and operated by Luke Frauhiger, DBA (“Quick Freeze"). You must be at least thirteen years
-							of age to use our website. Use of this website is at your own risk. We host our site on a reputable platform and
-							take reasonable efforts to maintain and host the site. However, we make no explicit representations or
-							warranties as to the safety or your individual use of the website. The Terms and Conditions contained on this
+							This website is owned and operated by Quick Freeze LLC, DBA (“Quick Freeze"). You must be at least thirteen
+							years of age to use our website. Use of this website is at your own risk. We host our site on a reputable
+							platform and take reasonable efforts to maintain and host the site. However, we make no explicit representations
+							or warranties as to the safety or your individual use of the website. The Terms and Conditions contained on this
 							page is subject to change at any time.
 						</p>
 					</div>

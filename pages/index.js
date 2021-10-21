@@ -37,7 +37,7 @@ export default function Home() {
 						</div>
 						<div className="max-w-screen-md text-center mt-6">
 							<div className="text-xl ">
-								The easiest way to store temorary data from webhooks, server logs, data migrations, or anything else!
+								The easiest way to store temporary data from webhooks, server logs, data migrations, or anything else!
 							</div>
 							<div className="mt-6">
 								<Link href="/sign-up" passHref>
