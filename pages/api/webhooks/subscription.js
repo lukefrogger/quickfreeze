@@ -1,18 +1,13 @@
 import { supabaseAdmin } from "@/services/supabase-admin";
 import parseStripeDate from "lib/parseStripeDate";
 
-// const endpointSecret = process.env.WEBHOOK_SUB_KEY;
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY);
 const testing = process.env.NODE_ENV === "development" && false; // cannot be set to true in prod
 
 export default async (req, res) => {
 	console.log(testing ? " 💥 💥 WEBHOOK SET TO TESTING" : "Running webhook");
-	const endpointSecret = "whsec_HbUEU5DWXJXY1csdKJbESDJSM93DKONW";
 	const payload = req.body;
-	// console.log(payload);
-	// const sig = req.headers["stripe-signature"];
-	// console.log(sig);
 
 	// Only working with post requests
 	if (req.method !== "POST") {
