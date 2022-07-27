@@ -4,5 +4,5 @@
     <h4>The easiest way to store temporary data from webhooks, server logs, data migrations, or anything else.</h4>
     <br />
     <br />
-    <a href="https://quickfreeze.vercel.app/docs"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/lukefrogger/quickfreeze/blob/main/pages/docs.js"><strong>Explore the docs »</strong></a>
 </div>
